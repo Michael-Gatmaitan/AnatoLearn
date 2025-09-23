@@ -1,0 +1,18 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/USS/ARMode.uss?fileID=7433441132597879392&amp;guid=42d0c057555a54d4c908934251b3ba27&amp;type=3#ARMode" />
+    <engine:VisualElement style="flex-grow: 1; display: none;">
+        <engine:VisualElement style="flex-grow: 1;" />
+        <engine:TextField label="Torso height" placeholder-text="Torso height" name="T_TorsoHeight" />
+        <engine:TextField label="Adjusted Hip Y" placeholder-text="Adjusted Hip Y" name="T_AdjustedHipY" />
+        <engine:Button text="Change&#10;" name="B_Change" />
+        <engine:Label text="Label" name="L_X" class="txt" style="display: flex;" />
+        <engine:Label text="Label" name="L_Y" class="txt" style="display: flex;" />
+        <engine:Label text="Label" name="L_Z" class="txt" style="display: flex;" />
+        <engine:VisualElement>
+            <engine:VisualElement style="flex-grow: 1; background-size: 100% 100px;">
+                <engine:Button text="Refresh scene" name="B_Refresh" />
+                <engine:Button text="Back to home&#10;" name="B_BackToHome" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

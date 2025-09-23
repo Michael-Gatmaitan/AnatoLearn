@@ -1,0 +1,4 @@
+repository "Cloud Repositories/AnatoLearn@1375326046092@cloud"
+  path "/"
+    br "/main"
+    co "/main"

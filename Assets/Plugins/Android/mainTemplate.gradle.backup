@@ -1,0 +1,67 @@
+apply plugin: 'com.android.library'
+apply from: 'setupSymbols.gradle'
+apply from: '../shared/keepUnitySymbols.gradle'
+
+dependencies {
+    implementation project(':unityLibrary')
+}
+
+android {
+    namespace "com.UnityTechnologies.com.unity.template.urpblank"
+    ndkPath "C:/Program Files/Unity/Hub/Editor/6000.0.41f1/Editor/Data/PlaybackEngines/AndroidPlayer/NDK"
+    ndkVersion "27.2.12479018"
+    compileSdk 33
+    buildToolsVersion = "34.0.0"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    defaultConfig {
+**DEFAULT_CONFIG_SETUP**
+consumerProguardFiles 'proguard-unity.txt'**USER_PROGUARD**
+        applicationId "com.UnityTechnologies.com.unity.template.urpblank"
+        versionName "0.1.0"
+        minSdk 23
+        targetSdk 33
+        versionCode 1
+
+        ndk {
+            abiFilters "arm64-v8a"
+            debugSymbolLevel "none"
+        }
+    }
+
+    lint {
+        abortOnError false
+    }
+
+    androidResources {
+        ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~"
+    noCompress = **BUILTIN_NOCOMPRESS** + unityStreamingAssets.tokenize(', ')
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging true
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled = false
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            jniDebuggable = true
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            minifyEnabled = false
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    
+} 

@@ -1,0 +1,4 @@
+TextField {
+    width: 100%;
+    color: rgb(109, 109, 109);
+}

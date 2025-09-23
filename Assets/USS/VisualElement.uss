@@ -1,0 +1,813 @@
+VisualElement {
+    background-color: rgba(56, 56, 56, 0);
+    flex-direction: column;
+    margin-left: 0;
+    width: 100px;
+    height: 100%;
+}
+
+#unity-content-and-vertical-scroll-container {
+    flex-grow: 1;
+    width: 100%;
+}
+
+#unity-content-viewport {
+    flex-grow: 1;
+    width: 100%;
+}
+
+#unity-content-container {
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: flex-start;
+    width: 100%;
+    min-width: auto;
+    max-width: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-self: auto;
+    align-content: auto;
+    margin-top: 0;
+    -unity-text-outline-width: 0;
+    background-size: 100% 100%;
+    overflow: visible;
+    visibility: visible;
+    display: flex;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.questionContainer {
+    flex-grow: 0;
+    height: auto;
+    width: 100%;
+    background-color: rgba(58, 166, 187, 0);
+    margin-top: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-right: 6px;
+    padding-left: 6px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    visibility: visible;
+    opacity: 1;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Regular');
+}
+
+.questionContent {
+    flex-grow: 1;
+    width: 100%;
+    background-image: none;
+    -unity-background-scale-mode: scale-to-fit;
+    background-color: rgb(255, 255, 255);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    padding-top: 22px;
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-bottom: 22px;
+    margin-top: 9px;
+}
+
+.question {
+    white-space: normal;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.questionChoice {
+    white-space: normal;
+    background-color: rgb(217, 217, 217);
+    padding-left: 8px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-right: 2px;
+    font-size: 16px;
+}
+
+.questionChoiceHighlight {
+    white-space: normal;
+    background-color: rgb(52, 107, 168);
+    padding-left: 8px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 8px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+}
+
+.questionLabel {
+    align-items: auto;
+    align-self: center;
+    width: 228px;
+    justify-content: center;
+    background-color: rgb(255, 178, 98);
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    margin-right: 0;
+    margin-left: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+    -unity-text-align: middle-center;
+    margin-top: 0;
+    margin-bottom: -15px;
+    padding-top: 4px;
+    font-size: 14px;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
+    padding-bottom: 4px;
+    background-position-y: center 0;
+    position: absolute;
+    translate: 0 0;
+    top: 0;
+}
+
+.progressContainer {
+    flex-grow: 0;
+    height: auto;
+    width: 100%;
+    background-color: rgb(52, 107, 168);
+    margin-top: 8px;
+    margin-right: 10px;
+    margin-bottom: 8px;
+    margin-left: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 14px;
+    padding-left: 14px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    max-width: 362px;
+    flex-direction: row;
+}
+
+.progressTopicLogo {
+    flex-grow: 0;
+    background-image: url("project://database/Assets/Images_old/progressPage/progress-skeletal.png?fileID=2800000&guid=17440a8906f529b4782daf35489c2104&type=3#progress-skeletal");
+    height: 59px;
+    width: 59px;
+    -unity-background-scale-mode: scale-to-fit;
+    flex-shrink: 1;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.progressTopicLabel {
+    align-items: auto;
+    align-self: center;
+    width: 100%;
+    justify-content: center;
+    background-color: rgba(255, 178, 98, 0);
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    margin-right: 0;
+    margin-left: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+    -unity-text-align: middle-center;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 4px;
+    font-size: 30px;
+    flex-shrink: 1;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Medium');
+}
+
+.TopicSumScoreContainer {
+    flex-grow: 0;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 170px;
+    height: 291px;
+    margin-right: 6px;
+    margin-bottom: -9px;
+    margin-left: 6px;
+    margin-top: 0;
+    align-self: auto;
+}
+
+.ScoreContainer {
+    flex-grow: 0;
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    background-color: rgb(52, 107, 168);
+    width: 100%;
+    height: auto;
+    max-height: none;
+    justify-content: flex-start;
+    align-self: center;
+    align-items: center;
+    display: flex;
+    flex-shrink: 1;
+    align-content: flex-end;
+    flex-direction: column;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 0;
+    padding-left: 12px;
+}
+
+.TopicLogo {
+    flex-grow: 0;
+    background-image: url("project://database/Assets/Images_old/progressPage/progress-skeletal.png?fileID=2800000&guid=17440a8906f529b4782daf35489c2104&type=3#progress-skeletal");
+    height: 52px;
+    width: 52px;
+    -unity-background-scale-mode: scale-to-fit;
+    flex-shrink: 1;
+    position: absolute;
+    top: 0;
+}
+
+.ShowActScoreBtn {
+    width: 18px;
+    height: 12px;
+    background-color: rgba(255, 178, 98, 0);
+    align-items: flex-start;
+    align-self: flex-start;
+    margin-left: 0;
+    margin-top: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    background-image: url("project://database/Assets/Images_old/progressPage/viewScoresBtn.png?fileID=2800000&guid=a36eea72da81ca04e86bdf7c606bddf9&type=3#viewScoresBtn");
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.ScorePercentContainer {
+    flex-grow: 0;
+    height: auto;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.ScoreCon {
+    flex-grow: 0;
+    height: auto;
+    width: 100%;
+    background-color: rgba(55, 55, 55, 0);
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 0;
+    margin-top: 6px;
+}
+
+.ScoreTime {
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    font-size: 15px;
+    width: 100%;
+    -unity-text-align: middle-center;
+    height: 23px;
+    justify-content: center;
+    align-self: auto;
+    background-color: rgb(153, 181, 211);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    margin-top: 6px;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.Padding {
+    flex-grow: 0;
+    flex-direction: row;
+    height: auto;
+    width: 268px;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.ScorePercentContent {
+    flex-grow: 1;
+    height: 80px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-left-color: rgb(228, 255, 77);
+    border-right-color: rgb(228, 255, 77);
+    border-top-color: rgb(228, 255, 77);
+    border-bottom-color: rgb(228, 255, 77);
+    width: 80px;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+    margin-top: 16px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    justify-content: center;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.ScorePercent {
+    align-items: stretch;
+    -unity-text-align: upper-center;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    font-size: 26px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Bold');
+}
+
+.ScoreLabel {
+    -unity-text-align: upper-center;
+    color: rgb(228, 255, 77);
+    margin-top: -6px;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 8px;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Regular');
+}
+
+.CScoreCon {
+    flex-grow: 0;
+    height: 67px;
+    width: 73px;
+    background-color: rgb(109, 226, 66);
+    margin-right: 6px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.CScore {
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    font-size: 40px;
+    -unity-text-align: upper-center;
+    margin-top: 2px;
+    margin-right: 0;
+    margin-bottom: -15px;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    height: auto;
+    flex-grow: 0;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Bold');
+    -unity-text-outline-color: rgb(0, 0, 0);
+    -unity-text-outline-width: 2px;
+}
+
+.MScoreLabel {
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    font-size: 7px;
+    -unity-text-align: upper-center;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Regular');
+}
+
+.MScoreLabel {
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    font-size: 7px;
+    -unity-text-align: upper-center;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.IScore {
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    font-size: 40px;
+    -unity-text-align: upper-center;
+    margin-top: 2px;
+    margin-right: 0;
+    margin-bottom: -17px;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    height: auto;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Bold');
+}
+
+.IScoreCon {
+    flex-grow: 0;
+    height: 67px;
+    width: 73px;
+    background-color: rgb(255, 65, 65);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.locked {
+    flex-grow: 0;
+    width: 50px;
+    background-image: url("project://database/Assets/Images/progressionPage/lockIcon.png?fileID=2800000&guid=6cedb915a41a8aa4f97df9af9befd2f1&type=3#lockIcon");
+    background-size: 100% 100%;
+    flex-shrink: 0;
+    position: absolute;
+    bottom: auto;
+    left: 9px;
+    height: 70px;
+    display: flex;
+    top: -10px;
+}
+
+.SystemLabel {
+    align-items: auto;
+    align-self: center;
+    width: 100%;
+    justify-content: center;
+    background-color: rgb(255, 178, 98);
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    margin-right: 0;
+    margin-left: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+    -unity-text-align: middle-center;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 4px;
+    font-size: 12px;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Regular');
+}
+
+.SystemImage {
+    flex-grow: 1;
+    width: 100%;
+    background-image: url("project://database/Assets/Images_old/HomePageSystem/system1.png?fileID=2800000&guid=64128a44c03882b409e15dbb9bae6eb9&type=3#system1");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.V_SystemButton {
+    flex-grow: 0;
+    height: 200px;
+    width: 170px;
+    background-color: rgb(52, 107, 168);
+    margin-top: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-right: 6px;
+    padding-left: 6px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.LockIcon {
+    background-image: url("project://database/Assets/Images/progressionPage/lockIcon.png?fileID=2800000&guid=6cedb915a41a8aa4f97df9af9befd2f1&type=3#lockIcon");
+    -unity-background-image-tint-color: rgba(56, 56, 56, 0);
+    background-color: rgba(56, 56, 56, 0);
+}
+
+.TopicLocked {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: url("project://database/Assets/Images/progressionPage/lockIcon.png?fileID=2800000&guid=6cedb915a41a8aa4f97df9af9befd2f1&type=3#lockIcon");
+    background-size: 60px 80px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.poppins {
+    -unity-font-definition: resource('fonts/poppins/Poppins-Regular');
+}
+
+.progContainer {
+    flex-grow: 1;
+    padding-top: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+    background-color: rgb(52, 107, 168);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    flex-direction: row;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Bold');
+    color: rgb(255, 255, 255);
+    width: 100%;
+    height: auto;
+    margin-bottom: 8px;
+}
+
+.progImageContainer {
+    flex-grow: initial;
+    padding-top: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    background-image: none;
+    height: 100px;
+    background-color: rgba(56, 56, 56, 0.39);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.progImage {
+    flex-grow: 1;
+    width: 100%;
+    background-image: url("project://database/Assets/Images/progressPage/progPics/progSkeletalLogo.png?fileID=2800000&guid=f16c909213fe94e408b70c629e7fb7f7&type=3#progSkeletalLogo");
+}
+
+.progInfos {
+    flex-grow: 1;
+}
+
+.progTitle {
+    align-self: center;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Bold');
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+}
+
+.progDataFlex {
+    flex-grow: 1;
+    flex-direction: row;
+    width: 100%;
+    padding-left: 6px;
+    padding-right: 0;
+    overflow: hidden;
+    visibility: visible;
+}
+
+.progDataContainerL {
+    flex-grow: 1;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.39);
+    margin-right: 3px;
+    overflow: hidden;
+}
+
+.progDataContainerR {
+    flex-grow: 1;
+    margin-left: 3px;
+    background-color: rgba(0, 0, 0, 0.39);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    overflow: hidden;
+}
+
+.progDataLC {
+    flex-grow: 1;
+    width: 100%;
+    justify-content: center;
+}
+
+.progDataLabel {
+    align-self: center;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 18px;
+}
+
+.progDataLabelAttempts {
+    align-self: center;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 12px;
+}
+
+.progDataAttempts {
+    flex-grow: 1;
+    width: 100%;
+    justify-content: center;
+    background-color: rgb(183, 209, 39);
+}
+
+.failedAccuracy {
+    flex-grow: 1;
+    width: 100%;
+    justify-content: center;
+    background-color: rgb(234, 45, 38);
+}
+
+.passedAccuracy {
+    flex-grow: 1;
+    width: 100%;
+    justify-content: center;
+    background-color: rgb(49, 209, 24);
+}
+
+.unselectedMcqChoice {
+    white-space: normal;
+    -unity-text-align: upper-left;
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 6px;
+    margin-left: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: rgb(214, 214, 214);
+    color: rgb(0, 0, 0);
+    -unity-font-definition: resource('fonts/poppins/Poppins-Regular');
+    -unity-font-style: bold;
+}
+
+.selectedMcqChoice {
+    white-space: normal;
+    -unity-text-align: upper-left;
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 6px;
+    margin-left: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: rgb(52, 107, 168);
+    color: rgb(255, 255, 255);
+    -unity-font-definition: resource('fonts/poppins/Poppins-Regular');
+    -unity-font-style: bold;
+}
+
+.nextQuestionBtn {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 12px;
+    padding-right: 0;
+    padding-bottom: 12px;
+    padding-left: 0;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Medium');
+    background-color: rgb(255, 178, 98);
+    color: rgb(255, 255, 255);
+    font-size: 21px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.unity-base-slider {
+}
+
+.sss {
+    -unity-font-definition: resource('fonts/poppins/Poppins-Bold');
+}
+
+.profile {
+    flex-grow: 1;
+    width: 100%;
+    height: 100px;
+    margin-right: 6px;
+    background-color: rgba(56, 56, 56, 0.74);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.bordered-score {
+    -unity-font-style: normal;
+    color: rgb(255, 255, 255);
+    font-size: 70px;
+    -unity-text-align: upper-center;
+    margin-top: 2px;
+    margin-right: 0;
+    margin-bottom: -15px;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    height: auto;
+    flex-grow: 0;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Bold');
+    -unity-text-outline-width: 3px;
+    -unity-text-outline-color: rgb(46, 46, 46);
+}
+
+.bordered-label {
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    -unity-text-align: upper-center;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Bold');
+    -unity-text-outline-color: rgb(46, 46, 46);
+    -unity-text-outline-width: 1px;
+}

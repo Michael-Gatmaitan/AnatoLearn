@@ -1,0 +1,50 @@
+/* Whole slider */
+.volume-slider {
+    flex-grow: 0;
+    height: auto;
+    /*margin: 5px 0;*/
+}
+
+/* Unity Drag Container */
+.volume-slider #unity-drag-container {
+    background-color: yellow;
+    width: 100%;
+    height: auto;
+    flex-grow: 0;
+}
+
+
+/* Track background */
+.volume-slider #unity-tracker { 
+     width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    border-color: transparent;
+    height: 8px;
+    margin-top: 7px;
+}
+
+/* Filled area (progress bar) */
+.volume-slider #unity-dragger-border {
+    background-color: #FFB262;
+    border-radius: 8px;
+    height: 6px;
+    margin-top: 7px;
+}
+
+
+/* Knob */
+.volume-slider #unity-dragger {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #346BA8;
+    border-color: transparent;
+    margin-top: 2px;
+}
+
+
+#fill-bar {
+    background-color: #FFB262;
+    border-radius: 8px;
+}
