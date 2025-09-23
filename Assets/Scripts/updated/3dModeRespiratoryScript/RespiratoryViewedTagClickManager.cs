@@ -42,6 +42,8 @@ public class RespiratoryViewedTagClickManager : MonoBehaviour
             { "bronchiDescriptionCon", viewedTagBronchi },
             { "lungsDescriptionCon", viewedTagLungs },
         };
+
+        CheckAllPartsIfVisited();
     }
 
     void Update()
@@ -57,8 +59,6 @@ public class RespiratoryViewedTagClickManager : MonoBehaviour
             Ray ray = cam.ScreenPointToRay(Input.GetTouch(0).position);
             DetectHit(ray);
         }
-
-        CheckAllPartsIfVisited();
     }
 
     void CheckAllPartsIfVisited()

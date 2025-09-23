@@ -92,7 +92,7 @@ public class IntegrateUI : MonoBehaviour
     public Sprite[] systemTopicSprites;
     public Sprite[] progressSprites;
     public Sprite[] progressLogoSprites;
-    public Sprite[] progressionTopicTitle;
+    public static Sprite[] progressionTopicTitle;
 
     public VideoPlayer fsVp;
 
@@ -444,6 +444,9 @@ public class IntegrateUI : MonoBehaviour
         VisualElement exploreBtn = popUpPage.Q<VisualElement>("exploreBtn");
         VisualElement quizBtn = popUpPage.Q<VisualElement>("quizBtn");
 
+        exploreBtn.SetEnabled(false);
+        quizBtn.SetEnabled(false);
+
         VisualElement progressionTitleImg = popUpPage.Q<VisualElement>("progressTitleImg");
 
         progressionTitleImg.style.backgroundImage = new StyleBackground(
@@ -787,13 +790,6 @@ public class IntegrateUI : MonoBehaviour
 
             var mcqPage = quizPage.Q<VisualElement>("mcqPage");
             var mcqSplash = quizPage.Q<VisualElement>("mcqSplash");
-
-            var quizTitleImg = mcqPage.Q<VisualElement>("quizTitleImg");
-            int topic_id = UserState.Instance.TopicId;
-
-            quizTitleImg.style.backgroundImage = new StyleBackground(
-                progressionTopicTitle[topic_id - 1]
-            );
 
             // taking quiz = true
             takingQuiz = true;
@@ -1449,6 +1445,18 @@ public class IntegrateUI : MonoBehaviour
 
             int actId = UserState.Instance.SetActivityId("mcq");
             int topicId = UserState.Instance.TopicId;
+
+            // Change the mcq title image here
+
+            var quizTitleImg = mcqPage.Q<VisualElement>("quizTitleImg");
+            Debug.Log("Quix title img: " + quizTitleImg);
+            int topic_id = UserState.Instance.TopicId;
+
+            quizTitleImg.style.backgroundImage = new StyleBackground(
+                progressionTopicTitle[topicId - 1]
+            );
+
+            Debug.Log("Quiz title background image: " + quizTitleImg.style.backgroundImage);
 
             void DisplayQuestion(int index, List<QuestionMCQ> mcqQuestions)
             {

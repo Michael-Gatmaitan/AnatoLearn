@@ -91,6 +91,7 @@ public class CirculatoryViewedTagClickManager : MonoBehaviour
                         }
                         else
                         {
+                            // Set to active if the user already viewed this part
                             Debug.Log("Buildkey found in label viewed tags variable");
                             labelToViewedTag[buildKey].SetActive(true);
                         }
