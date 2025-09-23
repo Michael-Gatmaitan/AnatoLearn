@@ -384,7 +384,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1b8efe13f883a2942924c45285074d4b, type: 3}
   - {fileID: 21300000, guid: 4f49eaf1649c0eb4d8461a6ce78f7a0d, type: 3}
   - {fileID: 21300000, guid: 1b225d10cefb0e34485a4d35ff76da8c, type: 3}
-  - {fileID: 21300000, guid: 1b225d10cefb0e34485a4d35ff76da8c, type: 3}
+  - {fileID: 21300000, guid: 9efa238ebc964aa4786b68af1131e588, type: 3}
   progressSprites:
   - {fileID: 21300000, guid: f16c909213fe94e408b70c629e7fb7f7, type: 3}
   - {fileID: 21300000, guid: c5e9ded94b2245c48892a9624bdcfbb6, type: 3}
@@ -575,6 +575,7 @@ MonoBehaviour:
   CurrentTapScore: -1
   CurrentMCQScore: -1
   CurrentTOFScore: -1
+  QuizTimeRemaining: 300
   isFromTapMe: 0
 --- !u!4 &1508282118
 Transform:

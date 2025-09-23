@@ -1483,6 +1483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tapCuesContainer: {fileID: 878656345}
+  tagsContainer: {fileID: 1427411331}
 --- !u!114 &261168102
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2780,7 +2780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: phalangeToesDescriptionCon
+  labelID: phalange_ToesDescriptionCon
 --- !u!65 &84653598
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7207,6 +7207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tapCuesContainer: {fileID: 878656345}
+  tagsContainer: {fileID: 1427411331}
 --- !u!114 &261168102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10253,7 +10254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: phalangeFingersDescriptionCon
+  labelID: phalange_FingersDescriptionCon
 --- !u!114 &417933878
 MonoBehaviour:
   m_ObjectHideFlags: 0

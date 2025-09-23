@@ -57,7 +57,7 @@ public class TagClickManager : MonoBehaviour
             labelPanels["metacarpalsDescriptionCon"] = root.Q<VisualElement>(
                 "metacarpalsDescriptionCon"
             );
-            labelPanels["phalangeFingersDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["phalange_FingersDescriptionCon"] = root.Q<VisualElement>(
                 "phalangeFingersDescriptionCon"
             );
             labelPanels["femurDescriptionCon"] = root.Q<VisualElement>("femurDescriptionCon");
@@ -68,12 +68,12 @@ public class TagClickManager : MonoBehaviour
             labelPanels["metatarsalDescriptionCon"] = root.Q<VisualElement>(
                 "metatarsalDescriptionCon"
             );
-            labelPanels["phalangeToesDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["phalange_ToesDescriptionCon"] = root.Q<VisualElement>(
                 "phalangeToesDescriptionCon"
             );
             labelPanels["humerusDescriptionCon"] = root.Q<VisualElement>("humerusDescriptionCon");
             labelPanels["coccyxDescriptionCon"] = root.Q<VisualElement>("coccyxDescriptionCon");
-            labelPanels["pelvicGirdleDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["pelvic_GirdleDescriptionCon"] = root.Q<VisualElement>(
                 "pelvicGirdleDescriptionCon"
             );
 
@@ -85,7 +85,7 @@ public class TagClickManager : MonoBehaviour
                 "sweatGlandDescriptionCon"
             );
             labelPanels["hairRootDescriptionCon"] = root.Q<VisualElement>("hairRootDescriptionCon");
-            labelPanels["poreOfGlandDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["pore_Of_GlandDescriptionCon"] = root.Q<VisualElement>(
                 "poreOfGlandDescriptionCon"
             );
             labelPanels["epidermisDescriptionCon"] = root.Q<VisualElement>(
@@ -102,17 +102,17 @@ public class TagClickManager : MonoBehaviour
                 "esophagusDescriptionCon"
             );
             labelPanels["stomachDescriptionCon"] = root.Q<VisualElement>("stomachDescriptionCon");
-            labelPanels["largeIntestineDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["large_IntestineDescriptionCon"] = root.Q<VisualElement>(
                 "largeIntestineDescriptionCon"
             );
-            labelPanels["smallIntestineDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["small_IntestineDescriptionCon"] = root.Q<VisualElement>(
                 "smallIntestineDescriptionCon"
             );
             labelPanels["rectumDescriptionCon"] = root.Q<VisualElement>("rectumDescriptionCon");
 
             //RESPIRATORY - TAG DESCRIPTION
             labelPanels["pharynxDescriptionCon"] = root.Q<VisualElement>("pharynxDescriptionCon");
-            labelPanels["nasalCavityDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["nasal_CavityDescriptionCon"] = root.Q<VisualElement>(
                 "nasalCavityDescriptionCon"
             );
             labelPanels["tracheaDescriptionCon"] = root.Q<VisualElement>("tracheaDescriptionCon");
@@ -125,13 +125,13 @@ public class TagClickManager : MonoBehaviour
             labelPanels["hypothalamusDescriptionCon"] = root.Q<VisualElement>(
                 "hypothalamusDescriptionCon"
             );
-            labelPanels["medullaOblongataDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["medulla_OblongataDescriptionCon"] = root.Q<VisualElement>(
                 "medullaOblongataDescriptionCon"
             );
             labelPanels["cerebellumDescriptionCon"] = root.Q<VisualElement>(
                 "cerebellumDescriptionCon"
             );
-            labelPanels["brainStemDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["brain_StemDescriptionCon"] = root.Q<VisualElement>(
                 "brainStemDescriptionCon"
             );
 
@@ -142,45 +142,45 @@ public class TagClickManager : MonoBehaviour
             labelPanels["heartDescriptionCon"] = root.Q<VisualElement>("heartDescriptionCon");
             labelPanels["arteriesDescriptionCon"] = root.Q<VisualElement>("arteriesDescriptionCon");
             labelPanels["veinsDescriptionCon"] = root.Q<VisualElement>("veinsDescriptionCon");
-            labelPanels["bloodVesselsDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["blood_VesselsDescriptionCon"] = root.Q<VisualElement>(
                 "bloodVesselsDescriptionCon"
             );
 
             //CIRCULATORY --HEART - TAG DESCRIPTION
-            labelPanels["rightAtriumDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["right_AtriumDescriptionCon"] = root.Q<VisualElement>(
                 "rightAtriumDescriptionCon"
             );
-            labelPanels["tricuspidValveDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["tricuspid_ValveDescriptionCon"] = root.Q<VisualElement>(
                 "tricuspidValveDescriptionCon"
             );
-            labelPanels["rightVentricleDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["right_VentricleDescriptionCon"] = root.Q<VisualElement>(
                 "rightVentricleDescriptionCon"
             );
-            labelPanels["inferiorVenaCavaDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["inferior_VenaCavaDescriptionCon"] = root.Q<VisualElement>(
                 "inferiorVenaCavaDescriptionCon"
             );
-            labelPanels["pulmonaryArteryDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["pulmonary_ArteryDescriptionCon"] = root.Q<VisualElement>(
                 "pulmonaryArteryDescriptionCon"
             );
-            labelPanels["aorticValveDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["aortic_ValveDescriptionCon"] = root.Q<VisualElement>(
                 "aorticValveDescriptionCon"
             );
-            labelPanels["pulmonaryVeinDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["pulmonary_VeinDescriptionCon"] = root.Q<VisualElement>(
                 "pulmonaryVeinDescriptionCon"
             );
-            labelPanels["leftAtriumDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["left_AtriumDescriptionCon"] = root.Q<VisualElement>(
                 "leftAtriumDescriptionCon"
             );
-            labelPanels["leftVentricleDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["left_VentricleDescriptionCon"] = root.Q<VisualElement>(
                 "leftVentricleDescriptionCon"
             );
-            labelPanels["mitralValveDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["mitral_ValveDescriptionCon"] = root.Q<VisualElement>(
                 "mitralValveDescriptionCon"
             );
-            labelPanels["pulmonaryValveDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["pulmonary_ValveDescriptionCon"] = root.Q<VisualElement>(
                 "pulmonaryValveDescriptionCon"
             );
-            labelPanels["superiorVenaCavaDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["superior_VenaCavaDescriptionCon"] = root.Q<VisualElement>(
                 "superiorVenaCavaDescriptionCon"
             );
 
@@ -190,7 +190,7 @@ public class TagClickManager : MonoBehaviour
             labelPanels["kidneysDescriptionCon"] = root.Q<VisualElement>("kidneysDescriptionCon");
             labelPanels["uretersDescriptionCon"] = root.Q<VisualElement>("uretersDescriptionCon");
             labelPanels["urethraDescriptionCon"] = root.Q<VisualElement>("urethraDescriptionCon");
-            labelPanels["urinaryBladderDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["urinary_BladderDescriptionCon"] = root.Q<VisualElement>(
                 "urinaryBladderDescriptionCon"
             );
 
@@ -270,7 +270,7 @@ public class TagClickManager : MonoBehaviour
                     }
 
                     var respiratoryViewedTagManager =
-                        FindObjectOfType<RespiratoryViewedTagClickManager>();
+                        FindFirstObjectByType<RespiratoryViewedTagClickManager>();
                     if (
                         respiratoryViewedTagManager != null
                         && !respiratoryViewedTagManager.IsTagActivated(label.labelID)
@@ -279,7 +279,8 @@ public class TagClickManager : MonoBehaviour
                         respiratoryViewedTagManager.ActivateTag(label.labelID);
                     }
 
-                    var nervousViewedTagManager = FindObjectOfType<NervousViewedTagClickManager>();
+                    var nervousViewedTagManager =
+                        FindFirstObjectByType<NervousViewedTagClickManager>();
                     if (
                         nervousViewedTagManager != null
                         && !nervousViewedTagManager.IsTagActivated(label.labelID)
@@ -289,7 +290,7 @@ public class TagClickManager : MonoBehaviour
                     }
 
                     var integumentaryViewedTagManager =
-                        FindObjectOfType<IntegumentaryViewedTagClickManager>();
+                        FindFirstObjectByType<IntegumentaryViewedTagClickManager>();
                     if (
                         integumentaryViewedTagManager != null
                         && !integumentaryViewedTagManager.IsTagActivated(label.labelID)
@@ -299,7 +300,7 @@ public class TagClickManager : MonoBehaviour
                     }
 
                     var excretoryViewedTagManager =
-                        FindObjectOfType<ExcretoryViewedTagClickManager>();
+                        FindFirstObjectByType<ExcretoryViewedTagClickManager>();
                     if (
                         excretoryViewedTagManager != null
                         && !excretoryViewedTagManager.IsTagActivated(label.labelID)
@@ -309,7 +310,7 @@ public class TagClickManager : MonoBehaviour
                     }
 
                     var digestiveViewedTagManager =
-                        FindObjectOfType<DigestiveSkeletalViewedTagClickManager>();
+                        FindFirstObjectByType<DigestiveSkeletalViewedTagClickManager>();
                     if (
                         digestiveViewedTagManager != null
                         && !digestiveViewedTagManager.IsTagActivated(label.labelID)
@@ -319,7 +320,7 @@ public class TagClickManager : MonoBehaviour
                     }
 
                     var circulatoryViewedTagManager =
-                        FindObjectOfType<CirculatoryViewedTagClickManager>();
+                        FindFirstObjectByType<CirculatoryViewedTagClickManager>();
                     if (
                         circulatoryViewedTagManager != null
                         && !circulatoryViewedTagManager.IsTagActivated(label.labelID)

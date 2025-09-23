@@ -14,6 +14,9 @@ public class UserState : MonoBehaviour
     public int CurrentMCQScore = -1;
     public int CurrentTOFScore = -1;
 
+    // MCQ and TOF time
+    public float QuizTimeRemaining = 300f;
+
     // States
     public bool isFromTapMe = false;
 
@@ -29,6 +32,11 @@ public class UserState : MonoBehaviour
         Instance = this;
         TopicId = 0;
         DontDestroyOnLoad(gameObject); // Persist between scenes
+    }
+
+    public void SetQuizTimeRemaining(float time)
+    {
+        QuizTimeRemaining = time;
     }
 
     public void SetUserData(int id, string username, string email)

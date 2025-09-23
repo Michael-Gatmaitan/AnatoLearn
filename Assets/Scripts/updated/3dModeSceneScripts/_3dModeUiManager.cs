@@ -67,6 +67,7 @@ public class _3dModeUIManager : MonoBehaviour
         // skullDescriptionCon = root.Q<VisualElement>("skullDescriptionCon"); //added
         // femurDescriptionCon = root.Q<VisualElement>("femurDescriptionCon"); //added 2
 
+        blackBgAbsoluteFunFactPage = root.Q<VisualElement>("blackBgAbsoluteFunFactPage");
         blackBgAbsoluteNeuronsCardsPage = root.Q<VisualElement>("blackBgAbsoluteNeuronsCardsPage"); //added 2
         blackBgAbsoluteChooseLanguagePage = root.Q<VisualElement>(
             "blackBgAbsoluteChooseLanguagePage"

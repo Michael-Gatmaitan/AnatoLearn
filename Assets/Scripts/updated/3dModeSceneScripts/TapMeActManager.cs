@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class TapMeActManager : MonoBehaviour
@@ -383,6 +384,11 @@ public class TapMeActManager : MonoBehaviour
         Debug.Log($"✅ Final Time Taken: {finalTimeTaken:F2} seconds");
         Debug.Log($"✅ Correct Answers: {correctScore}");
         Debug.Log($"✅ Wrong Answers: {wrongScore}");
+
+        UserState.Instance.SetQuizTimeRemaining(timeRemaining);
+        UserState.Instance.SetTapScore(correctScore);
+        UserState.Instance.isFromTapMe = true;
+        SceneManager.LoadScene("UIScene1");
 
         // Store to global state if needed
         // SceneData.tapMeCorrect = correctScore;

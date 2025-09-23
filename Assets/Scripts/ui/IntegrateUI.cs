@@ -85,6 +85,8 @@ public class IntegrateUI : MonoBehaviour
     private static bool isVideoPlaying = false;
     private static bool currentVideoValidToSkip = false;
 
+    private static bool takingQuiz = false;
+
     private List<Topic> allTopics;
 
     public Sprite[] systemTopicSprites;
@@ -101,6 +103,9 @@ public class IntegrateUI : MonoBehaviour
     private string videoPath;
     private string portrait_vid_src;
     private SliderInt S_VC;
+
+    private Label L_quizTimer;
+    private float timeRemaining;
 
     private void Awake()
     {
@@ -176,6 +181,7 @@ public class IntegrateUI : MonoBehaviour
 
         // Initialize mcq, tof and scores
         mcqPage = quizPage.Q<VisualElement>("mcqPage");
+        L_quizTimer = mcqPage.Q<Label>("L_quizTimer");
         tofPage = quizPage.Q<VisualElement>("tofPage");
         doneMcqButton = quizPage.Q<Button>("doneMcqActBtn");
         doneTofButton = V_Main.Q<Button>("doneTofActBtn"); //in quizPage, tofPage
@@ -253,6 +259,9 @@ public class IntegrateUI : MonoBehaviour
             {
                 homePage.style.display = DisplayStyle.None;
                 UserState.Instance.isFromTapMe = false;
+                // Get timer from UserState
+
+                timeRemaining = UserState.Instance.QuizTimeRemaining;
                 SetupQuizes.SetupMCQContent2(mcqPage);
                 Debug.Log($"✅ Topic id is: {topic_id} and fromTapMe is: {isFromTapMe}");
             }
@@ -779,13 +788,23 @@ public class IntegrateUI : MonoBehaviour
             var mcqPage = quizPage.Q<VisualElement>("mcqPage");
             var mcqSplash = quizPage.Q<VisualElement>("mcqSplash");
 
+            var quizTitleImg = mcqPage.Q<VisualElement>("quizTitleImg");
+            int topic_id = UserState.Instance.TopicId;
+
+            quizTitleImg.style.backgroundImage = new StyleBackground(
+                progressionTopicTitle[topic_id - 1]
+            );
+
+            // taking quiz = true
+            takingQuiz = true;
+            // Set quiz ui - get time remaining in UserState # UPDATE()
+
             progressionPage.style.display = DisplayStyle.None;
             homePage.style.display = DisplayStyle.None;
 
             // From revo -- if true, 3d mode will be tap me act
             SceneData.showTapActPage = true;
 
-            int topic_id = UserState.Instance.TopicId;
             Debug.Log($"Studying topic {topic.topic_name} in TapMe 3d Mode");
 
             // SceneData.ResetAllPartFlags();
@@ -1459,6 +1478,7 @@ public class IntegrateUI : MonoBehaviour
                 List<Label> choices = mcqPage.Query<Label>(className: "mcqChoice").ToList();
                 bool corrected = false;
                 int questionsLen = mcqQuestions.Count;
+
                 // Disable the next question button first.
                 Button nextQuestionBtn = mcqPage.Q<Button>("nextQuestionBtn");
                 nextQuestionBtn.SetEnabled(false);
@@ -1595,10 +1615,16 @@ public class IntegrateUI : MonoBehaviour
                 bool corrected = false;
                 int questionsLen = tofQuestions.Count;
 
+                Button nextQuestionBtn = mcqPage.Q<Button>("nextQuestionBtn");
+                nextQuestionBtn.SetEnabled(false);
+
                 foreach (var choice in choices)
                 {
                     choice?.RegisterCallback<ClickEvent>(_ =>
                     {
+                        // Then able the next question button here after clicking a choice.
+                        nextQuestionBtn.SetEnabled(true);
+
                         var currChoice = choice;
                         foreach (var c in choices)
                         {
@@ -1608,9 +1634,6 @@ public class IntegrateUI : MonoBehaviour
                                 c.EnableInClassList("unselectedMcqChoice", false);
 
                                 string answer = choice.text.ToString();
-                                Debug.Log(
-                                    $"ANS: {answer} Correct answer: {currentQuestion.answer}"
-                                );
                                 if (answer.ToLower().Equals(currentQuestion.answer))
                                 {
                                     if (!corrected)
@@ -1650,15 +1673,19 @@ public class IntegrateUI : MonoBehaviour
                 "tof",
                 (response) =>
                 {
-                    int questionIndex = 0;
-                    DisplayQuestion(questionIndex, response.data);
-
                     // Create a button
-                    Button nextQuestionBtn = new();
-                    nextQuestionBtn.text = "Next question";
+                    Button nextQuestionBtn = new()
+                    {
+                        text = "Next question",
+                        name = "nextQuestionBtn",
+                    };
+
                     nextQuestionBtn.AddToClassList("nextQuestionBtn");
 
                     nextQuestionBtnContainer.Add(nextQuestionBtn);
+
+                    int questionIndex = 0;
+                    DisplayQuestion(questionIndex, response.data);
 
                     nextQuestionBtn.RegisterCallback<ClickEvent>(_ =>
                     {
@@ -1669,6 +1696,9 @@ public class IntegrateUI : MonoBehaviour
                             Debug.Log("Quiz Done");
                             // Show score
                             nextQuestionBtn.text = "Show results";
+
+                            // Taking quiz false
+                            takingQuiz = false;
                             SetupScore();
                             return;
                         }
@@ -2114,12 +2144,16 @@ public class IntegrateUI : MonoBehaviour
             // }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        // Handle quiz time
+        if (takingQuiz)
         {
-            // Implement your back button logic here
-            // e.g., go back to previous scene, close a UI panel, etc.
-            Debug.Log("Back button pressed!");
-            root.style.display = DisplayStyle.None;
+            // update time UI
+            timeRemaining -= Time.deltaTime;
+            timeRemaining = Mathf.Max(timeRemaining, 0);
+
+            int minutes = Mathf.FloorToInt(timeRemaining / 60f);
+            int seconds = Mathf.FloorToInt(timeRemaining % 60f);
+            L_quizTimer.text = $"{minutes:00}:{seconds:00}";
         }
 
         if (fsVp.isPlaying && fsVp.length > 0)

@@ -1699,6 +1699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tapCuesContainer: {fileID: 60038773}
+  tagsContainer: {fileID: 1427411331}
 --- !u!82 &261168101
 AudioSource:
   m_ObjectHideFlags: 0
