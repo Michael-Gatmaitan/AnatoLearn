@@ -88,16 +88,6 @@ public class _3dModeSceneManager : MonoBehaviour
                         {
                             // Do nothing
                             Debug.Log("You need to view all body parts to proceed");
-                            if (
-                                EditorUtility.DisplayDialog(
-                                    "Alert!",
-                                    "You need to view all body parts to proceed",
-                                    "OK"
-                                )
-                            )
-                            {
-                                Debug.Log("User clicked 'OK'");
-                            }
                         }
                     },
                     (e) => Debug.Log(e)
