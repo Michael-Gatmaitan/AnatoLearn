@@ -82,7 +82,7 @@ public class SkeletalViewedTagClickManager : MonoBehaviour
             { "ribsDescriptionCon", viewedTagRibs },
             { "coccyxDescriptionCon", viewedTagCoccyx },
             { "spineDescriptionCon", viewedTagSpine },
-            { "pelvicGirdleDescriptionCon", viewedTagPelvicGirdle },
+            { "pelvic_GirdleDescriptionCon", viewedTagPelvicGirdle },
         };
 
         // Check all parts if visited
@@ -173,6 +173,8 @@ public class SkeletalViewedTagClickManager : MonoBehaviour
         {
             Ray ray = cam.ScreenPointToRay(Input.GetTouch(0).position);
             DetectHit(ray);
+
+            Debug.Log("Dragging?");
         }
     }
 
@@ -181,6 +183,7 @@ public class SkeletalViewedTagClickManager : MonoBehaviour
         if (tagClickManager.IsUIBlockingInput())
             return;
 
+        // I think this does not run at all
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             Debug.Log("Ray hit: " + hit.collider.name);
@@ -198,6 +201,7 @@ public class SkeletalViewedTagClickManager : MonoBehaviour
                 {
                     if (tagObj != null)
                     {
+                        Debug.Log($"{tagObj} activated.");
                         tagObj.SetActive(true);
                         activatedTags.Add(label.labelID); // mark as activated
                     }
@@ -205,39 +209,39 @@ public class SkeletalViewedTagClickManager : MonoBehaviour
             }
 
             // Look up and activate corresponding viewed tag
-            if (labelToViewedTag.TryGetValue(label.labelID, out GameObject viewedTag))
-            {
-                if (viewedTag != null)
-                {
-                    string rawText = label
-                        .labelID.Split("DescriptionCon")[0]
-                        .Replace("_", " ")
-                        .ToLower();
+            // if (labelToViewedTag.TryGetValue(label.labelID, out GameObject viewedTag))
+            // {
+            //     if (viewedTag != null)
+            //     {
+            //         string rawText = label
+            //             .labelID.Split("DescriptionCon")[0]
+            //             .Replace("_", " ")
+            //             .ToLower();
 
-                    Debug.Log($"Raw text from label id on click: {rawText}");
+            //         Debug.Log($"Raw text from label id on click: {rawText}");
 
-                    userTagViewsController.CreateUserTagView(
-                        UserState.Instance.Id,
-                        rawText,
-                        (r) =>
-                        {
-                            Debug.Log("Creation result: " + r);
+            //         userTagViewsController.CreateUserTagView(
+            //             UserState.Instance.Id,
+            //             rawText,
+            //             (r) =>
+            //             {
+            //                 Debug.Log("Creation result: " + r);
 
-                            // Check if unclocked all then able the finish button
-                        },
-                        (e) => Debug.LogError(e)
-                    );
+            //                 // Check if unclocked all then able the finish button
+            //             },
+            //             (e) => Debug.LogError(e)
+            //         );
 
-                    Debug.Log($"Tag view Label id: {label.labelID}");
-                    viewedTag.SetActive(true);
-                }
-                else
-                {
-                    Debug.LogWarning(
-                        $"GameObject for '{label.labelID}' is not assigned in the inspector."
-                    );
-                }
-            }
+            //         Debug.Log($"Tag view Label id: {label.labelID}");
+            //         viewedTag.SetActive(true);
+            //     }
+            //     else
+            //     {
+            //         Debug.LogWarning(
+            //             $"GameObject for '{label.labelID}' is not assigned in the inspector."
+            //         );
+            //     }
+            // }
         }
     }
 
@@ -246,12 +250,15 @@ public class SkeletalViewedTagClickManager : MonoBehaviour
         return activatedTags.Contains(labelID);
     }
 
+    // Activation of tag (NO API CALL) => API CALL is in TagClickManager.cs
     public void ActivateTag(string labelID)
     {
         if (labelToViewedTag.TryGetValue(labelID, out GameObject viewedTag) && viewedTag != null)
         {
             viewedTag.SetActive(true);
             activatedTags.Add(labelID);
+
+            Debug.Log("Manual activation from function: " + labelID);
         }
     }
 

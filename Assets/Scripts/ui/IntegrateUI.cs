@@ -92,7 +92,7 @@ public class IntegrateUI : MonoBehaviour
     public Sprite[] systemTopicSprites;
     public Sprite[] progressSprites;
     public Sprite[] progressLogoSprites;
-    public static Sprite[] progressionTopicTitle;
+    public Sprite[] progressionTopicTitle;
 
     public VideoPlayer fsVp;
 
@@ -405,8 +405,14 @@ public class IntegrateUI : MonoBehaviour
 
                 Debug.Log($"{tapScore} + {mcqScore} + {tofScore}");
 
+
+                Label score = sumScorePage.Q<Label>("L_SSPScore");
                 Label correctScore = sumScorePage.Q<Label>("correctScore");
                 Label incorrectScore = sumScorePage.Q<Label>("incorrectScore");
+
+                score.text = $"{(100 / 15) * allScores}%";
+
+                // Display accuracy / performance
 
                 correctScore.text = $"{allScores}";
                 incorrectScore.text = $"{15 - allScores}";
@@ -447,7 +453,7 @@ public class IntegrateUI : MonoBehaviour
         exploreBtn.SetEnabled(false);
         quizBtn.SetEnabled(false);
 
-        VisualElement progressionTitleImg = popUpPage.Q<VisualElement>("progressTitleImg");
+        VisualElement progressionTitleImg = progressionPage.Q<VisualElement>("V_ProgressTitleImg");
 
         progressionTitleImg.style.backgroundImage = new StyleBackground(
             progressionTopicTitle[topic_id - 1]
@@ -1453,7 +1459,7 @@ public class IntegrateUI : MonoBehaviour
             int topic_id = UserState.Instance.TopicId;
 
             quizTitleImg.style.backgroundImage = new StyleBackground(
-                progressionTopicTitle[topicId - 1]
+                IntegrateUI.Instance.progressionTopicTitle[topicId - 1]
             );
 
             Debug.Log("Quiz title background image: " + quizTitleImg.style.backgroundImage);

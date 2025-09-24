@@ -21,6 +21,12 @@ public class UserTagView
 public class Validity
 {
     public bool comparison_result;
+
+    // Total tags of current topic
+    public int tags_count_for_topic;
+
+    // Total viewed tags by the user at that topic
+    public int usertagviews_count_for_tags_in_topic;
 }
 
 [System.Serializable]

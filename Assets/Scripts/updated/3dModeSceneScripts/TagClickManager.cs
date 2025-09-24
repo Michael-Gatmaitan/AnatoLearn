@@ -17,6 +17,17 @@ public class TagClickManager : MonoBehaviour
     private VisualElement blackBgAbsoluteTagDescriptPage;
     private VisualElement blackBgAbsoluteFunFactPage;
     private VisualElement blackBgAbsoluteNeuronsCardsPage;
+    private UserTagViewsController userTagViewsController;
+
+    void OnEnable()
+    {
+        userTagViewsController = GetComponent<UserTagViewsController>();
+
+        if (userTagViewsController == null)
+        {
+            Debug.LogError("User tag view in TCM is null!!!");
+        }
+    }
 
     void Start()
     {
@@ -256,6 +267,53 @@ public class TagClickManager : MonoBehaviour
 
                     // Show black background
                     blackBackground.style.display = DisplayStyle.Flex;
+
+                    // Create tag using label id -- CALL API to CREATE A USER TAG IN DB
+                    if (label.labelID.Contains("DescriptionCon"))
+                    {
+                        string rawText = label
+                            .labelID.Split("DescriptionCon")[0]
+                            .Replace("_", " ")
+                            .ToLower();
+
+                        Debug.Log($"Raw text from label id on click: {rawText}");
+
+                        userTagViewsController.CreateUserTagView(
+                            UserState.Instance.Id,
+                            rawText,
+                            (r) =>
+                            {
+                                Debug.Log($"User now locked the {rawText} body part.");
+                            },
+                            (e) => Debug.LogError(e)
+                        );
+
+                        // Check validity of user tag views at current topic
+                        userTagViewsController.CheckValidity(
+                            UserState.Instance.Id,
+                            UserState.Instance.TopicId,
+                            (r) =>
+                            {
+                                Debug.Log(
+                                    $@"
+Result for validity: {r.comparison_result}
+Total tags in this topic: {r.tags_count_for_topic}
+User viewed tags: {r.usertagviews_count_for_tags_in_topic}
+                                "
+                                );
+
+                                if (r.comparison_result)
+                                {
+                                    // Enable the "Finish Button"
+                                }
+                                else
+                                {
+                                    // Do nothing
+                                }
+                            },
+                            (e) => Debug.Log(e)
+                        );
+                    }
 
                     // Activate viewed tag only if this is a fresh click (panel was previously closed)
                     var skeletalViewedTagManager =
