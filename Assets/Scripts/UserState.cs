@@ -19,6 +19,7 @@ public class UserState : MonoBehaviour
 
     // States
     public bool isFromTapMe = false;
+    public bool showProgressionPage = false;
 
     private void Awake()
     {
@@ -32,6 +33,16 @@ public class UserState : MonoBehaviour
         Instance = this;
         TopicId = 0;
         DontDestroyOnLoad(gameObject); // Persist between scenes
+    }
+
+    public void SetShowProgressionPage(bool t)
+    {
+        showProgressionPage = t;
+    }
+
+    public bool GetShowProgressionPage()
+    {
+        return showProgressionPage;
     }
 
     public void SetQuizTimeRemaining(float time)

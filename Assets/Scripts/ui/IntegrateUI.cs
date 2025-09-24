@@ -271,6 +271,14 @@ public class IntegrateUI : MonoBehaviour
                 Debug.Log($"❌ Topic id is: {topic_id} and fromTapMe is: {isFromTapMe}");
                 // homePage.style.display = DisplayStyle.Flex;
             }
+
+            Debug.Log("Show progression page: " + UserState.Instance.showProgressionPage);
+            if (UserState.Instance.GetShowProgressionPage())
+            {
+                ShowUnlockedProgression();
+                UserState.Instance.showProgressionPage = false;
+                UserState.Instance.SetShowProgressionPage(false);
+            }
         }
         else
         {
@@ -734,51 +742,66 @@ public class IntegrateUI : MonoBehaviour
                 // Temporarily unlock quiz by using "explore" as lesson_to_unlock?
                 Debug.Log(UserState.Instance.TopicId);
 
-                userTopicProgressController.UpdateUserTopicProgress(
-                    UserState.Instance.Id,
-                    UserState.Instance.TopicId,
-                    "explore",
-                    (r) =>
-                    {
-                        Debug.Log("Activity unlocked: " + r);
-                        ShowUnlockedProgression();
+                if (topic.topic_name == "skeletal")
+                    SceneManager.LoadScene("3dModeSkeletalScene");
+                else if (topic.topic_name == "integumentary")
+                    SceneManager.LoadScene("3dModeIntegumentaryScene");
+                else if (topic.topic_name == "respiratory")
+                    SceneManager.LoadScene("3dModeRespiratoryScene");
+                else if (topic.topic_name == "digestive")
+                    SceneManager.LoadScene("3dModeDigestiveScene");
+                else if (topic.topic_name == "circulatory")
+                    SceneManager.LoadScene("3dModeCirculatoryScene");
+                else if (topic.topic_name == "nervous")
+                    SceneManager.LoadScene("3dModeNervousScene");
+                else if (topic.topic_name == "excretory")
+                    SceneManager.LoadScene("3dModeExcretoryScene");
 
-                        PlayerPrefs.SetString("Chosen3D", topic.topic_name);
+                // userTopicProgressController.UpdateUserTopicProgress(
+                //     UserState.Instance.Id,
+                //     UserState.Instance.TopicId,
+                //     "explore",
+                //     (r) =>
+                //     {
+                //         Debug.Log("Activity unlocked: " + r);
+                //         ShowUnlockedProgression();
 
-                        if (topic.topic_name == "skeletal")
-                        {
-                            SceneManager.LoadScene("3dModeSkeletalScene");
-                        }
-                        else if (topic.topic_name == "integumentary")
-                        {
-                            SceneManager.LoadScene("3dModeIntegumentaryScene");
-                        }
-                        else if (topic.topic_name == "respiratory")
-                        {
-                            SceneManager.LoadScene("3dModeRespiratoryScene");
-                        }
-                        else if (topic.topic_name == "digestive")
-                        {
-                            SceneManager.LoadScene("3dModeDigestiveScene");
-                        }
-                        else if (topic.topic_name == "circulatory")
-                        {
-                            SceneManager.LoadScene("3dModeCirculatoryScene");
-                        }
-                        else if (topic.topic_name == "nervous")
-                        {
-                            SceneManager.LoadScene("3dModeNervousScene");
-                        }
-                        else if (topic.topic_name == "excretory")
-                        {
-                            SceneManager.LoadScene("3dModeExcretoryScene");
-                        }
-                    },
-                    (e) =>
-                    {
-                        Debug.LogError(e);
-                    }
-                );
+                //         PlayerPrefs.SetString("Chosen3D", topic.topic_name);
+
+                //         if (topic.topic_name == "skeletal")
+                //         {
+                //             SceneManager.LoadScene("3dModeSkeletalScene");
+                //         }
+                //         else if (topic.topic_name == "integumentary")
+                //         {
+                //             SceneManager.LoadScene("3dModeIntegumentaryScene");
+                //         }
+                //         else if (topic.topic_name == "respiratory")
+                //         {
+                //             SceneManager.LoadScene("3dModeRespiratoryScene");
+                //         }
+                //         else if (topic.topic_name == "digestive")
+                //         {
+                //             SceneManager.LoadScene("3dModeDigestiveScene");
+                //         }
+                //         else if (topic.topic_name == "circulatory")
+                //         {
+                //             SceneManager.LoadScene("3dModeCirculatoryScene");
+                //         }
+                //         else if (topic.topic_name == "nervous")
+                //         {
+                //             SceneManager.LoadScene("3dModeNervousScene");
+                //         }
+                //         else if (topic.topic_name == "excretory")
+                //         {
+                //             SceneManager.LoadScene("3dModeExcretoryScene");
+                //         }
+                //     },
+                //     (e) =>
+                //     {
+                //         Debug.LogError(e);
+                //     }
+                // );
 
                 exploreMorePage.style.display = DisplayStyle.None;
                 // Close and refresh the progression page

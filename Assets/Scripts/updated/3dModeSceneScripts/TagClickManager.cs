@@ -288,31 +288,6 @@ public class TagClickManager : MonoBehaviour
                             (e) => Debug.LogError(e)
                         );
 
-                        // Check validity of user tag views at current topic
-                        userTagViewsController.CheckValidity(
-                            UserState.Instance.Id,
-                            UserState.Instance.TopicId,
-                            (r) =>
-                            {
-                                Debug.Log(
-                                    $@"
-Result for validity: {r.comparison_result}
-Total tags in this topic: {r.tags_count_for_topic}
-User viewed tags: {r.usertagviews_count_for_tags_in_topic}
-                                "
-                                );
-
-                                if (r.comparison_result)
-                                {
-                                    // Enable the "Finish Button"
-                                }
-                                else
-                                {
-                                    // Do nothing
-                                }
-                            },
-                            (e) => Debug.Log(e)
-                        );
                     }
 
                     // Activate viewed tag only if this is a fresh click (panel was previously closed)
