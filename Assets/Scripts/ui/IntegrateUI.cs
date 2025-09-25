@@ -28,6 +28,7 @@ public class IntegrateUI : MonoBehaviour
     private VisualElement progressPage;
     private VisualElement progressTopicsPage; //added
     private VisualElement settingsPage;
+    private VisualElement quizInstructionPage;
 
     // Home page btn
     private Button progressBtn;
@@ -57,6 +58,9 @@ public class IntegrateUI : MonoBehaviour
     private Button btnAR;
     private Button btn3D;
     private Button exploreMoreBackBtn;
+
+    // Quiz Instruction page
+    private Button letsGoBtn;
 
     // Quiz
     public static VisualElement mcqPage;
@@ -88,6 +92,18 @@ public class IntegrateUI : MonoBehaviour
     private static bool takingQuiz = false;
 
     private List<Topic> allTopics;
+
+    // Array of Topics class
+    private Topics[] topicsArray = new Topics[]
+    {
+        new Topics { id = 1, topic_name = "skeletal" },
+        new Topics { id = 2, topic_name = "integumentary" },
+        new Topics { id = 3, topic_name = "digestive" },
+        new Topics { id = 4, topic_name = "respiratory" },
+        new Topics { id = 3, topic_name = "circulatory" },
+        new Topics { id = 3, topic_name = "nervous" },
+        new Topics { id = 3, topic_name = "excretory" },
+    };
 
     public Sprite[] systemTopicSprites;
     public Sprite[] progressSprites;
@@ -151,6 +167,7 @@ public class IntegrateUI : MonoBehaviour
         progressBackBtn = V_Main.Q<Button>("progressBackBtn");
         progressTopicsPage = progressPage.Q<VisualElement>("progressTopicsPage"); //added
         settingsPage = V_Main.Q<VisualElement>("settingsPage");
+        quizInstructionPage = V_Main.Q<VisualElement>("quizInstructionPage");
 
         settingsBtn = homePage.Q<Button>("settingsBtn");
         exitSettingsBtn = settingsPage.Q<Button>("exitSettingsBtn");
@@ -169,6 +186,9 @@ public class IntegrateUI : MonoBehaviour
         btnAR = exploreMorePage.Q<Button>("arModeBtn");
         btn3D = exploreMorePage.Q<Button>("3dModeBtn");
         exploreMoreBackBtn = exploreMorePage.Q<Button>("ExploreMoreBackBtn");
+
+        // Quiz instruction page
+        letsGoBtn = quizInstructionPage.Q<Button>("letsGoBtn");
 
         // Initialize popup
         videoContainer = popUpPage.Q<VisualElement>("lessonVideoPage");
@@ -202,6 +222,8 @@ public class IntegrateUI : MonoBehaviour
         topicController = GetComponent<TopicController>();
         totalScoresController = GetComponent<TotalScoresController>();
         userTopicProgressController = GetComponent<UserTopicProgressController>();
+
+        // Topics variable
     }
 
     void Start()
@@ -412,7 +434,6 @@ public class IntegrateUI : MonoBehaviour
                 int allScores = tapScore + mcqScore + tofScore;
 
                 Debug.Log($"{tapScore} + {mcqScore} + {tofScore}");
-
 
                 Label score = sumScorePage.Q<Label>("L_SSPScore");
                 Label correctScore = sumScorePage.Q<Label>("correctScore");
@@ -815,24 +836,23 @@ public class IntegrateUI : MonoBehaviour
         // TODO: Create or migrate a Modal popup after clicking QuizBtn
         quizBtn?.RegisterCallback<ClickEvent>(_ =>
         {
-            var topic = allTopics?.Find(t => t.id == UserState.Instance.TopicId);
-
             var mcqPage = quizPage.Q<VisualElement>("mcqPage");
             var mcqSplash = quizPage.Q<VisualElement>("mcqSplash");
+            quizInstructionPage.style.display = DisplayStyle.Flex;
+        });
 
-            // taking quiz = true
-            takingQuiz = true;
+        letsGoBtn?.RegisterCallback<ClickEvent>(_ =>
+        {
+            var topic = allTopics?.Find(t => t.id == UserState.Instance.TopicId);
+
             // Set quiz ui - get time remaining in UserState # UPDATE()
+            takingQuiz = true;
 
             progressionPage.style.display = DisplayStyle.None;
             homePage.style.display = DisplayStyle.None;
 
             // From revo -- if true, 3d mode will be tap me act
             SceneData.showTapActPage = true;
-
-            Debug.Log($"Studying topic {topic.topic_name} in TapMe 3d Mode");
-
-            // SceneData.ResetAllPartFlags();
 
             // Adter modal pops up, run code below to change the scene
             if (topic.topic_name == "skeletal")
@@ -914,110 +934,110 @@ public class IntegrateUI : MonoBehaviour
 
         // int index = 0;
 
-        topicController.GetAllTopics(
-            (r) =>
+
+        // topicController.GetAllTopics(
+        //     (r) =>
+        //     {
+        //         allTopics = r.data;
+        foreach (var topic in topicsArray)
+        {
+            Debug.Log("TOPIC: " + topic.id + topic.topic_name);
+
+            VisualElement systemContainer = new();
+            systemContainer.AddToClassList("V_SystemButton");
+
+            var capitalizedTopicName = char.ToUpper(topic.topic_name[0]) + topic.topic_name[1..];
+            Label systemLabel = new(text: $"{capitalizedTopicName} System");
+            systemLabel.AddToClassList("SystemLabel");
+
+            // Change backgroundImage here of this element base on topic.id
+            VisualElement systemImage = new();
+            systemImage.AddToClassList("SystemImage");
+
+            // systemImage.style.backgroundImage = new StyleBackground(
+            //     Resources.Load<Sprite>($"Images/HomePageSystem/system{topic.id}.png")
+            // );
+
+            systemImage.style.backgroundImage = new StyleBackground(
+                systemTopicSprites[topic.id - 1]
+            );
+
+            // Debug.Log("Background image: " + systemImage.);
+
+            VisualElement topicLocked = new();
+            topicLocked.AddToClassList("TopicLocked");
+
+            systemContainer.Add(systemLabel);
+            systemContainer.Add(systemImage);
+            systemContainer.Add(topicLocked);
+
+            sv.Add(systemContainer);
+
+            bool locked = false;
+
+            if (topic.id == 1) // topic is 'skeletal'
             {
-                allTopics = r.data;
-                foreach (var topic in r.data)
-                {
-                    Debug.Log(topic.topic_name);
-
-                    VisualElement systemContainer = new();
-                    systemContainer.AddToClassList("V_SystemButton");
-
-                    var capitalizedTopicName =
-                        char.ToUpper(topic.topic_name[0]) + topic.topic_name[1..];
-                    Label systemLabel = new(text: $"{capitalizedTopicName} System");
-                    systemLabel.AddToClassList("SystemLabel");
-
-                    // Change backgroundImage here of this element base on topic.id
-                    VisualElement systemImage = new();
-                    systemImage.AddToClassList("SystemImage");
-
-                    // systemImage.style.backgroundImage = new StyleBackground(
-                    //     Resources.Load<Sprite>($"Images/HomePageSystem/system{topic.id}.png")
-                    // );
-
-                    systemImage.style.backgroundImage = new StyleBackground(
-                        systemTopicSprites[topic.id - 1]
-                    );
-
-                    // Debug.Log("Background image: " + systemImage.);
-
-                    VisualElement topicLocked = new();
-                    topicLocked.AddToClassList("TopicLocked");
-
-                    systemContainer.Add(systemLabel);
-                    systemContainer.Add(systemImage);
-                    systemContainer.Add(topicLocked);
-
-                    sv.Add(systemContainer);
-
-                    bool locked = false;
-
-                    if (topic.id == 1)
+                // Enabled
+                topicLocked.style.display = DisplayStyle.None;
+                locked = false;
+            }
+            else
+            {
+                // Check topic - 1 total_score
+                // If there is at least 1 passing score at previou topic, enable the topic
+                Debug.Log("User id in total scores controller: " + UserState.Instance.Id);
+                totalScoresController.GetTotalScoresByUserIdAndTopicId(
+                    UserState.Instance.Id,
+                    topic.id - 1,
+                    true,
+                    (r) =>
                     {
-                        // Enabled
-                        topicLocked.style.display = DisplayStyle.None;
-                        locked = false;
-                    }
-                    else
-                    {
-                        // Check topic - 1 total_score
-                        // If there is at least 1 passing score at previou topic, enable the topic
-                        Debug.Log("User id in total scores controller: " + UserState.Instance.Id);
-                        totalScoresController.GetTotalScoresByUserIdAndTopicId(
-                            UserState.Instance.Id,
-                            topic.id - 1,
-                            true,
-                            (r) =>
-                            {
-                                Debug.Log(r.data);
-                                if (r.data.Count >= 1)
-                                {
-                                    // Enable here
-                                    // systemLabel.text = "UnLocked!!!";
-
-                                    Debug.Log($"Unlocked: {topic.topic_name}");
-                                    topicLocked.style.display = DisplayStyle.None;
-                                    locked = false;
-                                }
-                                else
-                                {
-                                    // systemLabel.text = "Locked!!!";
-                                    Debug.Log($"Locked: {topic.topic_name}");
-                                    topicLocked.style.display = DisplayStyle.Flex;
-                                    locked = true;
-                                }
-                            },
-                            (e) => Debug.LogError(e)
-                        );
-                    }
-
-                    systemContainer?.RegisterCallback<ClickEvent>(_ =>
-                    {
-                        // UIScreenManager.Instance.ShowProgressionPage();
-
-                        if (!locked)
+                        Debug.Log(r.data);
+                        if (r.data.Count >= 1)
                         {
-                            UserState.Instance.SetTopicId(topic.id);
-                            ShowUnlockedProgression();
+                            // Enable here
+                            // systemLabel.text = "UnLocked!!!";
+
+                            Debug.Log($"Unlocked: {topic.topic_name}");
+                            topicLocked.style.display = DisplayStyle.None;
+                            locked = false;
                         }
                         else
                         {
-                            Debug.Log(
-                                "This topic is still locked, please passed the activity of recent topic first"
-                            );
-                            MessageBox(
-                                root,
-                                "You need to pass at previous topic before proceeding to this topic"
-                            );
+                            // systemLabel.text = "Locked!!!";
+                            Debug.Log($"Locked: {topic.topic_name}");
+                            topicLocked.style.display = DisplayStyle.Flex;
+                            locked = true;
                         }
-                    });
+                    },
+                    (e) => Debug.LogError(e)
+                );
+            }
+
+            systemContainer?.RegisterCallback<ClickEvent>(_ =>
+            {
+                // UIScreenManager.Instance.ShowProgressionPage();
+
+                if (!locked)
+                {
+                    UserState.Instance.SetTopicId(topic.id);
+                    ShowUnlockedProgression();
                 }
-            },
-            (e) => Debug.Log(e)
-        );
+                else
+                {
+                    Debug.Log(
+                        "This topic is still locked, please passed the activity of recent topic first"
+                    );
+                    MessageBox(
+                        root,
+                        "You need to pass at previous topic before proceeding to this topic"
+                    );
+                }
+            });
+        }
+        //     },
+        //     (e) => Debug.Log(e)
+        // );
     }
 
     public void SetupProgressPage(VisualElement progressPage)
@@ -1041,14 +1061,16 @@ public class IntegrateUI : MonoBehaviour
         Debug.Log("Setting up progress page");
         Debug.Log(topicController);
 
-        topicController.GetAllTopics(
-            (response) => DisplayTopics(response.data),
-            (error) => Debug.LogError("Error on getting all topics")
-        );
+        // topicController.GetAllTopics(
+        //     (response) => DisplayTopics(response.data),
+        //     (error) => Debug.LogError("Error on getting all topics")
+        // );
+        DisplayTopics();
 
-        void DisplayTopics(List<Topic> topics)
+        // void DisplayTopics(List<Topic> topics)
+        void DisplayTopics()
         {
-            foreach (var topic in topics)
+            foreach (var topic in topicsArray)
             {
                 VisualElement progContainer = new();
                 progContainer.AddToClassList("progContainer");
