@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
@@ -100,10 +101,12 @@ public class IntegrateUI : MonoBehaviour
         new Topics { id = 2, topic_name = "integumentary" },
         new Topics { id = 3, topic_name = "digestive" },
         new Topics { id = 4, topic_name = "respiratory" },
-        new Topics { id = 3, topic_name = "circulatory" },
-        new Topics { id = 3, topic_name = "nervous" },
-        new Topics { id = 3, topic_name = "excretory" },
+        new Topics { id = 5, topic_name = "circulatory" },
+        new Topics { id = 6, topic_name = "nervous" },
+        new Topics { id = 7, topic_name = "excretory" },
     };
+
+    private List<TotalScore> scores;
 
     public Sprite[] systemTopicSprites;
     public Sprite[] progressSprites;
@@ -115,7 +118,6 @@ public class IntegrateUI : MonoBehaviour
     // Main root visual elements
     private VisualElement V_Main;
     private VisualElement V_VC;
-
     private string videoPath;
     private string portrait_vid_src;
     private SliderInt S_VC;
@@ -222,8 +224,6 @@ public class IntegrateUI : MonoBehaviour
         topicController = GetComponent<TopicController>();
         totalScoresController = GetComponent<TotalScoresController>();
         userTopicProgressController = GetComponent<UserTopicProgressController>();
-
-        // Topics variable
     }
 
     void Start()
@@ -276,6 +276,25 @@ public class IntegrateUI : MonoBehaviour
 
             int topic_id = UserState.Instance.TopicId;
             bool isFromTapMe = UserState.Instance.isFromTapMe;
+
+            // Fetch scores
+            totalScoresController.GetAllTotalScores(
+                UserState.Instance.Id,
+                false,
+                (r) =>
+                {
+                    Debug.Log("Result from getting all topic scores: " + r.data);
+                    scores = r.data;
+
+                    // foreach (var score in scores)
+                    // {
+                    //     Debug.Log(score);
+                    // }
+
+                    // List<TotalScore> f = scores.FindAll((e) => e.topic_id == 1);
+                },
+                (e) => Debug.Log(e)
+            );
 
             if (topic_id != 0 && isFromTapMe)
             {
@@ -1223,172 +1242,175 @@ public class IntegrateUI : MonoBehaviour
                 Debug.Log("Main container? " + mainContainer);
                 mainContainer.Clear();
 
+                List<TotalScore> filteredScores = scores.FindAll(s => s.topic_id == topic_id);
+
                 // GET TotalScores of this topic using topic_id and user_id
-                totalScoresController.GetTotalScoresByUserIdAndTopicId(
-                    UserState.Instance.Id,
-                    topic_id,
-                    false,
-                    (response) =>
+                // totalScoresController.GetTotalScoresByUserIdAndTopicId(
+                //     UserState.Instance.Id,
+                //     topic_id,
+                //     false,
+                //     (response) =>
+                //     {
+                // if (response != null)
+                if (filteredScores != null && filteredScores.Count != 0)
+                {
+                    // foreach (var totalScore in response.data)
+                    foreach (var totalScore in filteredScores)
                     {
-                        if (response != null)
-                        {
-                            foreach (var totalScore in response.data)
-                            {
-                                Debug.Log(totalScore.total_score);
+                        Debug.Log(totalScore.total_score);
 
-                                VisualElement TotalSumScoreContainer = new();
-                                TotalSumScoreContainer.AddToClassList("TopicSumScoreContainer");
+                        VisualElement TotalSumScoreContainer = new();
+                        TotalSumScoreContainer.AddToClassList("TopicSumScoreContainer");
 
-                                VisualElement TopicLogo = new(); // Inside TotalSumScoreContainer
-                                TopicLogo.AddToClassList("TopicLogo");
-                                TopicLogo.style.backgroundImage = new StyleBackground(
-                                    progressLogoSprites[totalScore.topic_id - 1]
-                                );
-
-                                VisualElement ScoreContainer = new(); // Inside TotalSumScoreContainer
-                                ScoreContainer.AddToClassList("ScoreContainer");
-
-                                // Button, V, V, Label, Padding
-                                Button ShowActScoreBtn = new(); // Inside ScoreContainer
-                                ShowActScoreBtn.AddToClassList("ShowActScoreBtn");
-
-                                ShowActScoreBtn?.RegisterCallback<ClickEvent>(_ =>
-                                { // Fetch and manipulate UI
-                                    actScoresController.GetActScoresByTotalScoresId(
-                                        totalScore.id,
-                                        (response) =>
-                                        {
-                                            List<VisualElement> actScoresContainers =
-                                                new List<VisualElement>
-                                                {
-                                                    progressTopicActScoresPage.Q<VisualElement>(
-                                                        "tapScoreCon"
-                                                    ),
-                                                    progressTopicActScoresPage.Q<VisualElement>(
-                                                        "mcqScoreCon"
-                                                    ),
-                                                    progressTopicActScoresPage.Q<VisualElement>(
-                                                        "tofScoreCon"
-                                                    ),
-                                                };
-
-                                            Debug.Log(response.data);
-                                            foreach (var actScore in response.data)
-                                            {
-                                                Debug.Log(
-                                                    $"Act_type_id: {actScore.act_type_id} score: {actScore.score}"
-                                                );
-
-                                                VisualElement currentScoreCon = actScoresContainers[
-                                                    actScore.act_type_id - 1
-                                                ];
-                                                Label correctScoreLabel = currentScoreCon.Q<Label>(
-                                                    "correctScore"
-                                                );
-                                                Label incorrectScoreLabel =
-                                                    currentScoreCon.Q<Label>("incorrectScore");
-
-                                                correctScoreLabel.text = $"{actScore.score}";
-                                                incorrectScoreLabel.text = $"{5 - actScore.score}";
-                                            }
-
-                                            Label totalScoreDate =
-                                                progressTopicActScoresPage.Q<Label>(
-                                                    "totalScoreDate"
-                                                );
-                                            // totalScoreDate.text = totalScore.created_at;
-                                            totalScoreDate.text =
-                                                $"{DateTimeOffset.Parse(totalScore.created_at).ToLocalTime()}";
-
-                                            progressTopicActScoresPage.style.display =
-                                                DisplayStyle.Flex;
-                                        },
-                                        (error) =>
-                                        {
-                                            Debug.Log(
-                                                "Something went wrong getting acts of total scores: "
-                                                    + error
-                                            );
-                                        }
-                                    );
-                                });
-
-                                VisualElement ScorePercentContainer = new(); // Inside ScoreContainer
-                                ScorePercentContainer.AddToClassList("ScorePercentContainer");
-
-                                VisualElement ScoreCon = new(); // Inside ScoreContainer
-                                ScoreCon.AddToClassList("ScoreCon");
-
-                                Label ScoreTime = new(text: "05:04"); // Inside ScoreContainer
-                                ScoreTime.AddToClassList("ScoreTime");
-
-                                VisualElement Padding = new(); // Inside ScoreContainer
-                                Padding.AddToClassList("Padding");
-
-                                ScoreContainer.Add(ShowActScoreBtn);
-                                ScoreContainer.Add(ScorePercentContainer);
-                                ScoreContainer.Add(ScoreCon);
-                                ScoreContainer.Add(ScoreTime);
-                                ScoreContainer.Add(Padding);
-
-                                // ScoreParentContainer
-                                VisualElement ScorePercentContent = new();
-                                ScorePercentContent.AddToClassList("ScorePercentContent");
-
-                                Label ScorePercent = new(text: $"{totalScore.accuracy}"); // Inside ScorePercentContent
-                                ScorePercent.AddToClassList("ScorePercent");
-
-                                Label ScoreLabel = new(text: "Performance");
-                                ScoreLabel.AddToClassList("ScoreLabel");
-
-                                ScorePercentContent.Add(ScorePercent);
-                                ScorePercentContent.Add(ScoreLabel);
-
-                                ScorePercentContainer.Add(ScorePercentContent);
-
-                                VisualElement CScoreCon = new();
-                                CScoreCon.AddToClassList("CScoreCon");
-
-                                int totalItems = 15;
-
-                                Label CScore = new(text: $"{totalScore.total_score}");
-                                CScore.AddToClassList("CScore");
-
-                                Label MScoreLabel = new(text: "Correct");
-                                MScoreLabel.AddToClassList("MScoreLabel");
-
-                                CScoreCon.Add(CScore);
-                                CScoreCon.Add(MScoreLabel);
-
-                                VisualElement IScoreCon = new();
-                                IScoreCon.AddToClassList("IScoreCon");
-
-                                Label IScore = new(text: $"{totalItems - totalScore.total_score}");
-                                IScore.AddToClassList("IScore");
-
-                                Label MScoreLabel2 = new(text: "Incorrect");
-                                MScoreLabel2.AddToClassList("MScoreLabel");
-
-                                IScoreCon.Add(IScore);
-                                IScoreCon.Add(MScoreLabel2);
-
-                                ScoreCon.Add(CScoreCon);
-                                ScoreCon.Add(IScoreCon);
-
-                                TotalSumScoreContainer.Add(ScoreContainer);
-                                TotalSumScoreContainer.Add(TopicLogo);
-
-                                mainContainer.Add(TotalSumScoreContainer);
-                            }
-                        }
-                    },
-                    (err) =>
-                    {
-                        Debug.Log(
-                            "There was an error getting total score by user id and topic id: " + err
+                        VisualElement TopicLogo = new(); // Inside TotalSumScoreContainer
+                        TopicLogo.AddToClassList("TopicLogo");
+                        TopicLogo.style.backgroundImage = new StyleBackground(
+                            progressLogoSprites[totalScore.topic_id - 1]
                         );
+
+                        VisualElement ScoreContainer = new(); // Inside TotalSumScoreContainer
+                        ScoreContainer.AddToClassList("ScoreContainer");
+
+                        // Button, V, V, Label, Padding
+                        Button ShowActScoreBtn = new(); // Inside ScoreContainer
+                        ShowActScoreBtn.AddToClassList("ShowActScoreBtn");
+
+                        ShowActScoreBtn?.RegisterCallback<ClickEvent>(_ =>
+                        { // Fetch and manipulate UI
+                            actScoresController.GetActScoresByTotalScoresId(
+                                totalScore.id,
+                                (response) =>
+                                {
+                                    List<VisualElement> actScoresContainers =
+                                        new List<VisualElement>
+                                        {
+                                            progressTopicActScoresPage.Q<VisualElement>(
+                                                "tapScoreCon"
+                                            ),
+                                            progressTopicActScoresPage.Q<VisualElement>(
+                                                "mcqScoreCon"
+                                            ),
+                                            progressTopicActScoresPage.Q<VisualElement>(
+                                                "tofScoreCon"
+                                            ),
+                                        };
+
+                                    Debug.Log(response.data);
+                                    foreach (var actScore in response.data)
+                                    {
+                                        Debug.Log(
+                                            $"Act_type_id: {actScore.act_type_id} score: {actScore.score}"
+                                        );
+
+                                        VisualElement currentScoreCon = actScoresContainers[
+                                            actScore.act_type_id - 1
+                                        ];
+                                        Label correctScoreLabel = currentScoreCon.Q<Label>(
+                                            "correctScore"
+                                        );
+                                        Label incorrectScoreLabel = currentScoreCon.Q<Label>(
+                                            "incorrectScore"
+                                        );
+
+                                        correctScoreLabel.text = $"{actScore.score}";
+                                        incorrectScoreLabel.text = $"{5 - actScore.score}";
+                                    }
+
+                                    Label totalScoreDate = progressTopicActScoresPage.Q<Label>(
+                                        "totalScoreDate"
+                                    );
+                                    // totalScoreDate.text = totalScore.created_at;
+                                    totalScoreDate.text =
+                                        $"{DateTimeOffset.Parse(totalScore.created_at).ToLocalTime()}";
+
+                                    progressTopicActScoresPage.style.display = DisplayStyle.Flex;
+                                },
+                                (error) =>
+                                {
+                                    Debug.Log(
+                                        "Something went wrong getting acts of total scores: "
+                                            + error
+                                    );
+                                }
+                            );
+                        });
+
+                        VisualElement ScorePercentContainer = new(); // Inside ScoreContainer
+                        ScorePercentContainer.AddToClassList("ScorePercentContainer");
+
+                        VisualElement ScoreCon = new(); // Inside ScoreContainer
+                        ScoreCon.AddToClassList("ScoreCon");
+
+                        Label ScoreTime = new(text: "05:04"); // Inside ScoreContainer
+                        ScoreTime.AddToClassList("ScoreTime");
+
+                        VisualElement Padding = new(); // Inside ScoreContainer
+                        Padding.AddToClassList("Padding");
+
+                        ScoreContainer.Add(ShowActScoreBtn);
+                        ScoreContainer.Add(ScorePercentContainer);
+                        ScoreContainer.Add(ScoreCon);
+                        ScoreContainer.Add(ScoreTime);
+                        ScoreContainer.Add(Padding);
+
+                        // ScoreParentContainer
+                        VisualElement ScorePercentContent = new();
+                        ScorePercentContent.AddToClassList("ScorePercentContent");
+
+                        Label ScorePercent = new(text: $"{totalScore.accuracy}"); // Inside ScorePercentContent
+                        ScorePercent.AddToClassList("ScorePercent");
+
+                        Label ScoreLabel = new(text: "Performance");
+                        ScoreLabel.AddToClassList("ScoreLabel");
+
+                        ScorePercentContent.Add(ScorePercent);
+                        ScorePercentContent.Add(ScoreLabel);
+
+                        ScorePercentContainer.Add(ScorePercentContent);
+
+                        VisualElement CScoreCon = new();
+                        CScoreCon.AddToClassList("CScoreCon");
+
+                        int totalItems = 15;
+
+                        Label CScore = new(text: $"{totalScore.total_score}");
+                        CScore.AddToClassList("CScore");
+
+                        Label MScoreLabel = new(text: "Correct");
+                        MScoreLabel.AddToClassList("MScoreLabel");
+
+                        CScoreCon.Add(CScore);
+                        CScoreCon.Add(MScoreLabel);
+
+                        VisualElement IScoreCon = new();
+                        IScoreCon.AddToClassList("IScoreCon");
+
+                        Label IScore = new(text: $"{totalItems - totalScore.total_score}");
+                        IScore.AddToClassList("IScore");
+
+                        Label MScoreLabel2 = new(text: "Incorrect");
+                        MScoreLabel2.AddToClassList("MScoreLabel");
+
+                        IScoreCon.Add(IScore);
+                        IScoreCon.Add(MScoreLabel2);
+
+                        ScoreCon.Add(CScoreCon);
+                        ScoreCon.Add(IScoreCon);
+
+                        TotalSumScoreContainer.Add(ScoreContainer);
+                        TotalSumScoreContainer.Add(TopicLogo);
+
+                        mainContainer.Add(TotalSumScoreContainer);
                     }
-                );
+                }
+                // },
+                //         (err) =>
+                //         {
+                //             Debug.Log(
+                //                 "There was an error getting total score by user id and topic id: " + err
+                //             );
+                //         }
+                //     );
             }
 
             // List<VisualElement> progressButtons = progressPage.Query<VisualElement>(className: "progressContainer").ToList();

@@ -80,4 +80,23 @@ public class TotalScoresController : MonoBehaviour
             )
         );
     }
+
+    public void GetAllTotalScores(
+        int user_id,
+        bool get_passed_scores,
+        Action<TotalScores> onSuccess,
+        Action<string> onError
+    )
+    {
+        string url =
+            $"{Constants.API_URL}/total-scores/u?user_id={user_id}&get_passed_scores={get_passed_scores}";
+
+        StartCoroutine(
+            httpManager.GetRequest<TotalScores>(
+                url,
+                (r) => onSuccess?.Invoke(r),
+                (e) => onError?.Invoke(e)
+            )
+        );
+    }
 }
