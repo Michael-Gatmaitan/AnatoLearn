@@ -9,7 +9,7 @@ public static class Constants
     public static readonly string DEVELOPMENT_API_URL = "http://localhost:8000";
 
     // Use this to switch between development and productioan
-    public static readonly bool IS_DEVELOPMENT = true; // Set to false for production builds
+    public static readonly bool IS_DEVELOPMENT = false; // Set to false for production builds
 
     // Current API URL based on environment
     // public static string API_URL = DEVELOPMENT_API_URL;

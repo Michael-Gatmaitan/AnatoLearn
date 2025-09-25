@@ -490,8 +490,8 @@ public class IntegrateUI : MonoBehaviour
         homePage.style.display = DisplayStyle.Flex;
         popUpPage.style.display = DisplayStyle.Flex;
         progressionPage.style.display = DisplayStyle.Flex;
+
         // Show modal first
-        // int user_id = UserState.Instance.Id;
         int user_id = UserState.Instance.Id;
         int topic_id = UserState.Instance.TopicId;
 
@@ -768,7 +768,7 @@ public class IntegrateUI : MonoBehaviour
         {
             SceneData.showTapActPage = false;
 
-            var topic = allTopics?.Find(t => t.id == UserState.Instance.TopicId);
+            var topic = topicsArray.ToList().Find(t => t.id == UserState.Instance.TopicId);
             Debug.Log("You chose 3D for topic: " + (topic?.topic_name ?? "N/A"));
 
             if (topic?.topic_name != null)
