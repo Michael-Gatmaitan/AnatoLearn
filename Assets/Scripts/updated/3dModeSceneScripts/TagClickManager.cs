@@ -89,13 +89,13 @@ public class TagClickManager : MonoBehaviour
             );
 
             //INTEGUMENTARY - TAG DESCRIPTION
-            labelPanels["hairShaftDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["hair_ShaftDescriptionCon"] = root.Q<VisualElement>(
                 "hairShaftDescriptionCon"
             );
-            labelPanels["sweatGlandDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["sweat_GlandDescriptionCon"] = root.Q<VisualElement>(
                 "sweatGlandDescriptionCon"
             );
-            labelPanels["hairRootDescriptionCon"] = root.Q<VisualElement>("hairRootDescriptionCon");
+            labelPanels["hair_RootDescriptionCon"] = root.Q<VisualElement>("hairRootDescriptionCon");
             labelPanels["pore_Of_GlandDescriptionCon"] = root.Q<VisualElement>(
                 "poreOfGlandDescriptionCon"
             );

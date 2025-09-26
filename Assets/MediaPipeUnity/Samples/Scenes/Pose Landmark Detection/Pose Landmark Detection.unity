@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: femurDescriptionCon
 --- !u!1 &54674434
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,7 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: scapulaDescriptionCon
 --- !u!1001 &62157542
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1354,7 +1354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: spineDescriptionCon
 --- !u!1001 &110532780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1508,7 +1508,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 115518162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f224a02999ccccb46bac3dd9a9bab81a, type: 3}
+  m_Script: {fileID: 11500000, guid: 10cc0f1cf6b95c748b3b162966ae0ada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   viewedTagCapillaries: {fileID: 1398683106}
@@ -1953,7 +1953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: smallIntestineDescriptionCon
+  labelID: small_IntestineDescriptionCon
 --- !u!1 &161967769
 GameObject:
   m_ObjectHideFlags: 0
@@ -2977,12 +2977,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 273775142}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: cerebrumDescriptionCon
+  labelID: urinary_BladderDescriptionCon
 --- !u!1 &273946805
 GameObject:
   m_ObjectHideFlags: 0
@@ -3278,7 +3278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: esophagusDescriptionCon
+  labelID: medulla_OblongataDescriptionCon
 --- !u!1 &288570191
 GameObject:
   m_ObjectHideFlags: 0
@@ -3435,7 +3435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: tibiaDescriptionCon
 --- !u!1 &294583545
 GameObject:
   m_ObjectHideFlags: 0
@@ -3623,7 +3623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: ribsDescriptionCon
 --- !u!1001 &317778952
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4517,12 +4517,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 364806342}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: cerebrumDescriptionCon
+  labelID: uretersDescriptionCon
 --- !u!1 &368676171
 GameObject:
   m_ObjectHideFlags: 0
@@ -4771,7 +4771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: esophagusDescriptionCon
+  labelID: capillariesDescriptionCon
 --- !u!1001 &396435661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4884,6 +4884,9 @@ GameObject:
   - component: {fileID: 403801989}
   - component: {fileID: 403801990}
   - component: {fileID: 403801994}
+  - component: {fileID: 403801998}
+  - component: {fileID: 403801997}
+  - component: {fileID: 403801999}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: Untagged
@@ -5320,6 +5323,42 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &403801997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403801983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b10b8f72cfe78439ba0a46a64cb4c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &403801998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403801983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89cf4ce980afaaa40a00ff0087438a03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &403801999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403801983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 648c668e65383214ca25d9b4f74de240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &407593684 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1121173478375521385, guid: 6020d61e7c3f2c64089c2fd039756c15, type: 3}
@@ -5373,7 +5412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: humerusDescriptionCon
 --- !u!1001 &409092231
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6021,7 +6060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: tarsalDescriptionCon
 --- !u!1 &457426752
 GameObject:
   m_ObjectHideFlags: 0
@@ -6424,7 +6463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: esophagusDescriptionCon
+  labelID: arteriesDescriptionCon
 --- !u!1001 &497102650
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8747,7 +8786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: clavicleDescriptionCon
 --- !u!1001 &643002347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10679,7 +10718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: fibulaDescriptionCon
 --- !u!1001 &758634226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11442,7 +11481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: esophagusDescriptionCon
+  labelID: veinsDescriptionCon
 --- !u!1 &818418061 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0099da164098d4348954eaea84520343, type: 3}
@@ -11831,7 +11870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: radiusDescriptionCon
 --- !u!1001 &865080849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13918,7 +13957,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: rectumDescriptionCon
+  labelID: large_IntestineDescriptionCon
 --- !u!1 &982651302 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 004d751af4681634484e63ff67bcd755, type: 3}
@@ -15148,7 +15187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: esophagusDescriptionCon
+  labelID: hypothalamusDescriptionCon
 --- !u!1 &1021601409
 GameObject:
   m_ObjectHideFlags: 0
@@ -16039,7 +16078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: patelaDescriptionCon
 --- !u!1 &1066287608
 GameObject:
   m_ObjectHideFlags: 0
@@ -16297,7 +16336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: phalange_FingersDescriptionCon
 --- !u!1001 &1074894665
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17015,7 +17054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: esophagusDescriptionCon
+  labelID: heartDescriptionCon
 --- !u!1001 &1133345559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18309,7 +18348,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1203791452}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
@@ -20625,7 +20664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: esophagusDescriptionCon
+  labelID: brain_StemDescriptionCon
 --- !u!1 &1345567982
 GameObject:
   m_ObjectHideFlags: 0
@@ -21564,12 +21603,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1423903098}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: cerebrumDescriptionCon
+  labelID: urethraDescriptionCon
 --- !u!1 &1427227225
 GameObject:
   m_ObjectHideFlags: 0
@@ -21914,7 +21953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: coccyxDescriptionCon
 --- !u!1 &1438959341
 GameObject:
   m_ObjectHideFlags: 0
@@ -22102,7 +22141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: esophagusDescriptionCon
+  labelID: blood_VesselDescriptionCon
 --- !u!1 &1440080776
 GameObject:
   m_ObjectHideFlags: 0
@@ -22146,12 +22185,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1440080776}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: cerebrumDescriptionCon
+  labelID: kidneysDescriptionCon
 --- !u!1 &1445373115
 GameObject:
   m_ObjectHideFlags: 0
@@ -22426,7 +22465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: phalange_ToesDescriptionCon
 --- !u!1 &1462508593
 GameObject:
   m_ObjectHideFlags: 0
@@ -24814,7 +24853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: metatarsalDescriptionCon
 --- !u!1001 &1593961150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25107,7 +25146,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1605794934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90770abad942cee468b119b6721966cf, type: 3}
+  m_Script: {fileID: 11500000, guid: eafa48d515f8d9d47ae06e50e44c5c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   viewedTagMouth: {fileID: 1578073433}
@@ -25602,7 +25641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: sternumDescriptionCon
 --- !u!1001 &1627467692
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28453,7 +28492,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1869967698}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 926829f8a2fd17548a45deb984156a14, type: 3}
+  m_Script: {fileID: 11500000, guid: d969c35b65ea24d4c9e94668e9f704ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   viewedTagKidneys: {fileID: 514631736}
@@ -29102,7 +29141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: ulnaDescriptionCon
 --- !u!1 &1917719638
 GameObject:
   m_ObjectHideFlags: 0
@@ -29613,7 +29652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: carpalsDescriptionCon
 --- !u!1001 &1955785449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30760,7 +30799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: metacarpalsDescriptionCon
 --- !u!1 &2029878893
 GameObject:
   m_ObjectHideFlags: 0
@@ -30809,7 +30848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: skullDescriptionCon
+  labelID: pelvic_GirdleDescriptionCon
 --- !u!1 &2033679937
 GameObject:
   m_ObjectHideFlags: 0
@@ -32446,7 +32485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: esophagusDescriptionCon
+  labelID: cerebellumDescriptionCon
 --- !u!1 &2140287212
 GameObject:
   m_ObjectHideFlags: 0

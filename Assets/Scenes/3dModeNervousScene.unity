@@ -6073,7 +6073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: brainStemDescriptionCon
+  labelID: brain_StemDescriptionCon
 --- !u!114 &1439861054
 MonoBehaviour:
   m_ObjectHideFlags: 0

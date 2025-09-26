@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using System.Collections.Generic;
 
 public class ExcretoryViewedTagClickManager : MonoBehaviour
 {
@@ -24,6 +24,7 @@ public class ExcretoryViewedTagClickManager : MonoBehaviour
     {
         userTagViewsController = GetComponent<UserTagViewsController>();
     }
+
     void Start()
     {
         cam = Camera.main;
@@ -34,9 +35,9 @@ public class ExcretoryViewedTagClickManager : MonoBehaviour
         labelToViewedTag = new Dictionary<string, GameObject>
         {
             { "kidneysDescriptionCon", viewedTagKidneys },
-            { "uretersDescriptionCon", viewedTagUreters},
+            { "uretersDescriptionCon", viewedTagUreters },
             { "urethraDescriptionCon", viewedTagUrethra },
-            { "urinary_BladderDescriptionCon", viewedTagUrinaryBladder }
+            { "urinary_BladderDescriptionCon", viewedTagUrinaryBladder },
         };
         CheckAllPartsIfVisited();
     }
@@ -135,10 +136,12 @@ public class ExcretoryViewedTagClickManager : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             Debug.Log("Ray hit: " + hit.collider.name);
-            if (!hit.collider.CompareTag("Clickable")) return;
+            if (!hit.collider.CompareTag("Clickable"))
+                return;
 
             var label = hit.collider.GetComponentInParent<TagTarget>();
-            if (label == null) return;
+            if (label == null)
+                return;
 
             // Activate viewedTag only if it hasn't been activated while panel is open
             if (!activatedTags.Contains(label.labelID))
@@ -182,7 +185,9 @@ public class ExcretoryViewedTagClickManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning($"GameObject for '{label.labelID}' is not assigned in the inspector.");
+                    Debug.LogWarning(
+                        $"GameObject for '{label.labelID}' is not assigned in the inspector."
+                    );
                 }
             }
         }

@@ -2427,6 +2427,8 @@ GameObject:
   - component: {fileID: 302077472}
   - component: {fileID: 302077471}
   - component: {fileID: 302077473}
+  - component: {fileID: 302077475}
+  - component: {fileID: 302077474}
   m_Layer: 0
   m_Name: TagClickManager
   m_TagString: Untagged
@@ -2470,7 +2472,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 302077470}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90770abad942cee468b119b6721966cf, type: 3}
+  m_Script: {fileID: 11500000, guid: eafa48d515f8d9d47ae06e50e44c5c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   viewedTagMouth: {fileID: 1161796146}
@@ -2479,6 +2481,30 @@ MonoBehaviour:
   viewedTagSmallIntestine: {fileID: 2120869257}
   viewedTagRectum: {fileID: 1847508365}
   viewedTagLargeIntestine: {fileID: 352622942}
+--- !u!114 &302077474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302077470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b10b8f72cfe78439ba0a46a64cb4c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &302077475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302077470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89cf4ce980afaaa40a00ff0087438a03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &328532392
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3692,7 +3718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: smallIntestineDescriptionCon
+  labelID: small_IntestineDescriptionCon
 --- !u!65 &656475022
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5653,7 +5679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: largeIntestineDescriptionCon
+  labelID: large_IntestineDescriptionCon
 --- !u!1001 &990046897
 PrefabInstance:
   m_ObjectHideFlags: 0

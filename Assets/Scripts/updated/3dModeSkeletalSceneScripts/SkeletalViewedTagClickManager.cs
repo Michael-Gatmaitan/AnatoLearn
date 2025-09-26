@@ -89,6 +89,23 @@ public class SkeletalViewedTagClickManager : MonoBehaviour
         CheckAllPartsIfVisited();
     }
 
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            DetectHit(ray);
+        }
+
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            Ray ray = cam.ScreenPointToRay(Input.GetTouch(0).position);
+            DetectHit(ray);
+
+            // Debug.Log("Dragging?");
+        }
+    }
+
     void CheckAllPartsIfVisited()
     {
         userTagViewsController.GetUserTagViewsByUserIdAndTopicId(
@@ -158,23 +175,6 @@ public class SkeletalViewedTagClickManager : MonoBehaviour
             // }
 
             Debug.Log($"Label original key: {key}");
-        }
-    }
-
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            DetectHit(ray);
-        }
-
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-            Ray ray = cam.ScreenPointToRay(Input.GetTouch(0).position);
-            DetectHit(ray);
-
-            Debug.Log("Dragging?");
         }
     }
 

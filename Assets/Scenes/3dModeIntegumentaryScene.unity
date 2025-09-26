@@ -3512,7 +3512,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 302077470}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddfc80a70f550664b91f5d1c57b5ce0b, type: 3}
+  m_Script: {fileID: 11500000, guid: 1742eb90d567b2e46be35864d66ffe9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   viewedTagHairShaft: {fileID: 1052323885}
@@ -8345,7 +8345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: hairShaftDescriptionCon
+  labelID: hair_ShaftDescriptionCon
 --- !u!1 &1247853942
 GameObject:
   m_ObjectHideFlags: 0
@@ -9585,7 +9585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: sweatGlandDescriptionCon
+  labelID: sweat_GlandDescriptionCon
 --- !u!65 &1406766912
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12771,7 +12771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: poreOfGlandDescriptionCon
+  labelID: pore_Of_GlandDescriptionCon
 --- !u!1 &1794586871
 GameObject:
   m_ObjectHideFlags: 0
@@ -13027,7 +13027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: hairRootDescriptionCon
+  labelID: hair_RootDescriptionCon
 --- !u!1 &1810639029
 GameObject:
   m_ObjectHideFlags: 0
