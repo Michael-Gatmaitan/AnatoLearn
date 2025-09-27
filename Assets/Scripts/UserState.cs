@@ -50,6 +50,11 @@ public class UserState : MonoBehaviour
         QuizTimeRemaining = time;
     }
 
+    public float GetQuizTimeRemaining()
+    {
+        return QuizTimeRemaining;
+    }
+
     public void SetUserData(int id, string username, string email)
     {
         Id = id;

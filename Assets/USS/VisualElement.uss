@@ -306,6 +306,9 @@ VisualElement {
     padding-left: 0;
     margin-right: 0;
     margin-left: 0;
+    -unity-font-definition: resource('fonts/poppins/Poppins-Bold');
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
 }
 
 .Padding {

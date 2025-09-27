@@ -11,6 +11,7 @@ public class TotalScore
     public int total_score;
     public int accuracy;
     public string created_at;
+    public int time_left;
 }
 
 [System.Serializable]

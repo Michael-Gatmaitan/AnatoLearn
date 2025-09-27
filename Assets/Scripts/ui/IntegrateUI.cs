@@ -89,10 +89,7 @@ public class IntegrateUI : MonoBehaviour
 
     private static bool isVideoPlaying = false;
     private static bool currentVideoValidToSkip = false;
-
     private static bool takingQuiz = false;
-
-    private List<Topic> allTopics;
 
     // Array of Topics class
     private Topics[] topicsArray = new Topics[]
@@ -260,6 +257,8 @@ public class IntegrateUI : MonoBehaviour
         // SetupProgressPage(progressPage);
         SetupQuizPage();
         SetupSumScorePage();
+
+        SceneData.resetAllFlags();
 
         if (UserState.Instance.Id != 0)
         {
@@ -674,7 +673,9 @@ public class IntegrateUI : MonoBehaviour
         {
             progressionPage.style.display = DisplayStyle.None;
             var topicId = UserState.Instance.TopicId;
-            var topic = allTopics?.Find(t => t.id == topicId);
+            // var topic = allTopics?.Find(t => t.id == topicId);
+            var topic = topicsArray[topicId - 1];
+
             if (topic != null)
             {
                 ShowIntroVidPage(topic.id, topic.topic_name);
@@ -747,7 +748,8 @@ public class IntegrateUI : MonoBehaviour
 
         btnAR?.RegisterCallback<ClickEvent>(_ =>
         {
-            var topic = allTopics?.Find(t => t.id == UserState.Instance.TopicId);
+            // var topic = allTopics?.Find(t => t.id == UserState.Instance.TopicId);
+            var topic = topicsArray[UserState.Instance.TopicId - 1];
             Debug.Log("You chose AR for topic: " + (topic?.topic_name ?? "N/A"));
 
             if (topic?.topic_name != null)
@@ -862,7 +864,7 @@ public class IntegrateUI : MonoBehaviour
 
         letsGoBtn?.RegisterCallback<ClickEvent>(_ =>
         {
-            var topic = allTopics?.Find(t => t.id == UserState.Instance.TopicId);
+            var topic = topicsArray[UserState.Instance.TopicId - 1];
 
             // Set quiz ui - get time remaining in UserState # UPDATE()
             takingQuiz = true;
@@ -873,6 +875,7 @@ public class IntegrateUI : MonoBehaviour
             // From revo -- if true, 3d mode will be tap me act
             SceneData.showTapActPage = true;
 
+            Debug.Log(topic);
             // Adter modal pops up, run code below to change the scene
             if (topic.topic_name == "skeletal")
             {
@@ -1341,7 +1344,15 @@ public class IntegrateUI : MonoBehaviour
                         VisualElement ScoreCon = new(); // Inside ScoreContainer
                         ScoreCon.AddToClassList("ScoreCon");
 
-                        Label ScoreTime = new(text: "05:04"); // Inside ScoreContainer
+                        // void UpdateTimerLabel()
+                        // {
+                        int minutes = Mathf.FloorToInt(300 - totalScore.time_left / 60f);
+                        int seconds = Mathf.FloorToInt(300 - totalScore.time_left % 60f);
+                        // timeLimitLabel.text = $"{minutes:00}:{seconds:00}";
+                        // }
+
+                        // Label ScoreTime = new(text: "05:04"); // Inside ScoreContainer
+                        Label ScoreTime = new(text: $"{minutes:00}:{seconds:00}"); // Inside ScoreContainer
                         ScoreTime.AddToClassList("ScoreTime");
 
                         VisualElement Padding = new(); // Inside ScoreContainer
@@ -2145,6 +2156,10 @@ public class IntegrateUI : MonoBehaviour
                 // store them all
                 Debug.Log("All scores are greater than -1");
 
+                int time_left = (int)Math.Abs(UserState.Instance.GetQuizTimeRemaining());
+
+                Debug.Log("Time left: " + time_left);
+
                 CreateTotalScoreBody reqBody = new()
                 {
                     scores = new()
@@ -2156,6 +2171,7 @@ public class IntegrateUI : MonoBehaviour
                     // We can get them from UserState instance
                     user_id = UserState.Instance.Id,
                     topic_id = UserState.Instance.TopicId,
+                    time_left = time_left,
                 };
 
                 actScoresController.CreateActScoresWithTotalScore(

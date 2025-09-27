@@ -34,6 +34,7 @@ public class CreateTotalScoreBody
     public ScoresBody scores;
     public int topic_id;
     public int user_id;
+    public int time_left;
 }
 
 [System.Serializable]

@@ -33,4 +33,16 @@ public static class SceneData
 
     //TAGALOG-ENGLISH VERSION FLAGS
     public static string LanguageVersion = "englishVersion"; //added 7 24
+
+    public static void resetAllFlags()
+    {
+        studyingSkeletal = false;
+        studyingIntegumentary = false;
+        studyingDigestive = false;
+        studyingRespiratory = false;
+        studyingCirculatory = false;
+        studyingCirculatoryHeart = false;
+        studyingNervous = false;
+        studyingExcretory = false;
+    }
 }
