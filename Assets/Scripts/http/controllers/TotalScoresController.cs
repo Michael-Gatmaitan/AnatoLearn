@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class TotalScore
 {
     public int id;
@@ -14,7 +14,7 @@ public class TotalScore
     public int time_left;
 }
 
-[System.Serializable]
+[Serializable]
 public class TotalScores
 {
     public List<TotalScore> data;
@@ -71,8 +71,7 @@ public class TotalScoresController : MonoBehaviour
     {
         string url =
             $"{Constants.API_URL}/total-scores/total-attempts?user_id={user_id}&topic_id={topic_id}";
-        Debug.Log(url);
-        // http://localhost:8000/total-scores/total-attempts?user_id=7&topic_id=1
+
         StartCoroutine(
             httpManager.GetRequest<Count>(
                 url,

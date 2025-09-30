@@ -12,7 +12,7 @@ public class IntegrateUI : MonoBehaviour
 {
     // public IntegrateUI instance;
     public UIDocument uiDocument;
-    private VisualElement root;
+    private static VisualElement root;
     private VideoPlayer videoPlayer;
     public RenderTexture videoRenderTexture;
 
@@ -94,16 +94,17 @@ public class IntegrateUI : MonoBehaviour
     // Array of Topics class
     private Topics[] topicsArray = new Topics[]
     {
-        new Topics { id = 1, topic_name = "skeletal" },
-        new Topics { id = 2, topic_name = "integumentary" },
-        new Topics { id = 3, topic_name = "digestive" },
-        new Topics { id = 4, topic_name = "respiratory" },
-        new Topics { id = 5, topic_name = "circulatory" },
-        new Topics { id = 6, topic_name = "nervous" },
-        new Topics { id = 7, topic_name = "excretory" },
+        new() { id = 1, topic_name = "skeletal" },
+        new() { id = 2, topic_name = "integumentary" },
+        new() { id = 3, topic_name = "digestive" },
+        new() { id = 4, topic_name = "respiratory" },
+        new() { id = 5, topic_name = "circulatory" },
+        new() { id = 6, topic_name = "nervous" },
+        new() { id = 7, topic_name = "excretory" },
     };
 
     private List<TotalScore> scores;
+    private List<Count> attempts;
 
     public Sprite[] systemTopicSprites;
     public Sprite[] progressSprites;
@@ -1087,6 +1088,8 @@ public class IntegrateUI : MonoBehaviour
         //     (response) => DisplayTopics(response.data),
         //     (error) => Debug.LogError("Error on getting all topics")
         // );
+
+        // totalScoresController.GetTotalAttempts(UserState.Instance.Id, (r) => Debug.Log(r), (e) => Debug.Log(e));
         DisplayTopics();
 
         // void DisplayTopics(List<Topic> topics)
@@ -2197,7 +2200,7 @@ public class IntegrateUI : MonoBehaviour
     // Parameter vs should be a page of the parent of vs should be the root VisualElement
     public static void MessageBox(VisualElement vs, string message)
     {
-        VisualElement root = vs.parent.parent.parent;
+        // VisualElement root = vs.parent.parent.parent;
         VisualElement messageBoxContainer = root.Q<VisualElement>("messageBox");
 
         Label messageBoxLabel = messageBoxContainer.Q<Label>("L_Message");
