@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -31,6 +32,9 @@ public class ProfilePage : MonoBehaviour
         V_EditProfile;
 
     private Label L_Username;
+
+    private static TotalScoresController totalScoresController;
+    private List<TotalScore> badgedScores;
 
     // Delete profile elements
 
@@ -116,6 +120,8 @@ public class ProfilePage : MonoBehaviour
 
     void OnEnable()
     {
+        totalScoresController = GetComponent<TotalScoresController>();
+
         root = GetComponent<UIDocument>().rootVisualElement;
         V_Main = root.Q<VisualElement>("V_Main");
         homePage = V_Main.Q<VisualElement>("homePage");
@@ -170,5 +176,18 @@ public class ProfilePage : MonoBehaviour
     {
         Debug.Log("Initializing home page");
         L_Username.text = UserState.Instance.Username;
+
+        totalScoresController.GetAllTotalScores(
+            UserState.Instance.Id,
+            true,
+            (r) =>
+            {
+                Debug.Log("Result from getting all topic scores: " + r.data);
+                badgedScores = r.data;
+
+                Debug.Log("BADGED SCORES: " + badgedScores);
+            },
+            (e) => Debug.Log(e)
+        );
     }
 }

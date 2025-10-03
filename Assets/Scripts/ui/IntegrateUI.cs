@@ -258,14 +258,11 @@ public class IntegrateUI : MonoBehaviour
             loginScreen.style.display = DisplayStyle.Flex;
         });
 
-        // SetupHomePageTouch();
+        // Consistent initializations
         SetupPopUpPageButtons();
         SetupFullScreenVideoControl();
-        // SetupPopUpPage();
-        // SetupProgressPage(progressPage);
         SetupQuizPage();
         SetupSumScorePage();
-
         SceneData.resetAllFlags();
 
         if (UserState.Instance.Id != 0)
@@ -277,10 +274,10 @@ public class IntegrateUI : MonoBehaviour
             // Hide splash screen if there's an id
             splashScreen.style.display = DisplayStyle.None;
 
+            // If system detects an already logged in user, this will trigger.
+            // Dynamic initializations (Becoz of DB data)
             SetupHomeSystems(homePage);
             SetupProgressPage(progressPage);
-            // SetupSettingsPage(settingsP);
-
             profilePage.InitializeHomePage();
 
             int topic_id = UserState.Instance.TopicId;
@@ -985,7 +982,6 @@ public class IntegrateUI : MonoBehaviour
 
         // int index = 0;
 
-
         // topicController.GetAllTopics(
         //     (r) =>
         //     {
@@ -1005,15 +1001,9 @@ public class IntegrateUI : MonoBehaviour
             VisualElement systemImage = new();
             systemImage.AddToClassList("SystemImage");
 
-            // systemImage.style.backgroundImage = new StyleBackground(
-            //     Resources.Load<Sprite>($"Images/HomePageSystem/system{topic.id}.png")
-            // );
-
             systemImage.style.backgroundImage = new StyleBackground(
                 systemTopicSprites[topic.id - 1]
             );
-
-            // Debug.Log("Background image: " + systemImage.);
 
             VisualElement topicLocked = new();
             topicLocked.AddToClassList("TopicLocked");
@@ -1068,6 +1058,7 @@ public class IntegrateUI : MonoBehaviour
             systemContainer?.RegisterCallback<ClickEvent>(_ =>
             {
                 // UIScreenManager.Instance.ShowProgressionPage();
+                Debug.Log("System container clicked");
 
                 if (!locked)
                 {

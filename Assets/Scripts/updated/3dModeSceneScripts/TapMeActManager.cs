@@ -585,6 +585,8 @@ public class TapMeActManager : MonoBehaviour
 
     void DisplayCorrectOrangeLabelTag(string bodyPartID)
     {
+        HideAllOrangeLabels();
+
         if (string.IsNullOrEmpty(bodyPartID))
             return;
         if (tagsContainer == null)
@@ -599,6 +601,7 @@ public class TapMeActManager : MonoBehaviour
         Transform child = tagsContainer.transform.Find(tagName);
         if (child != null)
         {
+            Debug.Log($"Showing {tagName}");
             child.gameObject.SetActive(true);
             Debug.Log($"✅ Showing orange label: {tagName}");
         }
