@@ -814,3 +814,26 @@ VisualElement {
     -unity-text-outline-color: rgb(46, 46, 46);
     -unity-text-outline-width: 1px;
 }
+
+.navigation-button {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    width: 50px;
+    height: 100%;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    background-color: rgba(188, 188, 188, 0);
+    background-image: url("project://database/Assets/Images/HomePageSystem/NavigationButtons/profile.png?fileID=2800000&guid=eaffcc87646e0014f89acde6eb49e888&type=3#profile");
+}

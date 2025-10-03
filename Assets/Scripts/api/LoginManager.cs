@@ -49,6 +49,8 @@ public class LoginManager : MonoBehaviour
 
     // private IntegrateUI integrateUI;
 
+    private ProfilePage profilePage;
+
     void OnEnable()
     {
         // integrateUI = GetComponent<IntegrateUI>();
@@ -58,6 +60,8 @@ public class LoginManager : MonoBehaviour
         homePage = V_Main.Q<VisualElement>("homePage");
         progressPage = V_Main.Q<VisualElement>("progressPage");
         settingsPage = V_Main.Q<VisualElement>("settingsPage");
+
+        profilePage = GetComponent<ProfilePage>();
     }
 
     public void StartLogin(LoginRequest requestBody)
@@ -110,6 +114,7 @@ public class LoginManager : MonoBehaviour
 
             IntegrateUI.Instance.SetupHomeSystems(homePage);
             IntegrateUI.Instance.SetupProgressPage(progressPage);
+            profilePage.InitializeHomePage();
             // IntegrateUI.Instance.SetupSettingsPage(settingsPage);
         }
         else

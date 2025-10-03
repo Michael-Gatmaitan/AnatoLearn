@@ -123,6 +123,9 @@ public class IntegrateUI : MonoBehaviour
     private Label L_quizTimer;
     private float timeRemaining;
 
+    // Pages
+    private ProfilePage profilePage;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -222,6 +225,9 @@ public class IntegrateUI : MonoBehaviour
         topicController = GetComponent<TopicController>();
         totalScoresController = GetComponent<TotalScoresController>();
         userTopicProgressController = GetComponent<UserTopicProgressController>();
+
+        // Pages
+        profilePage = GetComponent<ProfilePage>();
     }
 
     void Start()
@@ -273,6 +279,8 @@ public class IntegrateUI : MonoBehaviour
             SetupHomeSystems(homePage);
             SetupProgressPage(progressPage);
             // SetupSettingsPage(settingsP);
+
+            profilePage.InitializeHomePage();
 
             int topic_id = UserState.Instance.TopicId;
             bool isFromTapMe = UserState.Instance.isFromTapMe;
