@@ -110,6 +110,7 @@ public class IntegrateUI : MonoBehaviour
     public Sprite[] progressSprites;
     public Sprite[] progressLogoSprites;
     public Sprite[] progressionTopicTitle;
+    public Sprite[] vcImages;
 
     public VideoPlayer fsVp;
 
@@ -563,15 +564,19 @@ public class IntegrateUI : MonoBehaviour
         // Video controls
         playBtn?.RegisterCallback<ClickEvent>(_ =>
         {
+            // Change image
             if (videoPlayer.isPlaying)
             {
                 MessageBox(homePage, "Paused");
+                playBtn.style.backgroundImage = new StyleBackground(vcImages[1]);
                 videoPlayer.Pause();
             }
             else
             {
                 MessageBox(homePage, "Resumed");
                 videoPlayer.Play();
+
+                playBtn.style.backgroundImage = new StyleBackground(vcImages[0]);
             }
         });
 
@@ -608,13 +613,13 @@ public class IntegrateUI : MonoBehaviour
                 fsVp.url = portrait_vid_src;
             }
 
-            fsVp.Play();
+            videoPlayer.Pause();
             fsVp.time = videoPlayer.time;
+            fsVp.Play();
 
             Debug.Log("Setting full screen");
             // fsVp.url = videoPlayer.url;
             // fsVp.time = videoPlayer.time;
-            videoPlayer.Pause();
 
             // Exit fs should update the original vp currentTime and play it.
             // inject to exitfs btn
@@ -627,28 +632,28 @@ public class IntegrateUI : MonoBehaviour
             // fsVp.
         });
 
-        S_VC?.RegisterValueChangedCallback(
-            (e) =>
-            {
-                Debug.Log($"Slider seeked: {e.newValue}");
+        // S_VC?.RegisterValueChangedCallback(
+        //     (e) =>
+        //     {
+        //         Debug.Log($"Slider seeked: {e.newValue}");
 
-                // Only update video time if fsVp is available and has a valid duration
-                if (fsVp != null && fsVp.length > 0)
-                {
-                    // Map slider value (0-100) to video time (0 to video duration)
-                    float normalizedValue = e.newValue / 100f;
-                    float targetTime = normalizedValue * (float)fsVp.length;
+        //         // Only update video time if fsVp is available and has a valid duration
+        //         if (fsVp != null && fsVp.length > 0)
+        //         {
+        //             // Map slider value (0-100) to video time (0 to video duration)
+        //             float normalizedValue = e.newValue / 100f;
+        //             float targetTime = normalizedValue * (float)fsVp.length;
 
-                    fsVp.time = targetTime;
-                    Debug.Log($"Set video time to: {targetTime} seconds (slider: {e.newValue}%)");
-                }
-                else
-                {
-                    Debug.Log($"FSVP: {fsVp}");
-                    Debug.Log($"FSVP length: {fsVp.length}");
-                }
-            }
-        );
+        //             fsVp.time = targetTime;
+        //             Debug.Log($"Set video time to: {targetTime} seconds (slider: {e.newValue}%)");
+        //         }
+        //         else
+        //         {
+        //             Debug.Log($"FSVP: {fsVp}");
+        //             Debug.Log($"FSVP length: {fsVp.length}");
+        //         }
+        //     }
+        // );
 
         // S_VC?.RegisterCallback<ChangeEvent<int>>(
         //     (e) =>
@@ -928,22 +933,37 @@ public class IntegrateUI : MonoBehaviour
     {
         Button B_Pause = V_VC.Q<Button>("B_PlayPause");
         Button B_Forw = V_VC.Q<Button>("B_Forw");
+        Button B_Backw = V_VC.Q<Button>("B_Backw");
+        Button B_Minimize = V_VC.Q<Button>("B_Minimize");
 
         B_Pause?.RegisterCallback<ClickEvent>(_ =>
         {
             Debug.Log("Pause");
 
+            // Change image
             if (fsVp.isPaused)
             {
                 fsVp.Play();
+                B_Pause.style.backgroundImage = new StyleBackground(vcImages[0]);
             }
             else
             {
+                B_Pause.style.backgroundImage = new StyleBackground(vcImages[1]);
                 fsVp.Pause();
             }
         });
 
+        B_Backw?.RegisterCallback<ClickEvent>(_ =>
+        {
+            fsVp.time -= 10;
+        });
+
         B_Forw?.RegisterCallback<ClickEvent>(_ =>
+        {
+            fsVp.time += 10;
+        });
+
+        B_Minimize?.RegisterCallback<ClickEvent>(_ =>
         {
             fsVp.Pause();
             videoPlayer.time = fsVp.time;

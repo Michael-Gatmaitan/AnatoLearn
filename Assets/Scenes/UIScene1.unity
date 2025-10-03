@@ -410,6 +410,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f1caa6512851aa546bae7fb3ef68b344, type: 3}
   - {fileID: 21300000, guid: 4c8fe83d855e05a47aad9fe2775213a5, type: 3}
   - {fileID: 21300000, guid: c4f503cef447d2a448e0aa67a931fd40, type: 3}
+  vcImages:
+  - {fileID: 21300000, guid: 3d64fbc25ed9b2d48ba51c0e2de720be, type: 3}
+  - {fileID: 21300000, guid: 4cab9ea500aa88446b3a78751e180a8c, type: 3}
   fsVp: {fileID: 1840664405}
 --- !u!328 &1211968082
 VideoPlayer:
@@ -578,6 +581,7 @@ MonoBehaviour:
   CurrentTOFScore: -1
   QuizTimeRemaining: 300
   isFromTapMe: 0
+  showProgressionPage: 0
 --- !u!4 &1508282118
 Transform:
   m_ObjectHideFlags: 0
