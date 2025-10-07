@@ -613,6 +613,7 @@ public class TapMeActManager : MonoBehaviour
 
     void HideAllOrangeLabels()
     {
+        Debug.Log("Hiding all orange labels");
         if (tagsContainer == null)
             return;
 

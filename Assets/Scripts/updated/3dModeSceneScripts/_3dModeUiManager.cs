@@ -206,6 +206,10 @@ public class _3dModeUIManager : MonoBehaviour
                 nervousContentsBtns.style.display = DisplayStyle.Flex;
                 // skeletalContentsBtns.style.display = DisplayStyle.None;
             }
+            // else if (SceneData.studyingExcretory || UserState.Instance.TopicId == 7)
+            // {
+
+            // }
 
             if (SceneData.studyingCirculatoryHeart)
             {

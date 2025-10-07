@@ -36,6 +36,8 @@ public class _3dModeSceneManager : MonoBehaviour
     private UserTagViewsController userTagViewsController;
     private static UserTopicProgressController userTopicProgressController;
 
+    // The logic of finishBtn goes here
+
     private void OnEnable()
     {
         userTagViewsController = GetComponent<UserTagViewsController>();
@@ -43,6 +45,14 @@ public class _3dModeSceneManager : MonoBehaviour
 
         var root = GetComponent<UIDocument>().rootVisualElement;
         var finishBtn = root.Q<VisualElement>("finishBtn");
+        var finishPromptPage = root.Q<VisualElement>("blackBgAbsoluteFinishButtonPromptPage");
+        var OkayFinishPromptBtn = finishPromptPage.Q<Button>("OkayFinishPromptBtn");
+
+        OkayFinishPromptBtn?.RegisterCallback<ClickEvent>(_ =>
+        {
+            finishPromptPage.style.display = DisplayStyle.None;
+        });
+
         if (finishBtn != null)
         {
             finishBtn.RegisterCallback<ClickEvent>(evt =>
@@ -88,6 +98,7 @@ public class _3dModeSceneManager : MonoBehaviour
                         {
                             // Do nothing
                             Debug.Log("You need to view all body parts to proceed");
+                            // finishPromptPage.style.display = DisplayStyle.Flex;
                         }
                     },
                     (e) => Debug.Log(e)

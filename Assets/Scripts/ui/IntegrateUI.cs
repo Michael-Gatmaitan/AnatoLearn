@@ -769,6 +769,12 @@ public class IntegrateUI : MonoBehaviour
                 UserState.Instance.SetTopicId(topic.id);
                 PlayerPrefs.SetString("ChosenAR", topic.topic_name);
                 Debug.Log($"{topic.topic_name} chosen in 3d mode.");
+
+                if (topic.topic_name == "integumentary" || topic.id == 2)
+                {
+                    SceneManager.LoadScene("Hand Landmark Detection");
+                    return;
+                }
                 SceneManager.LoadScene("Pose Landmark Detection");
             }
             else
