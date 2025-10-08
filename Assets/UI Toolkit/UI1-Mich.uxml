@@ -3,7 +3,7 @@
     <Style src="project://database/Assets/USS/StyleForScrollCon.uss?fileID=7433441132597879392&amp;guid=7fc94aedded573944bdc738e09fceea4&amp;type=3#StyleForScrollCon" />
     <Style src="project://database/Assets/USS/VolumeSlider.uss?fileID=7433441132597879392&amp;guid=04f2db58ec6eb354dbde1a81e7abf6f2&amp;type=3#VolumeSlider" />
     <engine:VisualElement name="V_Main" style="flex-grow: 1; background-color: rgb(52, 107, 168); width: 100%; height: 100%; display: flex; opacity: 1;">
-        <engine:VisualElement name="splashScreen" style="flex-grow: 1; background-color: rgb(52, 107, 168); flex-direction: column; justify-content: center; align-self: auto; align-content: auto; align-items: center; border-top-width: 0; border-right-width: 20px; border-bottom-width: 0; border-left-width: 20px; display: flex; width: 100%; height: 100%;">
+        <engine:VisualElement name="splashScreen" style="flex-grow: 1; background-color: rgb(52, 107, 168); flex-direction: column; justify-content: center; align-self: auto; align-content: auto; align-items: center; border-top-width: 0; border-right-width: 20px; border-bottom-width: 0; border-left-width: 20px; display: none; width: 100%; height: 100%;">
             <engine:VisualElement name="VisualElement" style="flex-grow: 1; color: rgb(255, 0, 0); width: 100%; height: 0; background-color: rgba(130, 255, 0, 0); background-image: url(&quot;project://database/Assets/Images_old/anato_Logo.png?fileID=2800000&amp;guid=8e76965ff7a27c245b437fe732001364&amp;type=3#anato_Logo&quot;); max-height: 120px; -unity-background-image-tint-color: rgb(255, 255, 255); background-size: 100% 60%; -unity-background-scale-mode: scale-to-fit; background-position-x: center 0; justify-content: flex-start; align-self: auto; flex-direction: column; align-items: center; flex-shrink: 1; max-width: 450px;" />
             <engine:Label text="Tap everywhere to start" style="-unity-font-definition: resource(&apos;fonts/poppins/Poppins-Bold&apos;); font-size: 18px; -unity-text-align: upper-center; white-space: normal; color: rgb(255, 255, 255);" />
         </engine:VisualElement>
@@ -99,7 +99,7 @@
                 <engine:Button name="settingsBtn" emoji-fallback-support="false" style="background-image: url(&quot;project://database/Assets/Images_old/SettingsBtn.png?fileID=2800000&amp;guid=4197c556583e3ef46a6767c515d31422&amp;type=3#SettingsBtn&quot;); width: 80px; height: 54px; border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; background-color: rgba(188, 188, 188, 0);" />
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="popUpPage" style="flex-grow: 1; width: 100%; background-color: rgba(239, 237, 237, 0); display: none; position: absolute;">
+        <engine:VisualElement name="popUpPage" style="flex-grow: 1; width: 100%; background-color: rgba(239, 237, 237, 0); display: flex; position: absolute;">
             <engine:VisualElement name="blackBgAbsolute" style="flex-grow: 1; position: absolute; width: 100%; background-color: rgba(0, 0, 0, 0.55); background-size: 100% 100%; height: 100%; justify-content: center; align-items: center; display: flex;">
                 <engine:VisualElement name="progressionPage" enabled="true" style="display: none; width: 350px; height: auto; flex-grow: 0; -unity-background-image-tint-color: rgba(255, 0, 0, 0); background-color: rgb(52, 107, 168); border-top-left-radius: 16px; border-top-right-radius: 16px; border-bottom-right-radius: 16px; border-bottom-left-radius: 16px;">
                     <engine:VisualElement style="flex-grow: 0; flex-direction: row; width: 100%; height: auto; display: flex;">
@@ -213,7 +213,7 @@
                         <engine:VisualElement name="quizInstrucCharacter" style="flex-grow: 1; display: flex; position: absolute; background-image: url(&quot;project://database/Assets/Images/Instruction%20Page/quizInstructionCharacter.png?fileID=2800000&amp;guid=0c3d528b951c2b74ca6afd18cf7fa9a2&amp;type=3#quizInstructionCharacter&quot;); -unity-background-scale-mode: scale-to-fit; width: 128px; height: 124px; top: -124px; left: 16px;" />
                     </engine:VisualElement>
                 </engine:VisualElement>
-                <engine:VisualElement name="profilePage" style="flex-grow: 0; display: none; width: 100%; height: 100%; align-self: center; align-items: center; justify-content: flex-start; flex-direction: column; align-content: flex-start; background-color: rgb(255, 255, 255); flex-shrink: 0;">
+                <engine:VisualElement name="profilePage" style="flex-grow: 0; display: flex; width: 100%; height: 100%; align-self: center; align-items: center; justify-content: flex-start; flex-direction: column; align-content: flex-start; background-color: rgb(255, 255, 255); flex-shrink: 0;">
                     <engine:VisualElement name="profileHeader" style="flex-grow: 0; height: auto; width: 100%; background-image: none; border-left-width: 0; border-right-width: 0; border-top-width: 0; flex-direction: column; justify-content: space-between; align-self: center; align-content: center; background-color: rgb(52, 107, 168); border-bottom-width: 0; padding-left: 24px; padding-top: 24px; padding-right: 24px; padding-bottom: 12px;">
                         <engine:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: space-between; width: 100%; height: auto; padding-bottom: 12px;">
                             <engine:Button name="B_BackProfilePage" style="width: 60px; height: 60px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; background-image: url(&quot;project://database/Assets/Images/progressPage/progressBackBtn.png?fileID=2800000&amp;guid=6cbd9e31938682246b6ea40c3f1b31c7&amp;type=3#progressBackBtn&quot;); background-color: rgba(188, 188, 188, 0);" />
@@ -227,12 +227,14 @@
                         </engine:VisualElement>
                     </engine:VisualElement>
                     <engine:ScrollView enabled="true" name="S_ProfileScrollView" style="width: 100%;">
-                        <engine:VisualElement name="V_ProfileBody" style="display: flex; height: 100%; padding-left: 24px; padding-right: 24px; width: 100%; padding-top: 24px; padding-bottom: 24px;">
+                        <engine:VisualElement name="V_ProfileBody" style="display: none; height: 100%; padding-left: 24px; padding-right: 24px; width: 100%; padding-top: 24px; padding-bottom: 24px;">
                             <engine:VisualElement name="V_AvatarSection" style="flex-grow: 0; width: 100%; height: auto; align-items: center;">
-                                <engine:VisualElement name="V_Avatar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Images/profilePic.png?fileID=2800000&amp;guid=f860a29cba1e7304ab038d509817703f&amp;type=3#profilePic&quot;); height: 250px; width: 250px;" />
+                                <engine:VisualElement style="flex-grow: 1; width: 260px; height: 260px; overflow: hidden; border-top-left-radius: 260px; border-top-right-radius: 260px; border-bottom-right-radius: 260px; border-bottom-left-radius: 260px; border-top-width: 10px; border-right-width: 10px; border-bottom-width: 10px; border-left-width: 10px; border-left-color: rgb(52, 107, 168); border-right-color: rgb(52, 107, 168); border-top-color: rgb(52, 107, 168); border-bottom-color: rgb(52, 107, 168);">
+                                    <engine:VisualElement name="V_Avatar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Images/profilePage/avatars/girl.png?fileID=2800000&amp;guid=49f288c433bd00d40a5bf4b3e95ea277&amp;type=3#girl&quot;); height: 100%; width: 100%;" />
+                                </engine:VisualElement>
                                 <engine:Label text="Username" name="L_Username" style="-unity-text-align: upper-center; white-space: normal; -unity-font-definition: resource(&apos;fonts/poppins/Poppins-Medium&apos;); font-size: 24px; border-top-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; width: 80%; background-color: rgb(132, 132, 132); color: rgb(255, 255, 255); margin-top: 14px;" />
                             </engine:VisualElement>
-                            <engine:VisualElement name="V_AvatarPicking" style="flex-grow: 1; width: 100%; margin-top: 24px; background-color: rgb(52, 107, 168); border-top-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; padding-top: 12px; padding-right: 12px; padding-bottom: 12px; padding-left: 12px;">
+                            <engine:VisualElement name="V_AvatarPicking" style="flex-grow: 1; width: 100%; margin-top: 24px; background-color: rgb(52, 107, 168); border-top-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; padding-top: 12px; padding-right: 12px; padding-bottom: 12px; padding-left: 12px; display: none;">
                                 <engine:VisualElement name="V_Avatars_1" style="flex-grow: 1; width: 100%; flex-direction: row; margin-bottom: 6px;">
                                     <engine:VisualElement class="profile" />
                                     <engine:VisualElement class="profile" style="flex-grow: 1; width: 100%; height: 100px; margin-left: 6px; background-color: rgba(56, 56, 56, 0.74); margin-right: 0;" />
@@ -243,7 +245,16 @@
                                 </engine:VisualElement>
                             </engine:VisualElement>
                         </engine:VisualElement>
-                        <engine:VisualElement name="V_Badges" style="flex-grow: 1; width: 100%; padding-top: 24px; padding-right: 24px; padding-bottom: 24px; padding-left: 24px; display: none; background-color: rgb(56, 56, 56);" />
+                        <engine:VisualElement name="V_Badges" style="flex-grow: 1; width: 100%; padding-top: 24px; padding-right: 24px; padding-bottom: 24px; padding-left: 24px; display: flex; background-color: rgb(56, 56, 56);">
+                            <engine:VisualElement style="flex-grow: 1;">
+                                <engine:Label text="Topics" style="-unity-font-definition: resource(&apos;fonts/poppins/Poppins-Bold&apos;);" />
+                                <engine:VisualElement name="V_BadgesContainer" style="flex-grow: 1;">
+                                    <engine:VisualElement style="flex-grow: 1;">
+                                        <engine:VisualElement style="flex-grow: 1;" />
+                                    </engine:VisualElement>
+                                </engine:VisualElement>
+                            </engine:VisualElement>
+                        </engine:VisualElement>
                         <engine:VisualElement name="V_EditProfile" style="flex-grow: 1; width: 100%; padding-top: 24px; padding-right: 24px; padding-bottom: 24px; padding-left: 24px; display: none; background-color: rgb(204, 0, 0);" />
                     </engine:ScrollView>
                     <engine:VisualElement name="V_ProfileModals" style="width: 100%; position: absolute; align-self: center; justify-content: center; align-items: center; align-content: center; background-color: rgba(0, 0, 0, 0.39); display: none;">

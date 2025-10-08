@@ -34,6 +34,18 @@ public class ProfilePage : MonoBehaviour
     private Label L_Username;
 
     private static TotalScoresController totalScoresController;
+
+    private readonly Topics[] topicsArray = new Topics[]
+    {
+        new() { id = 1, topic_name = "skeletal" },
+        new() { id = 2, topic_name = "integumentary" },
+        new() { id = 3, topic_name = "digestive" },
+        new() { id = 4, topic_name = "respiratory" },
+        new() { id = 5, topic_name = "circulatory" },
+        new() { id = 6, topic_name = "nervous" },
+        new() { id = 7, topic_name = "excretory" },
+    };
+
     private List<TotalScore> badgedScores;
 
     // Delete profile elements
@@ -186,6 +198,20 @@ public class ProfilePage : MonoBehaviour
                 badgedScores = r.data;
 
                 Debug.Log("BADGED SCORES: " + badgedScores);
+
+                foreach (var topic in topicsArray)
+                {
+                    // Find existing badged scores based on topic id
+                    if (badgedScores.Find(b => b.topic_id == topic.id) != null)
+                    {
+                        Debug.Log("User has a badge of " + topic.topic_name + ": " + topic.id);
+                    }
+                }
+
+                foreach (var badgedScore in badgedScores)
+                {
+                    Debug.Log("Badged score: " + badgedScore.topic_id);
+                }
             },
             (e) => Debug.Log(e)
         );

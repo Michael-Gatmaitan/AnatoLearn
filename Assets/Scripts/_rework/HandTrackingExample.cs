@@ -41,10 +41,10 @@ public class HandTrackingExample : MonoBehaviour
             Debug.LogError("Cube for playground is null");
             return;
         }
-        else
-        {
-            cube = Instantiate(cube);
-        }
+        // else
+        // {
+        //     cube = Instantiate(cube);
+        // }
 
         // Create landmark spheres if they don't exist
         if (landmarkSpheres == null || landmarkSpheres.Length == 0)
@@ -88,13 +88,18 @@ public class HandTrackingExample : MonoBehaviour
 
         // Scale the cube based on the distance (clamp to avoid too small/large)
         float minScale = 0.1f;
-        float maxScale = 30.0f;
-        float scale = Mathf.Clamp(thumbPinkyDistance * 0.5f, minScale, maxScale); // 0.01f is a scaling factor, adjust as needed
+        float maxScale = 10.0f;
+        float scale = Mathf.Clamp(thumbPinkyDistance * 0.1f, minScale, maxScale); // 0.01f is a scaling factor, adjust as needed
         cube.transform.localScale = new Vector3(scale, scale, scale);
 
         // Place the cube at the center between thumb and pinky
         Vector3 centerPos = (thumbPos + pinkyPos) / 2f;
+        centerPos.z = 70;
         cube.transform.position = centerPos;
+
+        // Slowly rotate the cube to the right (around Y axis)
+        // float rotationSpeed = 30f; // degrees per second
+        // cube.transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime, Space.World);
     }
 
     void CreateLandmarkSpheres()
@@ -156,23 +161,37 @@ public class HandTrackingExample : MonoBehaviour
 
     private Vector3 GetScreenToWorldPoint(Vector3 landmark)
     {
-        float x,
-            y;
+        // float x,
+        //     y;
 
-        float width = Screen.width;
-        float height = Screen.height;
+        // float width = Screen.width;
+        // float height = Screen.height;
+
+        // // Desktop
+        // // x = landmark.x * width;
+        // // y = (1f - landmark.y) * height;
+
+        // // Mobile
+        // x = (1 - landmark.y) * width;
+        // y = (1f - landmark.x) * height;
+
+        // Vector3 spoint = new(x, y, 100f);
+        // Vector3 stwpoint = Camera.main.ScreenToWorldPoint(spoint);
+        // stwpoint.z -= 20;
+
+        float vx, vy;
 
         // Desktop
-        // x = landmark.x * width;
-        // y = (1f - landmark.y) * height;
+        vx = landmark.x;
+        vy = 1f - landmark.y;
 
         // Mobile
-        x = (1 - landmark.y) * width;
-        y = (1f - landmark.x) * height;
+        // vx = 1f - landmark.y;
+        // vy = 1f - landmark.x;
 
-        Vector3 spoint = new(x, y, 100f);
-        Vector3 stwpoint = Camera.main.ScreenToWorldPoint(spoint);
-        stwpoint.z -= 20;
+        Vector3 stwpoint = Camera.main.ViewportToWorldPoint(
+            new Vector3(vx, vy, 100f)
+        );
 
         return stwpoint;
     }

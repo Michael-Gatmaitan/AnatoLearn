@@ -535,15 +535,25 @@ public class HumanoidPoseMapper : MonoBehaviour
         // screenY = (1f - mediaPipePos.y) * height;
 
         // Mobile
-        screenX = (1 - mediaPipePos.y) * width;
-        screenY = (1f - mediaPipePos.x) * height;
+        // screenX = (1 - mediaPipePos.y) * width;
+        // screenY = (1f - mediaPipePos.x) * height;
 
         // Convert screen coordinates to world position at specified depth
-        Vector3 screenPoint = new(screenX, screenY, screenDepth);
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPoint);
+        // Vector3 screenPoint = new(screenX, screenY, screenDepth);
+        // Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPoint);
 
         // This will being the model in front of the detected body
-        worldPosition.z -= positionZOffset;
+        // worldPosition.z -= positionZOffset;
+
+        // TESTING FOR MORE ACCURACY
+
+        // Desktop
+        screenX = mediaPipePos.x;
+        screenY = 1f - mediaPipePos.y;
+
+        Vector3 worldPosition = Camera.main.ViewportToWorldPoint(
+            new Vector3(screenX, screenY, screenDepth)
+        );
 
         return worldPosition;
     }
