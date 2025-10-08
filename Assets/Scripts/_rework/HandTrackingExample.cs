@@ -179,19 +179,18 @@ public class HandTrackingExample : MonoBehaviour
         // Vector3 stwpoint = Camera.main.ScreenToWorldPoint(spoint);
         // stwpoint.z -= 20;
 
-        float vx, vy;
+        float vx,
+            vy;
 
         // Desktop
-        vx = landmark.x;
-        vy = 1f - landmark.y;
+        // vx = landmark.x;
+        // vy = 1f - landmark.y;
 
         // Mobile
-        // vx = 1f - landmark.y;
-        // vy = 1f - landmark.x;
+        vx = 1f - landmark.y;
+        vy = 1f - landmark.x;
 
-        Vector3 stwpoint = Camera.main.ViewportToWorldPoint(
-            new Vector3(vx, vy, 100f)
-        );
+        Vector3 stwpoint = Camera.main.ViewportToWorldPoint(new Vector3(vx, vy, 100f));
 
         return stwpoint;
     }

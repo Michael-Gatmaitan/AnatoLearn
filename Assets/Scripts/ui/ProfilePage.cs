@@ -177,6 +177,9 @@ public class ProfilePage : MonoBehaviour
         V_ProfileBody = profilePage.Q<VisualElement>("V_ProfileBody");
         V_Badges = profilePage.Q<VisualElement>("V_Badges");
         V_EditProfile = profilePage.Q<VisualElement>("V_EditProfile");
+
+        Debug.Log($"V Badges: " + V_Badges);
+        Debug.Log($"V Edit profile: " + V_EditProfile);
     }
 
     // void Start()
@@ -188,6 +191,15 @@ public class ProfilePage : MonoBehaviour
     {
         Debug.Log("Initializing home page");
         L_Username.text = UserState.Instance.Username;
+
+        DisplayBadges();
+    }
+
+    public void DisplayBadges()
+    {
+        List<VisualElement> badgesContainer = V_Badges
+            .Query<VisualElement>(className: "badge-container")
+            .ToList();
 
         totalScoresController.GetAllTotalScores(
             UserState.Instance.Id,
@@ -206,6 +218,10 @@ public class ProfilePage : MonoBehaviour
                     {
                         Debug.Log("User has a badge of " + topic.topic_name + ": " + topic.id);
                     }
+                    else
+                    {
+                        badgesContainer[topic.id - 0].SetEnabled(false);
+                    }
                 }
 
                 foreach (var badgedScore in badgedScores)
@@ -215,5 +231,7 @@ public class ProfilePage : MonoBehaviour
             },
             (e) => Debug.Log(e)
         );
+
+        Debug.Log(badgesContainer.Count);
     }
 }
