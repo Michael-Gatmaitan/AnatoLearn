@@ -116,9 +116,9 @@ public class HTTPManager : MonoBehaviour
     }
 
     // DELETE Request
-    public IEnumerator DeleteRequest(
+    public IEnumerator DeleteRequest<T>(
         string url,
-        System.Action<string> onSuccess,
+        System.Action<T> onSuccess,
         System.Action<string> onError
     )
     {
@@ -132,7 +132,9 @@ public class HTTPManager : MonoBehaviour
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                onSuccess?.Invoke(request.downloadHandler.text);
+                // onSuccess?.Invoke(request.downloadHandler.text);
+                T postResponse = JsonUtility.FromJson<T>(request.downloadHandler.text);
+                onSuccess?.Invoke(postResponse);
             }
             else
             {

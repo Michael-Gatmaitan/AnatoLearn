@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Google.Protobuf.WellKnownTypes;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 [System.Serializable]

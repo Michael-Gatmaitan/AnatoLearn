@@ -34,6 +34,7 @@ public class ProfilePage : MonoBehaviour
     private Label L_Username;
 
     private static TotalScoresController totalScoresController;
+    private static UserController userController;
 
     private readonly Topics[] topicsArray = new Topics[]
     {
@@ -68,6 +69,12 @@ public class ProfilePage : MonoBehaviour
     {
         V_ProfileModals.style.display = DisplayStyle.Flex;
         V_DeleteProfileModal.style.display = DisplayStyle.Flex;
+
+        userController.DeleteUser(
+            UserState.Instance.Email,
+            (r) => Debug.Log(r),
+            (e) => Debug.Log(e)
+        );
     }
 
     void HideDeleteProfileModal()
@@ -133,6 +140,7 @@ public class ProfilePage : MonoBehaviour
     void OnEnable()
     {
         totalScoresController = GetComponent<TotalScoresController>();
+        userController = GetComponent<UserController>();
 
         root = GetComponent<UIDocument>().rootVisualElement;
         V_Main = root.Q<VisualElement>("V_Main");
