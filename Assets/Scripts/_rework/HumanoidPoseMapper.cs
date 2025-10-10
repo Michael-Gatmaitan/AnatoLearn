@@ -248,7 +248,7 @@ public class HumanoidPoseMapper : MonoBehaviour
 
         float calculatedScale = detectedTorsoHeight / avatarReferenceTorsoHeight;
 
-        float currentScale = humanoidAnimator.transform.localScale.x; // Assuming uniform scale
+        // float currentScale = humanoidAnimator.transform.localScale.x; // Assuming uniform scale
         // float smooth = Mathf.Clamp01(Time.deltaTime * 5f); // Adjust smoothing factor as needed
         // float newScale = Mathf.Lerp(currentScale, calculatedScale, smooth);
 
@@ -316,32 +316,29 @@ public class HumanoidPoseMapper : MonoBehaviour
     public float rotationSpeed = 10f;
 
     // Only for chest and hips
-    private void SetSocketJointsRotation(
-        Vector3 leftJoint,
-        Vector3 rightJoint,
-        HumanBodyBones boneId
-    )
-    {
-        Transform humanBone = humanoidAnimator.GetBoneTransform(boneId);
+    // private void SetSocketJointsRotation(
+    //     Vector3 leftJoint,
+    //     Vector3 rightJoint,
+    //     HumanBodyBones boneId
+    // )
+    // {
+    //     Transform humanBone = humanoidAnimator.GetBoneTransform(boneId);
 
-        Vector3 targetWorldPosition = (leftJoint + rightJoint) / 2f;
-        targetWorldPosition.y = 0;
+    //     Vector3 targetWorldPosition = (leftJoint + rightJoint) / 2f;
+    //     targetWorldPosition.y = 0;
 
-        Vector4 directionToTarget = targetWorldPosition - humanBone.position;
+    //     Vector4 directionToTarget = targetWorldPosition - humanBone.position;
 
-        directionToTarget.x *= -1f;
-        directionToTarget.y = 0;
+    //     directionToTarget.x *= -1f;
+    //     directionToTarget.y = 0;
 
-        Quaternion targetRotation = Quaternion.LookRotation(-directionToTarget, Vector3.up);
+    //     Quaternion targetRotation = Quaternion.LookRotation(-directionToTarget, Vector3.up);
 
-        humanoidAnimator.SetBoneLocalRotation(boneId, targetRotation);
-    }
-
-    private int counter = 0;
+    //     humanoidAnimator.SetBoneLocalRotation(boneId, targetRotation);
+    // }
 
     public void OnAnimatorIK()
     {
-        counter++;
         Debug.Log("Animator running");
         // lz.text = $"Animator is now running {counter}";
 
@@ -525,8 +522,8 @@ public class HumanoidPoseMapper : MonoBehaviour
 
     public Vector3 ConvertMediaPipeToUnitySpace(NormalizedLandmark mediaPipePos)
     {
-        float width = UnityEngine.Screen.width;
-        float height = UnityEngine.Screen.height;
+        // float width = UnityEngine.Screen.width;
+        // float height = UnityEngine.Screen.height;
         float screenX;
         float screenY;
 
@@ -550,6 +547,10 @@ public class HumanoidPoseMapper : MonoBehaviour
         // Desktop
         screenX = mediaPipePos.x;
         screenY = 1f - mediaPipePos.y;
+
+        // Mobile
+        // screenX = 1f - mediaPipePos.y;
+        // screenY = 1f - mediaPipePos.x;
 
         Vector3 worldPosition = Camera.main.ViewportToWorldPoint(
             new Vector3(screenX, screenY, screenDepth)

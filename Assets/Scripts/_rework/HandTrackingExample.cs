@@ -21,7 +21,16 @@ public class HandTrackingExample : MonoBehaviour
     [Header("Playground")]
     public GameObject cube;
 
+    [Header("Smoothing")]
+    public float positionSmoothing = 5f;
+    public float scaleSmoothing = 5f;
+
     private List<Vector3> worldPositions;
+
+    // Smoothing variables
+    private Vector3 targetPosition;
+    private Vector3 targetScale;
+    private bool isInitialized = false;
 
     void Start()
     {
@@ -86,16 +95,39 @@ public class HandTrackingExample : MonoBehaviour
         // Calculate distance between thumb and pinky
         float thumbPinkyDistance = Vector3.Distance(thumbPos, pinkyPos);
 
-        // Scale the cube based on the distance (clamp to avoid too small/large)
+        // Calculate target scale based on the distance (clamp to avoid too small/large)
         float minScale = 0.1f;
         float maxScale = 10.0f;
         float scale = Mathf.Clamp(thumbPinkyDistance * 0.1f, minScale, maxScale); // 0.01f is a scaling factor, adjust as needed
-        cube.transform.localScale = new Vector3(scale, scale, scale);
+        targetScale = new Vector3(scale, scale, scale);
 
-        // Place the cube at the center between thumb and pinky
+        // Calculate target position (center between thumb and pinky)
         Vector3 centerPos = (thumbPos + pinkyPos) / 2f;
         centerPos.z = 70;
-        cube.transform.position = centerPos;
+        targetPosition = centerPos;
+
+        // Initialize targets on first frame
+        if (!isInitialized)
+        {
+            cube.transform.localScale = targetScale;
+            cube.transform.position = targetPosition;
+            isInitialized = true;
+        }
+        else
+        {
+            // Smooth interpolation for position and scale
+            float deltaTime = Time.deltaTime;
+            cube.transform.position = Vector3.Lerp(
+                cube.transform.position,
+                targetPosition,
+                positionSmoothing * deltaTime
+            );
+            cube.transform.localScale = Vector3.Lerp(
+                cube.transform.localScale,
+                targetScale,
+                scaleSmoothing * deltaTime
+            );
+        }
 
         // Slowly rotate the cube to the right (around Y axis)
         // float rotationSpeed = 30f; // degrees per second
@@ -183,12 +215,12 @@ public class HandTrackingExample : MonoBehaviour
             vy;
 
         // Desktop
-        // vx = landmark.x;
-        // vy = 1f - landmark.y;
+        vx = landmark.x;
+        vy = 1f - landmark.y;
 
         // Mobile
-        vx = 1f - landmark.y;
-        vy = 1f - landmark.x;
+        // vx = 1f - landmark.y;
+        // vy = 1f - landmark.x;
 
         Vector3 stwpoint = Camera.main.ViewportToWorldPoint(new Vector3(vx, vy, 100f));
 
