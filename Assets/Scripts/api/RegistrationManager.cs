@@ -95,7 +95,7 @@ public class RegistrationManager : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            IntegrateUI.MessageBox(V_RegistrationPages, "Account successfully created");
+            IntegrateUI.MessageBox("Account successfully created");
             Debug.Log("Signup successful: " + request.downloadHandler.text);
             B_CreateAccount.SetEnabled(true);
             // B_CreateAccount.text = "Register";
@@ -125,7 +125,7 @@ public class RegistrationManager : MonoBehaviour
             UserError error = JsonUtility.FromJson<UserError>(request.downloadHandler.text);
 
             Debug.LogError("Error Message: " + error.message);
-            IntegrateUI.MessageBox(V_RegistrationPages, error.message);
+            IntegrateUI.MessageBox(error.message);
 
             // if (error.type == "email")
             // {

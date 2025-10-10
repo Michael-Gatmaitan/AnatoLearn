@@ -183,14 +183,14 @@ public class RegistrationPage : MonoBehaviour
             if (T_Pass.value.Length < 8)
             {
                 Debug.Log("Password too short");
-                IntegrateUI.MessageBox(V_RegistrationPages, "Password too short");
+                IntegrateUI.MessageBox("Password too short");
                 return;
             }
 
             if (T_Pass.value != T_ConfirmPass.value)
             {
                 Debug.Log("Password should match");
-                IntegrateUI.MessageBox(V_RegistrationPages, "Password should match");
+                IntegrateUI.MessageBox("Password should match");
                 return;
             }
 
@@ -204,7 +204,7 @@ public class RegistrationPage : MonoBehaviour
                 user_email,
                 (r) =>
                 {
-                    IntegrateUI.MessageBox(V_RegistrationPages, r.message);
+                    IntegrateUI.MessageBox(r.message);
 
                     if (r.success)
                     {
@@ -283,7 +283,7 @@ public class RegistrationPage : MonoBehaviour
                 || T_Code_6.value.Length != 1
             )
             {
-                IntegrateUI.MessageBox(V_RegistrationPages, "Code should be 6 digits");
+                IntegrateUI.MessageBox("Code should be 6 digits");
                 return;
             }
 
@@ -305,7 +305,7 @@ public class RegistrationPage : MonoBehaviour
                     // if success, clear the form
 
 
-                    IntegrateUI.MessageBox(V_RegistrationPages, r.message);
+                    IntegrateUI.MessageBox(r.message);
                     if (r.success)
                     {
                         Debug.Log("Code matched: " + r.success);
@@ -336,20 +336,20 @@ public class RegistrationPage : MonoBehaviour
         {
             if (T_Username.value.Length <= 5)
             {
-                IntegrateUI.MessageBox(V_RegistrationPages, "Username should 6 characters or long");
+                IntegrateUI.MessageBox("Username should 6 characters or long");
                 return;
             }
 
             if (T_FirstName.value.Length == 0)
             {
-                IntegrateUI.MessageBox(V_RegistrationPages, "First name required");
+                IntegrateUI.MessageBox("First name required");
                 T_FirstName.Focus();
                 return;
             }
 
             if (T_LastName.value.Length == 0)
             {
-                IntegrateUI.MessageBox(V_RegistrationPages, "Last name required");
+                IntegrateUI.MessageBox("Last name required");
                 T_LastName.Focus();
                 return;
             }

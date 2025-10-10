@@ -107,7 +107,7 @@ public class LoginManager : MonoBehaviour
             string loggedInMessage = $"Welcome, {name}!";
             Debug.Log("You logged in! " + response.user.name);
 
-            IntegrateUI.MessageBox(loginPage, loggedInMessage);
+            IntegrateUI.MessageBox(loggedInMessage);
 
             loginPage.style.display = DisplayStyle.None;
             homePage.style.display = DisplayStyle.Flex;
@@ -133,7 +133,7 @@ public class LoginManager : MonoBehaviour
             // Label loginUserErrLabel = loginPage.Q<Label>("L_UserErr");
 
 
-            IntegrateUI.MessageBox(loginPage, error.message);
+            IntegrateUI.MessageBox(error.message);
 
             // if (error.type == "email")
             //     loginEmailErrLabel.text = error.message;

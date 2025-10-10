@@ -110,7 +110,7 @@ public class ForgotPasswordPage : MonoBehaviour
             // ^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$
             string email = T_Email.value;
 
-            IntegrateUI.MessageBox(V_ForgotPasswordPages, "Sending verification code");
+            IntegrateUI.MessageBox("Sending verification code");
 
             B_SendCode.SetEnabled(false);
 
@@ -136,7 +136,6 @@ public class ForgotPasswordPage : MonoBehaviour
                                 user_email = T_Email.value;
 
                                 IntegrateUI.MessageBox(
-                                    V_ForgotPasswordPages,
                                     "Code sent to your email."
                                 );
 
@@ -194,7 +193,7 @@ public class ForgotPasswordPage : MonoBehaviour
                 || T_Code_6.value.Length != 1
             )
             {
-                IntegrateUI.MessageBox(V_ForgotPasswordPages, "Code should be 6 digits");
+                IntegrateUI.MessageBox("Code should be 6 digits");
                 return;
             }
 
@@ -219,7 +218,7 @@ public class ForgotPasswordPage : MonoBehaviour
                     // if success, clear the form
 
 
-                    IntegrateUI.MessageBox(V_ForgotPasswordPages, r.message);
+                    IntegrateUI.MessageBox(r.message);
                     if (r.success)
                     {
                         Debug.Log("Code matched: " + r.success);
@@ -247,7 +246,7 @@ public class ForgotPasswordPage : MonoBehaviour
 
             if (newPass != confirmNewPass)
             {
-                IntegrateUI.MessageBox(V_ForgotPasswordPages, "Password should match");
+                IntegrateUI.MessageBox("Password should match");
                 T_ConfirmNewPass.Focus();
                 return;
             }
@@ -266,7 +265,7 @@ public class ForgotPasswordPage : MonoBehaviour
                     {
                         ClearForm3();
                         // Show login page
-                        IntegrateUI.MessageBox(V_ForgotPasswordPages, r.message);
+                        IntegrateUI.MessageBox(r.message);
                         V_ForgotPasswordPages.style.display = DisplayStyle.None;
                         V_ForgotPassword_3.style.display = DisplayStyle.None;
                         loginPage.style.display = DisplayStyle.Flex;

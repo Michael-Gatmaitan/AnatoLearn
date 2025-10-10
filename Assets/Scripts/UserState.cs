@@ -1,3 +1,4 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class UserState : MonoBehaviour
@@ -6,6 +7,10 @@ public class UserState : MonoBehaviour
     public string Username { get; private set; }
     public string Email { get; private set; }
     public int Id;
+
+    public string Firstname,
+        Middlename,
+        Lastname;
 
     public int TopicId { get; private set; }
     public int ActivityId { get; private set; }

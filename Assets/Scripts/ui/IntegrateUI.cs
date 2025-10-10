@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
@@ -231,6 +232,25 @@ public class IntegrateUI : MonoBehaviour
         profilePage = GetComponent<ProfilePage>();
     }
 
+    public void LogoutFunc()
+    {
+        UserState.Instance.ClearUserData();
+
+        // Hide popup and settings page
+        popUpPage.style.display = DisplayStyle.None;
+        settingsPage.style.display = DisplayStyle.None;
+
+        // Hide home page and show login paage
+        loginScreen.style.display = DisplayStyle.Flex;
+        homePage.style.display = DisplayStyle.None;
+
+        Debug.Log("Checking if logged out: ");
+        Debug.Log(UserState.Instance.Id);
+        Debug.Log(UserState.Instance.Username);
+
+        MessageBox("Logged out");
+    }
+
     void Start()
     {
         if (Permission.HasUserAuthorizedPermission(Permission.Camera))
@@ -354,21 +374,7 @@ public class IntegrateUI : MonoBehaviour
 
         logoutBtn?.RegisterCallback<ClickEvent>(_ =>
         {
-            UserState.Instance.ClearUserData();
-
-            // Hide popup and settings page
-            popUpPage.style.display = DisplayStyle.None;
-            settingsPage.style.display = DisplayStyle.None;
-
-            // Hide home page and show login paage
-            loginScreen.style.display = DisplayStyle.Flex;
-            homePage.style.display = DisplayStyle.None;
-
-            Debug.Log("Checking if logged out: ");
-            Debug.Log(UserState.Instance.Id);
-            Debug.Log(UserState.Instance.Username);
-
-            MessageBox(homePage, "Logged out");
+            LogoutFunc();
         });
 
         exitSettingsBtn?.RegisterCallback<ClickEvent>(_ =>
@@ -564,13 +570,13 @@ public class IntegrateUI : MonoBehaviour
             // Change image
             if (videoPlayer.isPlaying)
             {
-                MessageBox(homePage, "Paused");
+                MessageBox("Paused");
                 playBtn.style.backgroundImage = new StyleBackground(vcImages[1]);
                 videoPlayer.Pause();
             }
             else
             {
-                MessageBox(homePage, "Resumed");
+                MessageBox("Resumed");
                 videoPlayer.Play();
 
                 playBtn.style.backgroundImage = new StyleBackground(vcImages[0]);
@@ -580,14 +586,14 @@ public class IntegrateUI : MonoBehaviour
         prevBtn?.RegisterCallback<ClickEvent>(_ =>
         {
             Debug.Log("Previous");
-            MessageBox(homePage, "Video seeked -10 secons");
+            MessageBox("Video seeked -10 secons");
             videoPlayer.time -= 10;
         });
 
         forwBtn?.RegisterCallback<ClickEvent>(_ =>
         {
             Debug.Log("Forward");
-            MessageBox(homePage, "Video seeked 10 secons");
+            MessageBox("Video seeked 10 secons");
             videoPlayer.time += 10;
         });
 
@@ -1077,7 +1083,6 @@ public class IntegrateUI : MonoBehaviour
                         "This topic is still locked, please passed the activity of recent topic first"
                     );
                     MessageBox(
-                        root,
                         "You need to pass at previous topic before proceeding to this topic"
                     );
                 }
@@ -2223,9 +2228,8 @@ public class IntegrateUI : MonoBehaviour
     }
 
     // Parameter vs should be a page of the parent of vs should be the root VisualElement
-    public static void MessageBox(VisualElement vs, string message)
+    public static void MessageBox(string message)
     {
-        // VisualElement root = vs.parent.parent.parent;
         VisualElement messageBoxContainer = root.Q<VisualElement>("messageBox");
 
         Label messageBoxLabel = messageBoxContainer.Q<Label>("L_Message");
@@ -2234,13 +2238,13 @@ public class IntegrateUI : MonoBehaviour
 
         messageBoxContainer.style.display = DisplayStyle.Flex;
 
-        Instance.StartCoroutine(HideMessageBox());
-
         IEnumerator<WaitForSeconds> HideMessageBox()
         {
             yield return new WaitForSeconds(3);
             messageBoxContainer.style.display = DisplayStyle.None;
         }
+
+        Instance.StartCoroutine(HideMessageBox());
     }
 
     void Update()

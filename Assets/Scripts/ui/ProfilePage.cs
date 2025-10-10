@@ -49,6 +49,12 @@ public class ProfilePage : MonoBehaviour
 
     private List<TotalScore> badgedScores;
 
+    // Edit profile page variables
+    private TextField T_NewFirstname,
+        T_NewMiddlename,
+        T_NewLastname;
+    private Button B_EditButton;
+
     // Delete profile elements
 
     // Edit username elements
@@ -65,6 +71,13 @@ public class ProfilePage : MonoBehaviour
         profilePage.style.display = DisplayStyle.None;
     }
 
+    void ClearEditProfileInputs()
+    {
+        T_NewFirstname.value = "";
+        T_NewMiddlename.value = "";
+        T_NewLastname.value = "";
+    }
+
     void ShowDeleteProfileModal()
     {
         V_ProfileModals.style.display = DisplayStyle.Flex;
@@ -72,7 +85,16 @@ public class ProfilePage : MonoBehaviour
 
         userController.DeleteUser(
             UserState.Instance.Email,
-            (r) => Debug.Log(r),
+            (r) =>
+            {
+                NavigateToProfileBody();
+                HideProfilePage();
+                ClearEditProfileInputs();
+                IntegrateUI.MessageBox("Account successfully deleted");
+                IntegrateUI.Instance.LogoutFunc();
+
+                // Debug.Log(r);
+            },
             (e) => Debug.Log(e)
         );
     }
@@ -186,8 +208,13 @@ public class ProfilePage : MonoBehaviour
         V_Badges = profilePage.Q<VisualElement>("V_Badges");
         V_EditProfile = profilePage.Q<VisualElement>("V_EditProfile");
 
-        Debug.Log($"V Badges: " + V_Badges);
-        Debug.Log($"V Edit profile: " + V_EditProfile);
+        // Edit profile variables initializations
+
+        T_NewFirstname = V_EditProfile.Q<TextField>("T_NewFirstname");
+        T_NewMiddlename = V_EditProfile.Q<TextField>("T_NewMiddlename");
+        T_NewLastname = V_EditProfile.Q<TextField>("T_NewLastname");
+
+        B_EditButton = V_EditProfile.Q<Button>("B_EditButton");
     }
 
     // void Start()
@@ -201,6 +228,8 @@ public class ProfilePage : MonoBehaviour
         L_Username.text = UserState.Instance.Username;
 
         DisplayBadges();
+
+        DisplayEditProfile();
     }
 
     public void DisplayBadges()
@@ -241,5 +270,48 @@ public class ProfilePage : MonoBehaviour
         );
 
         Debug.Log(badgesContainer.Count);
+    }
+
+    public void DisplayEditProfile()
+    {
+        B_EditButton.RegisterCallback<ClickEvent>(
+            (evt) =>
+            {
+                // Assume NewFirstname, NewMiddlename, and NewLastname are TextField elements
+                string email = UserState.Instance.Email;
+                string newFirstname = T_NewFirstname.value;
+                string newMiddlename = T_NewMiddlename.value;
+                string newLastname = T_NewLastname.value;
+
+                Debug.Log($"Email: {email}");
+
+                if (newFirstname.Trim() == "" || newLastname.Trim() == "")
+                {
+                    IntegrateUI.MessageBox("Names cannot be empty");
+                    return;
+                }
+
+                userController.EditName(
+                    email,
+                    newFirstname,
+                    newMiddlename,
+                    newLastname,
+                    (r) =>
+                    {
+                        Debug.Log("Edit name successful: " + r.message);
+                        IntegrateUI.MessageBox(r.message);
+                        ClearEditProfileInputs();
+                        // Optionally update UI or user state here
+                    },
+                    (e) =>
+                    {
+                        Debug.LogError("Edit name failed: " + e);
+                        IntegrateUI.MessageBox(e);
+                        ClearEditProfileInputs();
+                        // Optionally notify user about error here
+                    }
+                );
+            }
+        );
     }
 }
