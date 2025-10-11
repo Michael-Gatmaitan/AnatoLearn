@@ -35,29 +35,20 @@ public class HumanoidPoseMapper : MonoBehaviour
 
     private FieldInfo currentTargetField;
     private List<NormalizedLandmark> landmarks;
-
-    public float screenDepth = 100f;
-    private int LANDMARK_LENGTH = 33;
-
-    // private GameObject[] landmarkPrefabs;
-
     private GameObject positionPref;
-
     public UIDocument uiDocument;
+
     public static HumanoidPoseMapper instance;
 
-    // private Label lx,
-    //     ly,
-    //     lz;
+    [Header("Positioning")]
+    public float screenDepth = 100f;
+    public float positionZOffset = 20;
+    public float adjustedHipYDivider = 1.5f; // 2.5-ish for skeletal
 
     void OnEnable()
     {
         // var root = uiDocument.rootVisualElement;
         instance = this;
-
-        // lx = root.Q<Label>("L_X");
-        // ly = root.Q<Label>("L_Y");
-        // lz = root.Q<Label>("L_Z");
     }
 
     // MediaPipe landmark indices (33 total landmarks)
@@ -98,9 +89,48 @@ public class HumanoidPoseMapper : MonoBehaviour
         RIGHT_FOOT_INDEX = 32,
     }
 
+    public GameObject[] landmarkSpheres; // 33 spheres for hand landmarks
+
+    void CreateLandmarkSpheres()
+    {
+        landmarkSpheres = new GameObject[33];
+
+        for (int i = 0; i < 33; i++)
+        {
+            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            sphere.name = $"Landmark_{i}";
+            sphere.transform.localScale = Vector3.one * 3f; // Small spheres
+            sphere.GetComponent<Renderer>().material.color = Color.green;
+
+            // Remove collider to avoid physics interference
+            Destroy(sphere.GetComponent<Collider>());
+
+            landmarkSpheres[i] = sphere;
+        }
+    }
+
+    void UpdateLandmarkVisualization()
+    {
+        for (int i = 0; i < landmarks.Count; i++)
+        {
+            Vector3 worldPosition = ConvertMediaPipeToUnitySpace(landmarks[i]);
+
+            landmarkSpheres[i].transform.position = worldPosition;
+            landmarkSpheres[i].SetActive(true);
+        }
+
+        // Hide unused spheres
+        for (int i = landmarks.Count; i < landmarkSpheres.Length; i++)
+        {
+            landmarkSpheres[i].SetActive(false);
+        }
+    }
+
     void Start()
     {
         humanoidAnimator = GetComponent<Animator>();
+
+        CreateLandmarkSpheres();
 
         positionPref = Instantiate(landmarkPrefab);
         positionPref.name = "Position pref";
@@ -175,7 +205,16 @@ public class HumanoidPoseMapper : MonoBehaviour
             if (move)
             {
                 SetAvatarWorldPosition();
-                SetAvatarScaleBaseOnTorsoHeight();
+                UpdateLandmarkVisualization();
+
+                if (!useShoulderScale)
+                {
+                    SetAvatarScaleBaseOnTorsoHeight();
+                }
+                else
+                {
+                    SetAvatarScaleBasedOnShoulderWidth();
+                }
             }
 
             // ApplyPoseToHumanoid();
@@ -199,13 +238,15 @@ public class HumanoidPoseMapper : MonoBehaviour
 
     // Rotation
     private bool hasPrevIK = false;
+
+    [Header("Scaling")]
     public float avatarReferenceToShoulderWidth = 0.5f;
-    public float positionZOffset = 20;
-    public float adjustedHipYDivider = 1.5f; // 2.5-ish for skeletal
     public float avatarReferenceTorsoHeight = 0.65f; // 1 for skeletal
 
     public float ikPositionWeight = 1;
 
+    [Header("Debug")]
+    public bool useShoulderScale = false;
     public bool move = true;
 
     public void SetAvatarScaleBaseOnTorsoHeight()
@@ -248,15 +289,18 @@ public class HumanoidPoseMapper : MonoBehaviour
 
         float calculatedScale = detectedTorsoHeight / avatarReferenceTorsoHeight;
 
-        // float currentScale = humanoidAnimator.transform.localScale.x; // Assuming uniform scale
-        // float smooth = Mathf.Clamp01(Time.deltaTime * 5f); // Adjust smoothing factor as needed
-        // float newScale = Mathf.Lerp(currentScale, calculatedScale, smooth);
+        float currentScale = humanoidAnimator.transform.localScale.x; // Assuming uniform scale
+        float smooth = Mathf.Clamp01(Time.deltaTime * 5f); // Adjust smoothing factor as needed
+        float newScale = Mathf.Lerp(currentScale, calculatedScale, smooth);
 
         // humanoidAnimator.transform.localScale = new Vector3(newScale, newScale, newScale);
         humanoidAnimator.transform.localScale = new Vector3(
-            calculatedScale,
-            calculatedScale,
-            calculatedScale
+            // calculatedScale,
+            // calculatedScale,
+            // calculatedScale
+            newScale,
+            newScale,
+            newScale
         );
     }
 
@@ -278,12 +322,13 @@ public class HumanoidPoseMapper : MonoBehaviour
 
         float calculatedScale = detectedShoulderWidth * avatarReferenceToShoulderWidth;
 
+        // Apply smooth scaling
+        float currentScale = humanoidAnimator.transform.localScale.x; // Assuming uniform scale
+        float smooth = Mathf.Clamp01(Time.deltaTime * 5f); // Smoothing factor of 5f
+        float newScale = Mathf.Lerp(currentScale, calculatedScale, smooth);
+
         // Apply the calculated scale to the avatar
-        humanoidAnimator.transform.localScale = new Vector3(
-            calculatedScale,
-            calculatedScale,
-            calculatedScale
-        );
+        humanoidAnimator.transform.localScale = new(newScale, newScale, newScale);
 
         // IMPORTANT: You need to define this value based on your avatar's actual shoulder width
         // (e.g., measure it in your 3D modeling software when the avatar is T-posed)

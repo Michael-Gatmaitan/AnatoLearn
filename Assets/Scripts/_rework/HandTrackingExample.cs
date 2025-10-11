@@ -20,16 +20,19 @@ public class HandTrackingExample : MonoBehaviour
 
     [Header("Playground")]
     public GameObject cube;
+    public bool useHandRotation = true;
 
     [Header("Smoothing")]
     public float positionSmoothing = 5f;
     public float scaleSmoothing = 5f;
+    public float rotationSmoothing = 5f;
 
     private List<Vector3> worldPositions;
 
     // Smoothing variables
     private Vector3 targetPosition;
     private Vector3 targetScale;
+    private Quaternion targetRotation;
     private bool isInitialized = false;
 
     void Start()
@@ -103,14 +106,24 @@ public class HandTrackingExample : MonoBehaviour
 
         // Calculate target position (center between thumb and pinky)
         Vector3 centerPos = (thumbPos + pinkyPos) / 2f;
-        centerPos.z = 70;
+        centerPos.z = 50;
         targetPosition = centerPos;
+
+        // Calculate hand rotation and apply to cube (if enabled)
+        if (useHandRotation)
+        {
+            targetRotation = CalculateHandRotation();
+        }
 
         // Initialize targets on first frame
         if (!isInitialized)
         {
             cube.transform.localScale = targetScale;
             cube.transform.position = targetPosition;
+            if (useHandRotation)
+            {
+                cube.transform.rotation = targetRotation;
+            }
             isInitialized = true;
         }
         else
@@ -127,11 +140,82 @@ public class HandTrackingExample : MonoBehaviour
                 targetScale,
                 scaleSmoothing * deltaTime
             );
+
+            // Apply rotation only if hand rotation is enabled
+            if (useHandRotation)
+            {
+                cube.transform.rotation = Quaternion.Lerp(
+                    cube.transform.rotation,
+                    targetRotation,
+                    rotationSmoothing * deltaTime
+                );
+            }
+        }
+    }
+
+    Quaternion CalculateHandRotation()
+    {
+        if (worldPositions == null || worldPositions.Count < 21)
+        {
+            return Quaternion.identity;
         }
 
-        // Slowly rotate the cube to the right (around Y axis)
-        // float rotationSpeed = 30f; // degrees per second
-        // cube.transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime, Space.World);
+        // Get key landmarks for palm orientation calculation
+        Vector3 wrist = GetScreenToWorldPoint(
+            worldPositions[HTS_Improved.HandLandmarkIndices.WRIST]
+        );
+        Vector3 middleFingerMcp = GetScreenToWorldPoint(
+            worldPositions[HTS_Improved.HandLandmarkIndices.MIDDLE_FINGER_MCP]
+        );
+        Vector3 thumbTip = GetScreenToWorldPoint(
+            worldPositions[HTS_Improved.HandLandmarkIndices.THUMB_TIP]
+        );
+        Vector3 pinkyTip = GetScreenToWorldPoint(
+            worldPositions[HTS_Improved.HandLandmarkIndices.PINKY_TIP]
+        );
+
+        // Calculate palm normal using cross product of palm vectors
+        // Vector from wrist to middle finger MCP (palm center direction)
+        Vector3 palmCenter = (middleFingerMcp - wrist).normalized;
+
+        // Vector from thumb to pinky (palm width direction)
+        Vector3 palmWidth = (pinkyTip - thumbTip).normalized;
+
+        // Cross product to get palm normal (perpendicular to palm surface)
+        Vector3 palmNormal = Vector3.Cross(palmCenter, palmWidth).normalized;
+
+        // Ensure the normal points towards the camera (positive Z direction)
+        if (palmNormal.z < 0)
+        {
+            palmNormal = -palmNormal;
+        }
+
+        // Calculate palm up direction (corrected palm center)
+        Vector3 palmUp = Vector3.Cross(palmWidth, palmNormal).normalized;
+
+        // Create rotation from palm orientation
+        // The cube will align its Y-axis with the palm up direction and Z-axis with palm normal
+        Quaternion palmRotation = Quaternion.LookRotation(palmNormal, palmUp);
+
+        // Optional: Add rotation around the palm normal based on finger orientation
+        // This gives more detailed rotation based on how the fingers are oriented
+        Vector3 indexTip = GetScreenToWorldPoint(
+            worldPositions[HTS_Improved.HandLandmarkIndices.INDEX_FINGER_TIP]
+        );
+        Vector3 indexMcp = GetScreenToWorldPoint(
+            worldPositions[HTS_Improved.HandLandmarkIndices.INDEX_FINGER_MCP]
+        );
+
+        // Calculate finger direction in palm space
+        Vector3 fingerDirection = (indexTip - indexMcp).normalized;
+        Vector3 palmSpaceFinger = Quaternion.Inverse(palmRotation) * fingerDirection;
+
+        // Calculate roll rotation around palm normal
+        float rollAngle = Mathf.Atan2(palmSpaceFinger.y, palmSpaceFinger.x) * Mathf.Rad2Deg;
+        Quaternion rollRotation = Quaternion.AngleAxis(rollAngle, Vector3.forward);
+
+        // Combine palm rotation with finger roll
+        return palmRotation * rollRotation;
     }
 
     void CreateLandmarkSpheres()
@@ -193,24 +277,6 @@ public class HandTrackingExample : MonoBehaviour
 
     private Vector3 GetScreenToWorldPoint(Vector3 landmark)
     {
-        // float x,
-        //     y;
-
-        // float width = Screen.width;
-        // float height = Screen.height;
-
-        // // Desktop
-        // // x = landmark.x * width;
-        // // y = (1f - landmark.y) * height;
-
-        // // Mobile
-        // x = (1 - landmark.y) * width;
-        // y = (1f - landmark.x) * height;
-
-        // Vector3 spoint = new(x, y, 100f);
-        // Vector3 stwpoint = Camera.main.ScreenToWorldPoint(spoint);
-        // stwpoint.z -= 20;
-
         float vx,
             vy;
 
@@ -219,8 +285,8 @@ public class HandTrackingExample : MonoBehaviour
         vy = 1f - landmark.y;
 
         // Mobile
-        // vx = 1f - landmark.y;
-        // vy = 1f - landmark.x;
+        vx = 1f - landmark.y;
+        vy = 1f - landmark.x;
 
         Vector3 stwpoint = Camera.main.ViewportToWorldPoint(new Vector3(vx, vy, 100f));
 
