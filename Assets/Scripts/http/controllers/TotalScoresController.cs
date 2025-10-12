@@ -43,8 +43,8 @@ public class TotalScoresController : MonoBehaviour
         int user_id,
         int topic_id,
         bool get_passed_scores,
-        System.Action<TotalScores> onSuccess,
-        System.Action<string> onError
+        Action<TotalScores> onSuccess,
+        Action<string> onError
     )
     {
         string gps = get_passed_scores == true ? "true" : "false";

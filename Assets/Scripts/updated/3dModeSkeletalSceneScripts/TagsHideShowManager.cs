@@ -17,7 +17,10 @@ public class TagsManager : MonoBehaviour
             HideTags();
         }
 
-        finishBtn?.RegisterCallback<ClickEvent>(evt => HideTags());
+        // Instead of hiding go w/o confirmation, i moved the script in
+        // _3dModeSceneManager.cs 94
+
+        // finishBtn?.RegisterCallback<ClickEvent>(evt => HideTags());
         toggleButton.clicked += ToggleTagsVisibility;
     }
 

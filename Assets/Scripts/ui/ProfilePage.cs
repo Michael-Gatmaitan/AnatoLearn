@@ -257,7 +257,7 @@ public class ProfilePage : MonoBehaviour
                     }
                     else
                     {
-                        badgesContainer[topic.id - 0].SetEnabled(false);
+                        badgesContainer[topic.id - 1].SetEnabled(false);
                     }
                 }
 

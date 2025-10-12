@@ -40,6 +40,8 @@ public class _3dModeSceneManager : MonoBehaviour
 
     private void OnEnable()
     {
+        SceneData.studyingCirculatoryHeart = false;
+
         userTagViewsController = GetComponent<UserTagViewsController>();
         userTopicProgressController = GetComponent<UserTopicProgressController>();
 
@@ -80,12 +82,22 @@ public class _3dModeSceneManager : MonoBehaviour
                             UserState.Instance.SetShowProgressionPage(true);
                             SceneManager.LoadScene("UIScene1");
 
+                            GameObject tagsContainer = GameObject.Find("TagsContainer");
+
                             userTopicProgressController.UpdateUserTopicProgress(
                                 UserState.Instance.Id,
                                 UserState.Instance.TopicId,
                                 "explore",
                                 (r) =>
                                 {
+                                    if (tagsContainer == null)
+                                        Debug.LogError("Tags container not found");
+                                    else
+                                    {
+                                        tagsContainer.SetActive(false);
+                                        Debug.Log($"Tags Container successfully hide");
+                                    }
+
                                     Debug.Log("Explore unlocked: " + r);
                                 },
                                 (e) =>
@@ -145,8 +157,11 @@ public class _3dModeSceneManager : MonoBehaviour
         var heart3dModeBtn = root.Q<Button>("heart3dModeBtn"); //edited 6-20
         heart3dModeBtn?.RegisterCallback<ClickEvent>(eevt =>
         {
+            PlayerPrefs.SetInt("studyingHeart", 1);
+
+            Debug.Log("PlayerPrefs studyingHeart: " + PlayerPrefs.GetInt("studyingHeart"));
             SceneManager.LoadScene("3dModeCirculatory_HeartScene");
-            UnityEngine.Debug.Log("3dModeCirculatory_HeartScene LOADED");
+            Debug.Log("3dModeCirculatory_HeartScene LOADED");
             // SceneData.takingCirculatoryHeartTapMe = true;
         });
     }

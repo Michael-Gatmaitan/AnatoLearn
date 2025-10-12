@@ -281,8 +281,8 @@ public class HandTrackingExample : MonoBehaviour
             vy;
 
         // Desktop
-        vx = landmark.x;
-        vy = 1f - landmark.y;
+        // vx = landmark.x;
+        // vy = 1f - landmark.y;
 
         // Mobile
         vx = 1f - landmark.y;

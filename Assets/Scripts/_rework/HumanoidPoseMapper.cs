@@ -41,9 +41,9 @@ public class HumanoidPoseMapper : MonoBehaviour
     public static HumanoidPoseMapper instance;
 
     [Header("Positioning")]
-    public float screenDepth = 100f;
+    public float screenDepth = 20;
     public float positionZOffset = 20;
-    public float adjustedHipYDivider = 1.5f; // 2.5-ish for skeletal
+    public float adjustedHipYDivider = 0.9f; // 2.5-ish for skeletal
 
     void OnEnable()
     {
@@ -99,7 +99,7 @@ public class HumanoidPoseMapper : MonoBehaviour
         {
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.name = $"Landmark_{i}";
-            sphere.transform.localScale = Vector3.one * 3f; // Small spheres
+            sphere.transform.localScale = Vector3.one * 1f; // Small spheres
             sphere.GetComponent<Renderer>().material.color = Color.green;
 
             // Remove collider to avoid physics interference
@@ -225,23 +225,25 @@ public class HumanoidPoseMapper : MonoBehaviour
         }
     }
 
-    private Vector3 prevLeftElbowPos;
-    private Vector3 prevRightElbowPos;
-    private Vector3 prevLeftHandPos;
-    private Vector3 prevRightHandPos;
-    private Vector3 prevLeftKneePos;
-    private Vector3 prevRightKneePos;
-    private Vector3 prevLeftFootPos;
-
-    private Vector3 prevRightFootPos;
-    private Vector3 prevHeadPos;
+    // Variables for previous
+    private Vector3 prevLeftElbowPos,
+        prevRightElbowPos,
+        prevLeftHandPos,
+        prevRightHandPos,
+        prevLeftKneePos,
+        prevRightKneePos,
+        prevLeftFootPos,
+        prevRightFootPos,
+        prevHeadPos;
 
     // Rotation
     private bool hasPrevIK = false;
 
     [Header("Scaling")]
     public float avatarReferenceToShoulderWidth = 0.5f;
-    public float avatarReferenceTorsoHeight = 0.65f; // 1 for skeletal
+
+    // public float avatarReferenceTorsoHeight = 0.65f; // 1 for skeletal
+    public float avatarReferenceTorsoHeight = 0.40f; // 1 for skeletal
 
     public float ikPositionWeight = 1;
 
@@ -269,10 +271,6 @@ public class HumanoidPoseMapper : MonoBehaviour
         Vector3 unityMidShoulder = (unityLeftShoulder + unityRightShoulder) / 2f;
         // Calculate midpoint of hips
         Vector3 unityMidHip = (unityLeftHip + unityRightHip) / 2f;
-
-        // Debug.Log($"Mid Shoulder position: {unityMidShoulder}");
-        // Debug.Log($"Mid Hip position: {unityMidHip}");
-
         // Calculate the vertical distance between shoulders and hips
         float detectedTorsoHeight = Mathf.Abs(unityMidShoulder.y - unityMidHip.y);
 
@@ -358,7 +356,7 @@ public class HumanoidPoseMapper : MonoBehaviour
         humanoidAnimator.transform.localPosition = adjustedHip;
     }
 
-    public float rotationSpeed = 10f;
+    // public float rotationSpeed = 10f;
 
     // Only for chest and hips
     // private void SetSocketJointsRotation(
@@ -590,12 +588,12 @@ public class HumanoidPoseMapper : MonoBehaviour
         // TESTING FOR MORE ACCURACY
 
         // Desktop
-        screenX = mediaPipePos.x;
-        screenY = 1f - mediaPipePos.y;
+        // screenX = mediaPipePos.x;
+        // screenY = 1f - mediaPipePos.y;
 
         // Mobile
-        // screenX = 1f - mediaPipePos.y;
-        // screenY = 1f - mediaPipePos.x;
+        screenX = 1f - mediaPipePos.y;
+        screenY = 1f - mediaPipePos.x;
 
         Vector3 worldPosition = Camera.main.ViewportToWorldPoint(
             new Vector3(screenX, screenY, screenDepth)

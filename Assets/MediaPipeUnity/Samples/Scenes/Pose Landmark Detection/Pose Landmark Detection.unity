@@ -1550,15 +1550,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
   landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
-  screenDepth: 100
   uiDocument: {fileID: 403801984}
-  avatarReferenceToShoulderWidth: 0.5
+  screenDepth: 100
   positionZOffset: 20
   adjustedHipYDivider: 1.5
+  landmarkSpheres: []
+  avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.65
   ikPositionWeight: 1
+  useShoulderScale: 0
   move: 1
-  rotationSpeed: 10
 --- !u!1 &122274104
 GameObject:
   m_ObjectHideFlags: 0
@@ -7114,15 +7115,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
   landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
-  screenDepth: 100
   uiDocument: {fileID: 403801984}
-  avatarReferenceToShoulderWidth: 0.5
+  screenDepth: 100
   positionZOffset: 20
   adjustedHipYDivider: 1.5
+  landmarkSpheres: []
+  avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.7
   ikPositionWeight: 1
+  useShoulderScale: 0
   move: 1
-  rotationSpeed: 10
 --- !u!4 &524192758 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1163652796354969534, guid: 3829ec1155cf96445894452bad993606, type: 3}
@@ -11072,15 +11074,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
   landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
-  screenDepth: 100
   uiDocument: {fileID: 403801984}
-  avatarReferenceToShoulderWidth: 0.5
+  screenDepth: 20
   positionZOffset: 20
-  adjustedHipYDivider: 1.5
+  adjustedHipYDivider: 0.8
+  landmarkSpheres: []
+  avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.65
   ikPositionWeight: 1
+  useShoulderScale: 0
   move: 1
-  rotationSpeed: 10
 --- !u!4 &767708023 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -9062683070111997736, guid: 78d3f70c0b96b234aa5f3c1e4119e793, type: 3}
@@ -13069,15 +13072,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
   landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
-  screenDepth: 100
   uiDocument: {fileID: 403801984}
-  avatarReferenceToShoulderWidth: 0.5
+  screenDepth: 100
   positionZOffset: 50
   adjustedHipYDivider: 1.5
+  landmarkSpheres: []
+  avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.65
   ikPositionWeight: 1
+  useShoulderScale: 0
   move: 1
-  rotationSpeed: 10
 --- !u!114 &912372031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13092,15 +13096,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 0}
   landmarkPrefab: {fileID: 0}
-  screenDepth: 100
   uiDocument: {fileID: 0}
-  avatarReferenceToShoulderWidth: 0.5
+  screenDepth: 100
   positionZOffset: 20
   adjustedHipYDivider: 1.5
+  landmarkSpheres: []
+  avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.65
   ikPositionWeight: 1
+  useShoulderScale: 0
   move: 1
-  rotationSpeed: 10
 --- !u!1 &913895455
 GameObject:
   m_ObjectHideFlags: 0
@@ -17840,15 +17845,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
   landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
-  screenDepth: 100
   uiDocument: {fileID: 403801984}
-  avatarReferenceToShoulderWidth: 0.5
+  screenDepth: 20
   positionZOffset: 50
-  adjustedHipYDivider: 2
-  avatarReferenceTorsoHeight: 0.85
-  ikPositionWeight: 1
+  adjustedHipYDivider: 0.9
+  landmarkSpheres: []
+  avatarReferenceToShoulderWidth: 0.5
+  avatarReferenceTorsoHeight: 0.3
+  ikPositionWeight: 0.4
+  useShoulderScale: 0
   move: 1
-  rotationSpeed: 10
 --- !u!114 &1171826051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27098,15 +27104,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
   landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
-  screenDepth: 100
   uiDocument: {fileID: 403801984}
-  avatarReferenceToShoulderWidth: 0.5
+  screenDepth: 100
   positionZOffset: 20
   adjustedHipYDivider: 1.5
+  landmarkSpheres: []
+  avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.65
   ikPositionWeight: 0.2
+  useShoulderScale: 0
   move: 1
-  rotationSpeed: 10
 --- !u!1001 &1763564215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30009,7 +30016,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2002120613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31561,15 +31568,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
   landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
-  screenDepth: 100
   uiDocument: {fileID: 403801984}
-  avatarReferenceToShoulderWidth: 0.5
+  screenDepth: 100
   positionZOffset: 20
   adjustedHipYDivider: 1.5
+  landmarkSpheres: []
+  avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.65
   ikPositionWeight: 1
+  useShoulderScale: 0
   move: 1
-  rotationSpeed: 10
 --- !u!95 &2111542083
 Animator:
   serializedVersion: 7
@@ -32620,7 +32628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5287013772374095222, guid: 6020d61e7c3f2c64089c2fd039756c15, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

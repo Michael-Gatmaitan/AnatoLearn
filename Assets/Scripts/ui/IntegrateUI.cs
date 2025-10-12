@@ -287,7 +287,7 @@ public class IntegrateUI : MonoBehaviour
 
         if (UserState.Instance.Id != 0)
         {
-            //
+            Debug.Log("User detected, setting up.");
             // UserState.Instance.SetTopicId(1);
             // SetupQuizes.SetupMCQContent2(mcqPage);
 
@@ -309,8 +309,9 @@ public class IntegrateUI : MonoBehaviour
                 false,
                 (r) =>
                 {
-                    Debug.Log("Result from getting all topic scores: " + r.data);
+                    // Debug.Log("Result from getting all topic scores: " + r.data);
                     scores = r.data;
+                    Debug.Log("Scores updated: " + scores.Count);
 
                     // foreach (var score in scores)
                     // {
@@ -319,7 +320,7 @@ public class IntegrateUI : MonoBehaviour
 
                     // List<TotalScore> f = scores.FindAll((e) => e.topic_id == 1);
                 },
-                (e) => Debug.Log(e)
+                (e) => Debug.LogError(e)
             );
 
             if (topic_id != 0 && isFromTapMe)
@@ -1188,7 +1189,7 @@ public class IntegrateUI : MonoBehaviour
                 VisualElement progDataHighest = new();
                 progDataHighest.AddToClassList("progDataAttempts");
 
-                Label progDataLabelHighest = new(text: "Highest");
+                Label progDataLabelHighest = new(text: "Highest passed");
                 progDataLabelHighest.AddToClassList("progDataLabelAttempts");
 
                 progDataLCL.Add(progDataLabelL);
@@ -1241,7 +1242,7 @@ public class IntegrateUI : MonoBehaviour
                         {
                             progDataLabelR.text = $"{r.data[0].total_score}";
 
-                            if (r.data[0].accuracy < 60)
+                            if (r.data[0].accuracy < 50)
                                 progDataHighest.AddToClassList("failedAccuracy");
                             else
                                 progDataHighest.AddToClassList("passedAccuracy");
@@ -1279,6 +1280,9 @@ public class IntegrateUI : MonoBehaviour
                 mainContainer.Clear();
 
                 List<TotalScore> filteredScores = scores.FindAll(s => s.topic_id == topic_id);
+
+                Debug.Log($"Filtered Scores: {filteredScores}");
+                Debug.Log($"Filtered Scores langth: {filteredScores.Count}");
 
                 // GET TotalScores of this topic using topic_id and user_id
                 // totalScoresController.GetTotalScoresByUserIdAndTopicId(

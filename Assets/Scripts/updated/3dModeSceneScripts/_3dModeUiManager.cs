@@ -1,8 +1,5 @@
 using System;
-using System.Diagnostics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class _3dModeUIManager : MonoBehaviour
@@ -180,6 +177,7 @@ public class _3dModeUIManager : MonoBehaviour
         //     UserState.Instance.SetTopicId(1); // Debugging purposes
         // }
 
+        // try catch moved to Start()
         try
         {
             if (SceneData.studyingSkeletal || UserState.Instance.TopicId == 1)
@@ -211,12 +209,14 @@ public class _3dModeUIManager : MonoBehaviour
 
             // }
 
-            if (SceneData.studyingCirculatoryHeart)
+            Debug.Log("PlayerPrefs studyingHeart: " + PlayerPrefs.GetInt("studyingHeart"));
+            if (PlayerPrefs.GetInt("studyingHeart") == 1)
             {
                 circulatoryContentsBtns.style.display = DisplayStyle.None;
                 finishBtn.style.display = DisplayStyle.Flex;
-                UnityEngine.Debug.Log("circuContentBTn = NONE");
-                SceneData.studyingCirculatoryHeart = false;
+
+                Debug.Log("circuContentBTn = NONE");
+                PlayerPrefs.SetInt("studyingHeart", 0);
                 // skeletalContentsBtns.style.display = DisplayStyle.None;s
             }
 
@@ -231,30 +231,30 @@ public class _3dModeUIManager : MonoBehaviour
 
             //     SceneData.showTapActPage = false;
             // }
-            UnityEngine.Debug.Log("last line of OnEnable in 3dModeUImAnager");
+            Debug.Log("last line of OnEnable in 3dModeUImAnager");
         }
-        catch (Exception _)
+        catch (Exception)
         {
-            UnityEngine.Debug.Log("Error occured in ui, entering dev mode");
+            Debug.Log("Error occured in ui, entering dev mode");
             skeletalContentsBtns.style.display = DisplayStyle.Flex;
         }
+        // Debug.Log(
+        //     $"SceneData.showTapActPage = {SceneData.showTapActPage} -- 3dModeUiManager"
+        // );
     }
 
     private void Start()
     {
-        UnityEngine.Debug.Log(
-            $"SceneData.showTapActPage = {SceneData.showTapActPage} -- 3dModeUiManager"
-        );
         // SceneData.showTapActPage = true;
         if (SceneData.showTapActPage)
         {
             ShowTapActPage(); //3dModeScene
             ShowTapMeActInstructionPage();
-            UnityEngine.Debug.Log("✅ ShowTapActPage and ShowTapMeActInstrucPage run in Start()");
+            Debug.Log("✅ ShowTapActPage and ShowTapMeActInstrucPage run in Start()");
             SceneData.showTapActPage = false;
         }
 
-        UnityEngine.Debug.Log("✅ Start() finished in 3dModeUIManager");
+        Debug.Log("✅ Start() finished in 3dModeUIManager");
     }
 
     private void ShowHomePromptPage()
@@ -300,7 +300,7 @@ public class _3dModeUIManager : MonoBehaviour
     private void HideTagDescriptionPage() //added
     {
         blackBgAbsoluteTagDescriptPage.style.display = DisplayStyle.None;
-        UnityEngine.Debug.LogWarning("NAGCLOSE HIDETAGDECRIPTIONPAGE");
+        Debug.LogWarning("NAGCLOSE HIDETAGDECRIPTIONPAGE");
     }
 
     private void ToggleMenuBtn()
@@ -410,7 +410,7 @@ public class _3dModeUIManager : MonoBehaviour
         if (tagClickManager != null)
             tagClickManager.SetLanguage(languageVersion);
 
-        UnityEngine.Debug.Log($"Language set to: {languageVersion}");
+        Debug.Log($"Language set to: {languageVersion}");
 
         if (funFactsLanguageManager != null)
             funFactsLanguageManager.SetLanguage(languageVersion);

@@ -1,3 +1,5 @@
+using Mediapipe;
+
 public static class SceneData
 {
     public static bool showScorePage = false;
@@ -33,6 +35,16 @@ public static class SceneData
 
     //TAGALOG-ENGLISH VERSION FLAGS
     public static string LanguageVersion = "englishVersion"; //added 7 24
+
+    public static bool GetStudyingCurculatoryHeart()
+    {
+        return studyingCirculatoryHeart;
+    }
+
+    public static void SetStudyingCirculatoryHeart(bool val)
+    {
+        studyingCirculatoryHeart = val;
+    }
 
     public static void resetAllFlags()
     {

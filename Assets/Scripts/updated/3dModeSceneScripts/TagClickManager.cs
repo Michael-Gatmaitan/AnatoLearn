@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-// using UnityEditor.SearchService;
-
 public class TagClickManager : MonoBehaviour
 {
     private Camera cam;
@@ -33,7 +31,7 @@ public class TagClickManager : MonoBehaviour
     {
         cam = Camera.main;
 
-        var uiDoc = Object.FindFirstObjectByType<UIDocument>();
+        var uiDoc = FindFirstObjectByType<UIDocument>();
         if (uiDoc != null)
         {
             var root = uiDoc.rootVisualElement;
