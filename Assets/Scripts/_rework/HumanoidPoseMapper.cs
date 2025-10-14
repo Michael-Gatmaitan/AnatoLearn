@@ -130,7 +130,7 @@ public class HumanoidPoseMapper : MonoBehaviour
     {
         humanoidAnimator = GetComponent<Animator>();
 
-        CreateLandmarkSpheres();
+        // CreateLandmarkSpheres();
 
         positionPref = Instantiate(landmarkPrefab);
         positionPref.name = "Position pref";
@@ -205,7 +205,7 @@ public class HumanoidPoseMapper : MonoBehaviour
             if (move)
             {
                 SetAvatarWorldPosition();
-                UpdateLandmarkVisualization();
+                // UpdateLandmarkVisualization();
 
                 if (!useShoulderScale)
                 {
@@ -234,7 +234,8 @@ public class HumanoidPoseMapper : MonoBehaviour
         prevRightKneePos,
         prevLeftFootPos,
         prevRightFootPos,
-        prevHeadPos;
+        prevHeadPos,
+        prevAvatarPosition;
 
     // Rotation
     private bool hasPrevIK = false;
@@ -351,9 +352,24 @@ public class HumanoidPoseMapper : MonoBehaviour
 
         Vector3 averageHip = (leftHip + rightHip) / 2;
 
-        Vector3 adjustedHip = new(averageHip.x, averageHip.y / adjustedHipYDivider, averageHip.z);
+        Vector3 targetPosition = new(
+            averageHip.x,
+            averageHip.y / adjustedHipYDivider,
+            averageHip.z
+        );
 
-        humanoidAnimator.transform.localPosition = adjustedHip;
+        // Initialize previous position if not set
+        if (!hasPrevIK)
+        {
+            prevAvatarPosition = targetPosition;
+        }
+
+        // Smooth interpolation between current and target position
+        float smooth = Mathf.Clamp01(Time.deltaTime * 10f); // Adjust smoothing factor as needed
+        Vector3 smoothPosition = Vector3.Lerp(prevAvatarPosition, targetPosition, smooth);
+
+        humanoidAnimator.transform.localPosition = smoothPosition;
+        prevAvatarPosition = smoothPosition;
     }
 
     // public float rotationSpeed = 10f;
