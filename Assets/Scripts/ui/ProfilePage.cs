@@ -228,7 +228,6 @@ public class ProfilePage : MonoBehaviour
         L_Username.text = UserState.Instance.Username;
 
         DisplayBadges();
-
         DisplayEditProfile();
     }
 
@@ -274,6 +273,11 @@ public class ProfilePage : MonoBehaviour
 
     public void DisplayEditProfile()
     {
+        // Username
+        T_NewFirstname.value = UserState.Instance.Firstname;
+        T_NewMiddlename.value = UserState.Instance.Middlename;
+        T_NewLastname.value = UserState.Instance.Lastname;
+
         B_EditButton.RegisterCallback<ClickEvent>(
             (evt) =>
             {
@@ -300,6 +304,11 @@ public class ProfilePage : MonoBehaviour
                     {
                         Debug.Log("Edit name successful: " + r.message);
                         IntegrateUI.MessageBox(r.message);
+
+                        UserState.Instance.Firstname = newFirstname;
+                        UserState.Instance.Middlename = newMiddlename;
+                        UserState.Instance.Lastname = newLastname;
+
                         ClearEditProfileInputs();
                         // Optionally update UI or user state here
                     },

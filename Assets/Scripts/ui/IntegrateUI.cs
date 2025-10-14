@@ -24,7 +24,7 @@ public class IntegrateUI : MonoBehaviour
     private VisualElement splashScreen;
     private VisualElement homePage;
     private VisualElement loginScreen;
-    private VisualElement registrationScreen;
+    // private VisualElement registrationScreen;
     private VisualElement popUpPage;
     private VisualElement quizPage;
     private VisualElement progressPage;
@@ -34,7 +34,7 @@ public class IntegrateUI : MonoBehaviour
 
     // Home page btn
     private Button progressBtn;
-    private Button progressBackBtn;
+    // private Button progressBackBtn;
     private Button settingsBtn;
     private Button logoutBtn;
     private Button exitSettingsBtn;
@@ -164,12 +164,12 @@ public class IntegrateUI : MonoBehaviour
         splashScreen = V_Main.Q<VisualElement>("splashScreen");
         homePage = V_Main.Q<VisualElement>("homePage");
         loginScreen = V_Main.Q<VisualElement>("loginScreen");
-        registrationScreen = V_Main.Q<VisualElement>("registrationScreen");
+        // registrationScreen = V_Main.Q<VisualElement>("registrationScreen");
         popUpPage = V_Main.Q<VisualElement>("popUpPage");
         quizPage = V_Main.Q<VisualElement>("quizPage");
 
         progressBtn = homePage.Q<Button>("progressBtn");
-        progressBackBtn = V_Main.Q<Button>("progressBackBtn");
+        // progressBackBtn = V_Main.Q<Button>("progressBackBtn");
         progressTopicsPage = progressPage.Q<VisualElement>("progressTopicsPage"); //added
         settingsPage = V_Main.Q<VisualElement>("settingsPage");
         quizInstructionPage = V_Main.Q<VisualElement>("quizInstructionPage");
@@ -251,6 +251,32 @@ public class IntegrateUI : MonoBehaviour
         MessageBox("Logged out");
     }
 
+    // This function runs in redirecting from quiz and loging in.
+    public void SetupScoresAndAsyncPages()
+    {
+        // Fetch scores before reloading all pages
+        totalScoresController.GetAllTotalScores(
+            UserState.Instance.Id,
+            false,
+            (r) =>
+            {
+                scores = r.data;
+
+                // If system detects an already logged in user, this will trigger.
+                // Dynamic initializations (Becoz of DB data)
+                SetupHomeSystems();
+                // SetupProgressPage(progressPage);
+                SetupProgressPage();
+                profilePage.InitializeHomePage();
+            },
+            (e) =>
+            {
+                MessageBox("There's an problem in getting scores.");
+                Debug.LogError(e);
+            }
+        );
+    }
+
     void Start()
     {
         if (Permission.HasUserAuthorizedPermission(Permission.Camera))
@@ -282,46 +308,19 @@ public class IntegrateUI : MonoBehaviour
         SetupPopUpPageButtons();
         SetupFullScreenVideoControl();
         SetupQuizPage();
-        SetupSumScorePage();
+        // SetupSumScorePage();
         SceneData.resetAllFlags();
 
         if (UserState.Instance.Id != 0)
         {
             Debug.Log("User detected, setting up.");
-            // UserState.Instance.SetTopicId(1);
-            // SetupQuizes.SetupMCQContent2(mcqPage);
+            SetupScoresAndAsyncPages();
 
             // Hide splash screen if there's an id
             splashScreen.style.display = DisplayStyle.None;
 
-            // If system detects an already logged in user, this will trigger.
-            // Dynamic initializations (Becoz of DB data)
-            SetupHomeSystems(homePage);
-            SetupProgressPage(progressPage);
-            profilePage.InitializeHomePage();
-
             int topic_id = UserState.Instance.TopicId;
             bool isFromTapMe = UserState.Instance.isFromTapMe;
-
-            // Fetch scores
-            totalScoresController.GetAllTotalScores(
-                UserState.Instance.Id,
-                false,
-                (r) =>
-                {
-                    // Debug.Log("Result from getting all topic scores: " + r.data);
-                    scores = r.data;
-                    Debug.Log("Scores updated: " + scores.Count);
-
-                    // foreach (var score in scores)
-                    // {
-                    //     Debug.Log(score);
-                    // }
-
-                    // List<TotalScore> f = scores.FindAll((e) => e.topic_id == 1);
-                },
-                (e) => Debug.LogError(e)
-            );
 
             if (topic_id != 0 && isFromTapMe)
             {
@@ -360,7 +359,7 @@ public class IntegrateUI : MonoBehaviour
         // One time registration of callbacks
         progressBtn?.RegisterCallback<ClickEvent>(_ =>
         {
-            SetupProgressPage(progressPage);
+            // SetupProgressPage(progressPage);
 
             progressPage.style.display = DisplayStyle.Flex;
             progressTopicsPage.style.display = DisplayStyle.Flex;
@@ -384,10 +383,10 @@ public class IntegrateUI : MonoBehaviour
             settingsPage.style.display = DisplayStyle.None;
         });
 
-        progressBackBtn?.RegisterCallback<ClickEvent>(_ =>
-        {
-            progressPage.style.display = DisplayStyle.None;
-        });
+        // progressBackBtn?.RegisterCallback<ClickEvent>(_ =>
+        // {
+        //     progressPage.style.display = DisplayStyle.None;
+        // });
     }
 
     // public void SetupSettingsPage(VisualElement settingsPage)
@@ -428,7 +427,7 @@ public class IntegrateUI : MonoBehaviour
             quizPage.style.display = DisplayStyle.None;
             popUpPage.style.display = DisplayStyle.None;
 
-            SetupHomeSystems(homePage);
+            SetupHomeSystems();
         });
     }
 
@@ -983,7 +982,7 @@ public class IntegrateUI : MonoBehaviour
         });
     }
 
-    public void SetupHomeSystems(VisualElement homePage)
+    public void SetupHomeSystems()
     {
         homePage.style.display = DisplayStyle.Flex;
         ScrollView sv = homePage.Q<ScrollView>("ScrollView");
@@ -1094,9 +1093,11 @@ public class IntegrateUI : MonoBehaviour
         // );
     }
 
-    public void SetupProgressPage(VisualElement progressPage)
+    public void SetupProgressPage()
     {
-        VisualElement progressTopicsPage = progressPage.Q<VisualElement>("progressTopicsPage"); //added
+        // progressTopicsPage
+        // VisualElement progressTopicsPage = progressPage.Q<VisualElement>("progressTopicsPage"); //added
+        bool isTotalScoresPageShowed = false;
 
         VisualElement progressTopicTotalScoresPage = progressPage.Q<VisualElement>(
             "progressTopicTotalScoresPage"
@@ -1108,6 +1109,7 @@ public class IntegrateUI : MonoBehaviour
 
         Button progressBackBtn = progressPage.Q<Button>("progressBackBtn"); //added
         // Debug.Log("BACKGROUND IMAGE: " + progressBackBtn.style.backgroundImage);
+
 
         ScrollView progressScrollView = progressTopicsPage.Q<ScrollView>("ProgressScrollView");
         progressScrollView.Clear();
@@ -1269,6 +1271,7 @@ public class IntegrateUI : MonoBehaviour
             // Display specific scores of 1 topic
             void DisplayProgressTopicTotalScores(int topic_id)
             {
+                isTotalScoresPageShowed = true;
                 // Access userid in user state
                 progressTopicsPage.style.display = DisplayStyle.None;
                 progressTopicTotalScoresPage.style.display = DisplayStyle.Flex;
@@ -1284,14 +1287,10 @@ public class IntegrateUI : MonoBehaviour
                 Debug.Log($"Filtered Scores: {filteredScores}");
                 Debug.Log($"Filtered Scores langth: {filteredScores.Count}");
 
-                // GET TotalScores of this topic using topic_id and user_id
-                // totalScoresController.GetTotalScoresByUserIdAndTopicId(
-                //     UserState.Instance.Id,
-                //     topic_id,
-                //     false,
-                //     (response) =>
-                //     {
-                // if (response != null)
+                Label L_NoRecordFound = progressTopicTotalScoresPage.Q<Label>("L_NoRecordFound");
+                L_NoRecordFound.style.display = DisplayStyle.None;
+
+
                 if (filteredScores != null && filteredScores.Count != 0)
                 {
                     // foreach (var totalScore in response.data)
@@ -1451,6 +1450,10 @@ public class IntegrateUI : MonoBehaviour
                         mainContainer.Add(TotalSumScoreContainer);
                     }
                 }
+                else
+                {
+                    L_NoRecordFound.style.display = DisplayStyle.Flex;
+                }
                 // },
                 //         (err) =>
                 //         {
@@ -1466,22 +1469,22 @@ public class IntegrateUI : MonoBehaviour
             // foreach (var)
             progressBackBtn?.RegisterCallback<ClickEvent>(_ =>
             {
-                Debug.Log(progressTopicTotalScoresPage.style.display);
-                StyleEnum<DisplayStyle> topicTotalScorePageDisplay = progressTopicTotalScoresPage
-                    .style
-                    .display;
+                // if (topicTotalScorePageDisplay != DisplayStyle.Flex)
+                Debug.Log("Is total scorees page showed: " + isTotalScoresPageShowed);
 
-                Debug.Log($"Style of topic eme eme: {topicTotalScorePageDisplay}");
-
-                if (topicTotalScorePageDisplay == DisplayStyle.Flex)
+                if (isTotalScoresPageShowed)
                 {
+                    isTotalScoresPageShowed = false;
+                    progressPage.style.display = DisplayStyle.Flex;
                     progressTopicTotalScoresPage.style.display = DisplayStyle.None;
                     progressTopicsPage.style.display = DisplayStyle.Flex;
+                    homePage.style.display = DisplayStyle.None;
                 }
                 else
                 {
                     progressPage.style.display = DisplayStyle.None;
-                    progressPage.parent.Q("homePage").style.display = DisplayStyle.Flex;
+                    homePage.style.display = DisplayStyle.Flex;
+                    // progressPage.parent.Q("homePage").style.display = DisplayStyle.Flex;
                 }
             });
         }

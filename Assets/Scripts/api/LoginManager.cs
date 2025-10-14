@@ -27,6 +27,9 @@ public class LoginManager : MonoBehaviour
         public int id;
         public string name;
         public string email;
+        public string fname;
+        public string mname;
+        public string lname;
 
         // For errors
         public string message;
@@ -100,9 +103,12 @@ public class LoginManager : MonoBehaviour
             int id = response.user.id;
             string name = response.user.name;
             string email = response.user.email;
+            string fname = response.user.fname;
+            string lname = response.user.lname;
+            string mname = response.user.mname;
 
             // Set the data of user to localstorage
-            UserState.Instance.SetUserData(id, name, email);
+            UserState.Instance.SetUserData(id, name, email, fname, lname, mname);
 
             string loggedInMessage = $"Welcome, {name}!";
             Debug.Log("You logged in! " + response.user.name);
@@ -112,9 +118,11 @@ public class LoginManager : MonoBehaviour
             loginPage.style.display = DisplayStyle.None;
             homePage.style.display = DisplayStyle.Flex;
 
-            IntegrateUI.Instance.SetupHomeSystems(homePage);
-            IntegrateUI.Instance.SetupProgressPage(progressPage);
-            profilePage.InitializeHomePage();
+            IntegrateUI.Instance.SetupScoresAndAsyncPages();
+
+            // IntegrateUI.Instance.SetupHomeSystems(homePage);
+            // IntegrateUI.Instance.SetupProgressPage(progressPage);
+            // profilePage.InitializeHomePage();
             // IntegrateUI.Instance.SetupSettingsPage(settingsPage);
         }
         else

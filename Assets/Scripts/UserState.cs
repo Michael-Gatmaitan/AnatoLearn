@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal.Filters;
 using UnityEngine;
 
 public class UserState : MonoBehaviour
@@ -59,16 +60,33 @@ public class UserState : MonoBehaviour
         return QuizTimeRemaining;
     }
 
-    public void SetUserData(int id, string username, string email)
+    public void SetUserData(
+        int id,
+        string username,
+        string email,
+        string fname,
+        string lname,
+        string mname
+    )
     {
         Id = id;
         Username = username;
         Email = email;
 
+        Firstname = fname;
+        Lastname = lname;
+
+        if (mname != null || mname.Trim() != "")
+            Middlename = mname;
+
         // Save to PlayerPrefs
         PlayerPrefs.SetInt("id", id);
         PlayerPrefs.SetString("username", username);
         PlayerPrefs.SetString("email", email);
+        PlayerPrefs.SetString("fname", fname);
+        PlayerPrefs.SetString("mname", mname);
+        PlayerPrefs.SetString("lname", lname);
+
         PlayerPrefs.Save();
     }
 
@@ -79,6 +97,10 @@ public class UserState : MonoBehaviour
             Id = PlayerPrefs.GetInt("id");
             Username = PlayerPrefs.GetString("username");
             Email = PlayerPrefs.GetString("email");
+
+            Firstname = PlayerPrefs.GetString("fname");
+            Middlename = PlayerPrefs.GetString("mname");
+            Lastname = PlayerPrefs.GetString("lname");
         }
     }
 

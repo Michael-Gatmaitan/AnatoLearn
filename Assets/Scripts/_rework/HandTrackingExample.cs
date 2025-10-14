@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class HandTrackingExample : MonoBehaviour
 {
+    // Switch conversion of landmarks using this boolean
+    private readonly bool isMobile = true;
+
     [Header("Hand Tracking")]
     public HTS_Improved handTracker;
 
@@ -280,13 +283,18 @@ public class HandTrackingExample : MonoBehaviour
         float vx,
             vy;
 
-        // Desktop
-        // vx = landmark.x;
-        // vy = 1f - landmark.y;
-
-        // Mobile
-        vx = 1f - landmark.y;
-        vy = 1f - landmark.x;
+        if (isMobile)
+        {
+            // Mobile
+            vx = 1f - landmark.y;
+            vy = 1f - landmark.x;
+        }
+        else
+        {
+            // Desktop
+            vx = landmark.x;
+            vy = 1f - landmark.y;
+        }
 
         Vector3 stwpoint = Camera.main.ViewportToWorldPoint(new Vector3(vx, vy, 100f));
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -77,6 +78,7 @@ public class RegistrationPage : MonoBehaviour
     private TextField T_Code_4;
     private TextField T_Code_5;
     private TextField T_Code_6;
+    private Button B_ResendCode;
     private Button B_ConfirmAccount;
 
     // Registration 3
@@ -97,6 +99,10 @@ public class RegistrationPage : MonoBehaviour
     private string user_lastname;
     private string user_email;
     private string user_pass;
+
+    private int resendCodeTimer = 120;
+    private Coroutine resendTimerCoroutine;
+    private string resendDefaultText;
 
     private VisualElement loginPage;
 
@@ -131,7 +137,19 @@ public class RegistrationPage : MonoBehaviour
         T_Code_4 = V_Registration_2.Q<TextField>("T_Code_4");
         T_Code_5 = V_Registration_2.Q<TextField>("T_Code_5");
         T_Code_6 = V_Registration_2.Q<TextField>("T_Code_6");
+        B_ResendCode = V_Registration_2.Q<Button>("B_ResendCode");
         B_ConfirmAccount = V_Registration_2.Q<Button>("B_ConfirmAccount");
+        if (B_ResendCode != null)
+        {
+            if (!string.IsNullOrEmpty(B_ResendCode.text))
+            {
+                resendDefaultText = B_ResendCode.text;
+            }
+            else
+            {
+                resendDefaultText = "Resend Code";
+            }
+        }
 
         V_Registration_3 = V_RegistrationPages.Q<VisualElement>("V_Registration_3");
         T_Username = V_Registration_3.Q<TextField>("T_Username");
@@ -178,6 +196,24 @@ public class RegistrationPage : MonoBehaviour
             T_LastName.value = "";
         }
 
+        void SendCode()
+        {
+            emailVerificationController.CreateEmailVerification(
+                user_email,
+                "creation",
+                (r) => IntegrateUI.MessageBox("Code sent successfully"),
+                (e) => Debug.Log(e)
+            );
+            if (B_ResendCode != null)
+            {
+                if (resendTimerCoroutine != null)
+                {
+                    StopCoroutine(resendTimerCoroutine);
+                }
+                resendTimerCoroutine = StartCoroutine(ResendCooldown());
+            }
+        }
+
         B_Proceed?.RegisterCallback<ClickEvent>(_ =>
         {
             if (T_Pass.value.Length < 8)
@@ -209,27 +245,16 @@ public class RegistrationPage : MonoBehaviour
                     if (r.success)
                     {
                         Debug.Log("Email is valid!!!");
+                        SendCode();
 
-                        emailVerificationController.CreateEmailVerification(
-                            user_email,
-                            "creation",
-                            (r) =>
-                            {
-                                Debug.Log(r);
+                        Debug.Log(r);
 
-                                V_Registration_1.style.display = DisplayStyle.None;
-                                V_Registration_2.style.display = DisplayStyle.Flex;
+                        V_Registration_1.style.display = DisplayStyle.None;
+                        V_Registration_2.style.display = DisplayStyle.Flex;
 
-                                ClearForm1();
+                        ClearForm1();
 
-                                T_Code_1.Focus();
-
-                            },
-                            (e) =>
-                            {
-                                Debug.Log(e);
-                            }
-                        );
+                        T_Code_1.Focus();
                     }
                     else
                     {
@@ -270,6 +295,13 @@ public class RegistrationPage : MonoBehaviour
         {
             if (_.newValue.Length >= 1)
                 T_Code_6.Focus();
+        });
+
+        B_ResendCode?.RegisterCallback<ClickEvent>(_ =>
+        {
+            // Call resend code endpoint | call send code again
+            SendCode();
+            // Timer handled by SendCode via coroutine
         });
 
         B_ConfirmAccount?.RegisterCallback<ClickEvent>(_ =>
@@ -315,7 +347,6 @@ public class RegistrationPage : MonoBehaviour
                         ClearForm2();
                     }
                     B_ConfirmAccount.SetEnabled(true);
-
                 },
                 (e) =>
                 {
@@ -387,5 +418,27 @@ public class RegistrationPage : MonoBehaviour
 
             // }
         });
+    }
+
+    private IEnumerator ResendCooldown()
+    {
+        B_ResendCode.SetEnabled(false);
+        int remainingSeconds = resendCodeTimer;
+        while (remainingSeconds > 0)
+        {
+            B_ResendCode.text = $"Resend ({remainingSeconds}s)";
+            yield return new WaitForSeconds(1f);
+            remainingSeconds--;
+        }
+        if (string.IsNullOrEmpty(resendDefaultText))
+        {
+            B_ResendCode.text = "Resend Code";
+        }
+        else
+        {
+            B_ResendCode.text = resendDefaultText;
+        }
+        B_ResendCode.SetEnabled(true);
+        resendTimerCoroutine = null;
     }
 }
