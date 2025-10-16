@@ -8,6 +8,7 @@ public class LoginPage : MonoBehaviour
     private VisualElement V_RegistrationPages;
     private VisualElement V_Registration_1;
     private VisualElement loginPage;
+    private TextField T_Email, T_Pass;
 
     void OnEnable()
     {
@@ -28,12 +29,15 @@ public class LoginPage : MonoBehaviour
             "V_ForgotPassword_1"
         );
 
+        T_Email = loginPage.Q<TextField>("T_Email");
+        T_Pass = loginPage.Q<TextField>("T_Pass");
+
         loginBtn?.RegisterCallback<ClickEvent>(_ =>
         {
             // T_Username
             // T_Pass
-            string email = loginPage.Q<TextField>("T_Email").text;
-            string password = loginPage.Q<TextField>("T_Pass").text;
+            string email = T_Email.text;
+            string password = T_Pass.text;
 
             Debug.Log($"Email: {email} Password: {password}");
 

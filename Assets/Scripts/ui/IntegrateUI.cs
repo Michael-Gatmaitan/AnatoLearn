@@ -351,6 +351,9 @@ public class IntegrateUI : MonoBehaviour
             Debug.Log("Show progression page: " + UserState.Instance.showProgressionPage);
             if (UserState.Instance.GetShowProgressionPage())
             {
+                // Hide loading screen if the user is from AR/3D Mode
+                loadingScreen.style.display = DisplayStyle.None;
+
                 ShowUnlockedProgression();
                 UserState.Instance.showProgressionPage = false;
                 UserState.Instance.SetShowProgressionPage(false);

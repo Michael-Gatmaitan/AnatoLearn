@@ -47,9 +47,12 @@ public class LoginManager : MonoBehaviour
     private VisualElement root;
     private VisualElement V_Main;
     private VisualElement loginPage;
+
     private VisualElement homePage;
     private VisualElement progressPage;
     private VisualElement settingsPage;
+
+    private TextField T_Email, T_Pass;
 
     // private IntegrateUI integrateUI;
 
@@ -66,6 +69,9 @@ public class LoginManager : MonoBehaviour
         settingsPage = V_Main.Q<VisualElement>("settingsPage");
 
         profilePage = GetComponent<ProfilePage>();
+
+        T_Email = loginPage.Q<TextField>("T_Email");
+        T_Pass = loginPage.Q<TextField>("T_Pass");
     }
 
     public void StartLogin(LoginRequest requestBody)
@@ -94,6 +100,10 @@ public class LoginManager : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
+            // Clear text fields
+            T_Email.value = "";
+            T_Pass.value = "";
+
             loginButton.text = "Log in";
             loginButton.SetEnabled(true);
 

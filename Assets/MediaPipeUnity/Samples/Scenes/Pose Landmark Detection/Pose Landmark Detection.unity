@@ -7119,7 +7119,7 @@ MonoBehaviour:
   positionZOffset: 50
   adjustedHipYDivider: 0.9
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.3
+  avatarReferenceTorsoHeight: 0.45
   ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
@@ -11077,7 +11077,7 @@ MonoBehaviour:
   positionZOffset: 50
   adjustedHipYDivider: 0.9
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.3
+  avatarReferenceTorsoHeight: 0.5
   ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
@@ -17870,7 +17870,7 @@ MonoBehaviour:
   positionZOffset: 50
   adjustedHipYDivider: 0.9
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.3
+  avatarReferenceTorsoHeight: 0.4
   ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
@@ -27128,7 +27128,7 @@ MonoBehaviour:
   positionZOffset: 50
   adjustedHipYDivider: 0.9
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.3
+  avatarReferenceTorsoHeight: 0.6
   ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
@@ -31591,7 +31591,7 @@ MonoBehaviour:
   positionZOffset: 50
   adjustedHipYDivider: 0.9
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.3
+  avatarReferenceTorsoHeight: 0.7
   ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
@@ -32741,11 +32741,11 @@ SceneRoots:
   - {fileID: 403801985}
   - {fileID: 1593961150}
   - {fileID: 8915306871267397562}
+  - {fileID: 767708020}
   - {fileID: 1754062486}
+  - {fileID: 524192755}
   - {fileID: 2111542080}
   - {fileID: 1466234201}
-  - {fileID: 524192755}
-  - {fileID: 767708020}
   - {fileID: 2140527471}
   - {fileID: 2002120617}
   - {fileID: 1605794937}
