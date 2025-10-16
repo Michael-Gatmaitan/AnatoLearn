@@ -22,6 +22,7 @@ public class IntegrateUI : MonoBehaviour
 
     // Pages
     private VisualElement splashScreen;
+    private VisualElement loadingScreen;
     private VisualElement homePage;
     private VisualElement loginScreen;
     // private VisualElement registrationScreen;
@@ -162,6 +163,7 @@ public class IntegrateUI : MonoBehaviour
 
         // Initialize home
         splashScreen = V_Main.Q<VisualElement>("splashScreen");
+        loadingScreen = V_Main.Q<VisualElement>("loadingScreen");
         homePage = V_Main.Q<VisualElement>("homePage");
         loginScreen = V_Main.Q<VisualElement>("loginScreen");
         // registrationScreen = V_Main.Q<VisualElement>("registrationScreen");
@@ -254,6 +256,9 @@ public class IntegrateUI : MonoBehaviour
     // This function runs in redirecting from quiz and loging in.
     public void SetupScoresAndAsyncPages()
     {
+        // Show loading screen
+        loadingScreen.style.display = DisplayStyle.Flex;
+
         // Fetch scores before reloading all pages
         totalScoresController.GetAllTotalScores(
             UserState.Instance.Id,
@@ -264,6 +269,9 @@ public class IntegrateUI : MonoBehaviour
 
                 // If system detects an already logged in user, this will trigger.
                 // Dynamic initializations (Becoz of DB data)
+
+                loadingScreen.style.display = DisplayStyle.None;
+
                 SetupHomeSystems();
                 // SetupProgressPage(progressPage);
                 SetupProgressPage();
@@ -314,10 +322,11 @@ public class IntegrateUI : MonoBehaviour
         if (UserState.Instance.Id != 0)
         {
             Debug.Log("User detected, setting up.");
-            SetupScoresAndAsyncPages();
 
             // Hide splash screen if there's an id
             splashScreen.style.display = DisplayStyle.None;
+
+            SetupScoresAndAsyncPages();
 
             int topic_id = UserState.Instance.TopicId;
             bool isFromTapMe = UserState.Instance.isFromTapMe;
@@ -433,22 +442,6 @@ public class IntegrateUI : MonoBehaviour
 
     private void SetupQuizPage()
     {
-        // doneMcqButton.SetEnabled(false);
-        // doneMcqButton?.RegisterCallback<ClickEvent>(evt =>
-        // {
-        //     // ShowScorePage();
-        //     SetupQuizes.SetupScore();
-        //     mcqPage.style.display = DisplayStyle.None;
-        //     tofPage.style.display = DisplayStyle.Flex;
-        //     // doneMcq = true;
-        // });
-
-        // doneTofButton?.RegisterCallback<ClickEvent>(evt =>
-        // {
-        //     SetupQuizes.SetupScore();
-        //     // doneTof = true;
-        // });
-
         scorePageContinueBtn?.RegisterCallback<ClickEvent>(_ =>
         {
             int tapScore = UserState.Instance.CurrentTapScore;
@@ -470,7 +463,7 @@ public class IntegrateUI : MonoBehaviour
                 Label correctScore = sumScorePage.Q<Label>("correctScore");
                 Label incorrectScore = sumScorePage.Q<Label>("incorrectScore");
 
-                score.text = $"{(100 / 15) * allScores}%";
+                score.text = $"{100 / 15 * allScores}%";
 
                 // Display accuracy / performance
 

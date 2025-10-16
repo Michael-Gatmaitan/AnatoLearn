@@ -10,7 +10,8 @@ public class UserState : MonoBehaviour
 
     public string Firstname,
         Middlename,
-        Lastname;
+        Lastname,
+        Avatar;
 
     public int TopicId { get; private set; }
     public int ActivityId { get; private set; }
@@ -66,7 +67,8 @@ public class UserState : MonoBehaviour
         string email,
         string fname,
         string lname,
-        string mname
+        string mname,
+        string avatar
     )
     {
         Id = id;
@@ -79,6 +81,8 @@ public class UserState : MonoBehaviour
         if (mname != null || mname.Trim() != "")
             Middlename = mname;
 
+        Avatar = avatar;
+
         // Save to PlayerPrefs
         PlayerPrefs.SetInt("id", id);
         PlayerPrefs.SetString("username", username);
@@ -86,6 +90,7 @@ public class UserState : MonoBehaviour
         PlayerPrefs.SetString("fname", fname);
         PlayerPrefs.SetString("mname", mname);
         PlayerPrefs.SetString("lname", lname);
+        PlayerPrefs.SetString("avatar", avatar);
 
         PlayerPrefs.Save();
     }
@@ -101,6 +106,8 @@ public class UserState : MonoBehaviour
             Firstname = PlayerPrefs.GetString("fname");
             Middlename = PlayerPrefs.GetString("mname");
             Lastname = PlayerPrefs.GetString("lname");
+
+            Avatar = PlayerPrefs.GetString("avatar");
         }
     }
 
@@ -115,6 +122,12 @@ public class UserState : MonoBehaviour
         PlayerPrefs.DeleteKey("id");
         PlayerPrefs.DeleteKey("username");
         PlayerPrefs.DeleteKey("email");
+
+        PlayerPrefs.DeleteKey("fname");
+        PlayerPrefs.DeleteKey("mname");
+        PlayerPrefs.DeleteKey("lname");
+
+        PlayerPrefs.DeleteKey("avatar");
     }
 
     public bool IsLoggedIn()
@@ -125,25 +138,6 @@ public class UserState : MonoBehaviour
     public void SetTopicId(int topicId)
     {
         TopicId = topicId;
-        // switch (systemName)
-        // {
-        //     case "skeletal":
-        //         TopicId = 1;
-        //         // BodySystem = BodySystem.SkeletalSystem;
-        //         break;
-        //     case "muscular":
-        //         TopicId = 2;
-        //         break;
-        //     case "nervous":
-        //         TopicId = 7; // ??
-        //         // BodySystem = BodySystem.NervousSystem;
-        //         break;
-        //     default:
-        //         TopicId = 0;
-        //         Debug.LogError($"Invalid system name to set UserState.TopicId: {systemName}");
-        //         break;
-        // }
-
         Debug.Log($"UserData.TopicID is set to {TopicId}");
     }
 

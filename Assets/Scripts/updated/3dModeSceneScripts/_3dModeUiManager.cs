@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class _3dModeUIManager : MonoBehaviour
@@ -127,7 +128,8 @@ public class _3dModeUIManager : MonoBehaviour
         //Button call backs
         homeBtn?.RegisterCallback<ClickEvent>(evt => ShowHomePromptPage());
         exitHomePromptBtn?.RegisterCallback<ClickEvent>(evt => HideHomePromptPage());
-        yesHomeBtn?.RegisterCallback<ClickEvent>(evt => HideHomePromptPage());
+        // YesHomePromptPage function will direct user to home
+        yesHomeBtn?.RegisterCallback<ClickEvent>(evt => YesHomePropmtPage());
         noHomeBtn?.RegisterCallback<ClickEvent>(evt => HideHomePromptPage());
 
         // exitSkullDesBtn?.RegisterCallback<ClickEvent>(evt => HideTagDescriptionPage()); //added
@@ -260,6 +262,11 @@ public class _3dModeUIManager : MonoBehaviour
     private void ShowHomePromptPage()
     {
         blackBgAbsoluteHomePromptPage.style.display = DisplayStyle.Flex;
+    }
+
+    private void YesHomePropmtPage()
+    {
+        SceneManager.LoadScene("UIScene1");
     }
 
     private void HideHomePromptPage()

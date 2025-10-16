@@ -547,6 +547,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abce320a894cc3146a1239a37361c8cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  avatarSprites:
+  - {fileID: 21300000, guid: e0cd2bb55e7542943babbfb6284209b2, type: 3}
+  - {fileID: 21300000, guid: 48859d74e6232984ba75a7bb71b69b89, type: 3}
+  - {fileID: 21300000, guid: 6d063c57c8caadc4f91b683edb707d44, type: 3}
+  - {fileID: 21300000, guid: c8dd4561ae86f6b4fbb38f8143579a3b, type: 3}
+  - {fileID: 21300000, guid: 49f288c433bd00d40a5bf4b3e95ea277, type: 3}
 --- !u!114 &1211968091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,6 +595,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Id: 0
+  Firstname: 
+  Middlename: 
+  Lastname: 
+  Avatar: 
   CurrentTapScore: -1
   CurrentMCQScore: -1
   CurrentTOFScore: -1

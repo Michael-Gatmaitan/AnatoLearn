@@ -1,32 +1,3 @@
-// using UnityEngine;
-// using UnityEngine.UIElements;
-// using UnityEngine.SceneManagement;
-// using System;
-
-// public class RedIncorrectScoreBtnHandler : MonoBehaviour
-// {
-//     private void OnEnable()
-//     {
-//         var root = GetComponent<UIDocument>().rootVisualElement;
-//         var incorrectScoreRedbox = root.Q<VisualElement>("incorrectScore");
-
-//         if (incorrectScoreRedbox != null)
-//         {
-//             incorrectScoreRedbox.RegisterCallback<ClickEvent>(evt =>
-//             {
-//                 SceneData.showScorePage = true;
-//                 SceneManager.LoadScene("UIScene1");
-//             });
-//         }
-//         else
-//         {
-//             Debug.LogWarning("did not clcikec!!");
-//         }
-//     }
-// }
-
-
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -37,6 +8,7 @@ public class _3dModeSceneManager : MonoBehaviour
     private static UserTopicProgressController userTopicProgressController;
 
     // The logic of finishBtn goes here
+    private VisualElement finishPromptPage;
 
     private void OnEnable()
     {
@@ -47,7 +19,8 @@ public class _3dModeSceneManager : MonoBehaviour
 
         var root = GetComponent<UIDocument>().rootVisualElement;
         var finishBtn = root.Q<VisualElement>("finishBtn");
-        var finishPromptPage = root.Q<VisualElement>("blackBgAbsoluteFinishButtonPromptPage");
+        // var finishPromptPage = root.Q<VisualElement>("blackBgAbsoluteFinishButtonPromptPage");
+        finishPromptPage = root.Q<VisualElement>("blackBgAbsoluteFinishButtonPromptPage");
         var OkayFinishPromptBtn = finishPromptPage.Q<Button>("OkayFinishPromptBtn");
 
         OkayFinishPromptBtn?.RegisterCallback<ClickEvent>(_ =>
@@ -109,6 +82,7 @@ public class _3dModeSceneManager : MonoBehaviour
                         else
                         {
                             // Do nothing
+                            finishPromptPage.style.display = DisplayStyle.Flex;
                             Debug.Log("You need to view all body parts to proceed");
                             // finishPromptPage.style.display = DisplayStyle.Flex;
                         }

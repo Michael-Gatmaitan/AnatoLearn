@@ -30,6 +30,7 @@ public class LoginManager : MonoBehaviour
         public string fname;
         public string mname;
         public string lname;
+        public string avatar;
 
         // For errors
         public string message;
@@ -106,9 +107,10 @@ public class LoginManager : MonoBehaviour
             string fname = response.user.fname;
             string lname = response.user.lname;
             string mname = response.user.mname;
+            string avatar = response.user.avatar;
 
             // Set the data of user to localstorage
-            UserState.Instance.SetUserData(id, name, email, fname, lname, mname);
+            UserState.Instance.SetUserData(id, name, email, fname, lname, mname, avatar);
 
             string loggedInMessage = $"Welcome, {name}!";
             Debug.Log("You logged in! " + response.user.name);

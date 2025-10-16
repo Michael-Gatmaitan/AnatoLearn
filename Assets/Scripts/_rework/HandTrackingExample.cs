@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// Example script showing how to use the improved hand tracking system
@@ -15,6 +16,8 @@ public class HandTrackingExample : MonoBehaviour
 
     [Header("Visualization")]
     public GameObject[] landmarkSpheres; // 21 spheres for hand landmarks
+
+    [Tooltip("Toggle to show/hide hand landmark visualization spheres")]
     public bool showLandmarkSpheres = true;
 
     [Header("Gesture Detection")]
@@ -29,7 +32,6 @@ public class HandTrackingExample : MonoBehaviour
     public float positionSmoothing = 5f;
     public float scaleSmoothing = 5f;
     public float rotationSmoothing = 5f;
-
     private List<Vector3> worldPositions;
 
     // Smoothing variables
@@ -62,10 +64,12 @@ public class HandTrackingExample : MonoBehaviour
         // }
 
         // Create landmark spheres if they don't exist
-        if (landmarkSpheres == null || landmarkSpheres.Length == 0)
-        {
-            CreateLandmarkSpheres();
-        }
+        // if (landmarkSpheres == null || landmarkSpheres.Length == 0)
+        // {
+        //     CreateLandmarkSpheres();
+        // }
+
+        // Initialize hand instruction - show it initially since no hand is detected yet
     }
 
     void Update()
@@ -75,17 +79,37 @@ public class HandTrackingExample : MonoBehaviour
         if (handTracker == null)
             return;
 
+        bool isLandmarksValid = handTracker.HasValidLandmarks();
+
         // Check if we have valid landmarks
-        if (handTracker.HasValidLandmarks())
+        if (isLandmarksValid)
         {
-            UpdateLandmarkVisualization();
+            // UpdateLandmarkVisualization();
             DetectGestures();
             PlaceCube();
         }
-        else
-        {
-            HideLandmarkSpheres();
-        }
+
+        Debug.Log($"Landmark valid: " + isLandmarksValid);
+        Debug.Log($"Landmark positions count: " + worldPositions.Count);
+
+        Debug.Log($"Landmark count: " + handTracker.GetLandmarkCount());
+
+        // if (handTracker.GetLandmarkCount())
+        // else
+        // {
+        //     HideLandmarkSpheres();
+
+        //     // Only show instruction if hand has been missing for the delay period
+        //     if (wasHandDetected)
+        //     {
+        //         lastHandDetectionTime = Time.time;
+        //         wasHandDetected = false;
+        //     }
+        //     else if (Time.time - lastHandDetectionTime >= handDetectionDelay)
+        //     {
+        //         ShowHandInstruction();
+        //     }
+        // }
     }
 
     void PlaceCube()
@@ -301,17 +325,17 @@ public class HandTrackingExample : MonoBehaviour
         return stwpoint;
     }
 
-    void HideLandmarkSpheres()
-    {
-        if (landmarkSpheres == null)
-            return;
+    // void HideLandmarkSpheres()
+    // {
+    //     if (landmarkSpheres == null)
+    //         return;
 
-        foreach (var sphere in landmarkSpheres)
-        {
-            if (sphere != null)
-                sphere.SetActive(false);
-        }
-    }
+    //     foreach (var sphere in landmarkSpheres)
+    //     {
+    //         if (sphere != null)
+    //             sphere.SetActive(false);
+    //     }
+    // }
 
     void DetectGestures()
     {

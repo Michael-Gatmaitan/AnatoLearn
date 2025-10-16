@@ -861,3 +861,14 @@ VisualElement {
     padding-bottom: 8px;
     padding-left: 8px;
 }
+
+.profileSelected {
+    border-left-color: rgb(255, 149, 45);
+    border-right-color: rgb(255, 149, 45);
+    border-top-color: rgb(255, 149, 45);
+    border-bottom-color: rgb(255, 149, 45);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+}

@@ -1636,7 +1636,7 @@
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="blackBgAbsoluteFinishButtonPromptPage" style="flex-grow: 1; position: absolute; width: 100%; background-color: rgba(0, 0, 0, 0.55); background-size: 100% 100%; height: 100%; justify-content: center; align-items: center; display: none; font-size: 18px;">
+        <engine:VisualElement name="blackBgAbsoluteFinishButtonPromptPage" style="flex-grow: 1; position: absolute; width: 100%; background-color: rgba(0, 0, 0, 0.55); background-size: 100% 100%; height: 100%; justify-content: center; align-items: center; display: none; font-size: 18px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
             <engine:VisualElement name="FinishBtnPromptPage" style="flex-grow: 1; position: absolute; width: 100%; background-color: rgba(0, 0, 0, 0.55); background-size: 100% 100%; height: 100%; justify-content: center; align-items: center; display: flex; font-size: 18px;">
                 <engine:VisualElement name="finishPromptPage" style="flex-grow: 0; justify-content: center; align-items: center; align-content: center; width: 100%; height: auto; display: flex;">
                     <engine:VisualElement name="container" style="flex-grow: 0; border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); background-color: rgb(52, 107, 168); width: 358px; height: auto; max-height: none; justify-content: flex-start; align-self: center; align-items: center; display: flex; flex-shrink: 1; align-content: flex-end; flex-direction: column; border-top-left-radius: 14px; border-top-right-radius: 14px; border-bottom-right-radius: 14px; border-bottom-left-radius: 14px; padding-top: 12px; padding-bottom: 12px; padding-left: 18px; padding-right: 18px;">
@@ -1653,5 +1653,7 @@
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
+        <engine:Label text="Place a hand to spawn the model" name="L_HandInstruction" style="-unity-text-align: upper-center; position: absolute; width: 100%; bottom: 100px; -unity-font-definition: resource(&apos;fonts/poppins/Poppins-Bold&apos;); color: rgb(255, 255, 255); display: none;" />
+        <engine:Label text="Detect a human body to see the model" name="L_BodyInstruction" style="-unity-text-align: upper-center; position: absolute; width: 100%; bottom: 100px; -unity-font-definition: resource(&apos;fonts/poppins/Poppins-Bold&apos;); color: rgb(255, 255, 255); display: none;" />
     </engine:VisualElement>
 </engine:UXML>

@@ -1551,13 +1551,12 @@ MonoBehaviour:
   poseLandmarkerRunner: {fileID: 1064799468}
   landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
   uiDocument: {fileID: 403801984}
-  screenDepth: 100
-  positionZOffset: 20
-  adjustedHipYDivider: 1.5
-  landmarkSpheres: []
+  screenDepth: 20
+  positionZOffset: 50
+  adjustedHipYDivider: 0.9
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.65
-  ikPositionWeight: 1
+  avatarReferenceTorsoHeight: 0.3
+  ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
 --- !u!1 &122274104
@@ -7116,13 +7115,12 @@ MonoBehaviour:
   poseLandmarkerRunner: {fileID: 1064799468}
   landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
   uiDocument: {fileID: 403801984}
-  screenDepth: 100
-  positionZOffset: 20
-  adjustedHipYDivider: 1.5
-  landmarkSpheres: []
+  screenDepth: 20
+  positionZOffset: 50
+  adjustedHipYDivider: 0.9
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.7
-  ikPositionWeight: 1
+  avatarReferenceTorsoHeight: 0.3
+  ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
 --- !u!4 &524192758 stripped
@@ -11076,12 +11074,11 @@ MonoBehaviour:
   landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
   uiDocument: {fileID: 403801984}
   screenDepth: 20
-  positionZOffset: 20
-  adjustedHipYDivider: 0.8
-  landmarkSpheres: []
+  positionZOffset: 50
+  adjustedHipYDivider: 0.9
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.65
-  ikPositionWeight: 1
+  avatarReferenceTorsoHeight: 0.3
+  ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
 --- !u!4 &767708023 stripped
@@ -13047,6 +13044,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5115034461214926580, guid: 9fbe6d61591716e4e995976556349c58, type: 3}
       insertIndex: -1
       addedObject: {fileID: 912372031}
+    - targetCorrespondingSourceObject: {fileID: -5115034461214926580, guid: 9fbe6d61591716e4e995976556349c58, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 912372032}
   m_SourcePrefab: {fileID: 100100000, guid: 9fbe6d61591716e4e995976556349c58, type: 3}
 --- !u!1 &912372028 stripped
 GameObject:
@@ -13076,7 +13076,6 @@ MonoBehaviour:
   screenDepth: 100
   positionZOffset: 50
   adjustedHipYDivider: 1.5
-  landmarkSpheres: []
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.65
   ikPositionWeight: 1
@@ -13100,12 +13099,33 @@ MonoBehaviour:
   screenDepth: 100
   positionZOffset: 20
   adjustedHipYDivider: 1.5
-  landmarkSpheres: []
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.65
   ikPositionWeight: 1
   useShoulderScale: 0
   move: 1
+--- !u!95 &912372032
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912372029}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &913895455
 GameObject:
   m_ObjectHideFlags: 0
@@ -17849,7 +17869,6 @@ MonoBehaviour:
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
-  landmarkSpheres: []
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.3
   ikPositionWeight: 0.4
@@ -17862,7 +17881,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171826046}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee9febe14a8a5354e83bb2f04e52f57a, type: 3}
   m_Name: 
@@ -27108,7 +27127,6 @@ MonoBehaviour:
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
-  landmarkSpheres: []
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.3
   ikPositionWeight: 0.4
@@ -31569,13 +31587,12 @@ MonoBehaviour:
   poseLandmarkerRunner: {fileID: 1064799468}
   landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
   uiDocument: {fileID: 403801984}
-  screenDepth: 100
-  positionZOffset: 20
-  adjustedHipYDivider: 1.5
-  landmarkSpheres: []
+  screenDepth: 20
+  positionZOffset: 50
+  adjustedHipYDivider: 0.9
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.65
-  ikPositionWeight: 1
+  avatarReferenceTorsoHeight: 0.3
+  ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
 --- !u!95 &2111542083

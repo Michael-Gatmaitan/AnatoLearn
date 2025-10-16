@@ -8,6 +8,7 @@ using Mediapipe.Unity.Sample.PoseLandmarkDetection;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+[RequireComponent(typeof(Animator))]
 public class HumanoidPoseMapper : MonoBehaviour
 {
     // Switch conversion of landmarks using this boolean
@@ -41,6 +42,8 @@ public class HumanoidPoseMapper : MonoBehaviour
     private GameObject positionPref;
     public UIDocument uiDocument;
 
+    private Label L_BodyInstruction;
+
     public static HumanoidPoseMapper instance;
 
     [Header("Positioning")]
@@ -50,7 +53,9 @@ public class HumanoidPoseMapper : MonoBehaviour
 
     void OnEnable()
     {
-        // var root = uiDocument.rootVisualElement;
+        var root = uiDocument.rootVisualElement;
+        L_BodyInstruction = root.Q<Label>("L_BodyInstruction");
+
         instance = this;
     }
 
@@ -92,42 +97,42 @@ public class HumanoidPoseMapper : MonoBehaviour
         RIGHT_FOOT_INDEX = 32,
     }
 
-    public GameObject[] landmarkSpheres; // 33 spheres for hand landmarks
+    // public GameObject[] landmarkSpheres; // 33 spheres for hand landmarks
 
-    void CreateLandmarkSpheres()
-    {
-        landmarkSpheres = new GameObject[33];
+    // void CreateLandmarkSpheres()
+    // {
+    //     landmarkSpheres = new GameObject[33];
 
-        for (int i = 0; i < 33; i++)
-        {
-            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            sphere.name = $"Landmark_{i}";
-            sphere.transform.localScale = Vector3.one * 1f; // Small spheres
-            sphere.GetComponent<Renderer>().material.color = Color.green;
+    //     for (int i = 0; i < 33; i++)
+    //     {
+    //         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+    //         sphere.name = $"Landmark_{i}";
+    //         sphere.transform.localScale = Vector3.one * 1f; // Small spheres
+    //         sphere.GetComponent<Renderer>().material.color = Color.green;
 
-            // Remove collider to avoid physics interference
-            Destroy(sphere.GetComponent<Collider>());
+    //         // Remove collider to avoid physics interference
+    //         Destroy(sphere.GetComponent<Collider>());
 
-            landmarkSpheres[i] = sphere;
-        }
-    }
+    //         landmarkSpheres[i] = sphere;
+    //     }
+    // }
 
-    void UpdateLandmarkVisualization()
-    {
-        for (int i = 0; i < landmarks.Count; i++)
-        {
-            Vector3 worldPosition = ConvertMediaPipeToUnitySpace(landmarks[i]);
+    // void UpdateLandmarkVisualization()
+    // {
+    //     for (int i = 0; i < landmarks.Count; i++)
+    //     {
+    //         Vector3 worldPosition = ConvertMediaPipeToUnitySpace(landmarks[i]);
 
-            landmarkSpheres[i].transform.position = worldPosition;
-            landmarkSpheres[i].SetActive(true);
-        }
+    //         landmarkSpheres[i].transform.position = worldPosition;
+    //         landmarkSpheres[i].SetActive(true);
+    //     }
 
-        // Hide unused spheres
-        for (int i = landmarks.Count; i < landmarkSpheres.Length; i++)
-        {
-            landmarkSpheres[i].SetActive(false);
-        }
-    }
+    //     // Hide unused spheres
+    //     for (int i = landmarks.Count; i < landmarkSpheres.Length; i++)
+    //     {
+    //         landmarkSpheres[i].SetActive(false);
+    //     }
+    // }
 
     void Start()
     {
@@ -192,8 +197,14 @@ public class HumanoidPoseMapper : MonoBehaviour
                 || result.poseWorldLandmarks[0].landmarks.Count == 0
             )
             {
+                Debug.Log("No body detected.");
+                L_BodyInstruction.style.display = DisplayStyle.Flex;
                 // lx.text = "Pose landmarks statement problem";
                 return;
+            }
+            else
+            {
+                L_BodyInstruction.style.display = DisplayStyle.None;
             }
 
             landmarks = result.poseLandmarks[0].landmarks;

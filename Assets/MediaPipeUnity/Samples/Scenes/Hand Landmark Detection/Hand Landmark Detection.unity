@@ -767,8 +767,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handLandmarkerRunner: {fileID: 1747999299}
-  debugLogging: 0
+  debugLogging: 1
   coordinateConversionDistance: 1
+  uiDocument: {fileID: 1899105886}
 --- !u!114 &1747999299
 MonoBehaviour:
   m_ObjectHideFlags: 0

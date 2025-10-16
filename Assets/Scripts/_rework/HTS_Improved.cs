@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Mediapipe.Tasks.Components.Containers;
 using Mediapipe.Tasks.Vision.HandLandmarker;
 using Mediapipe.Unity.Sample.HandLandmarkDetection;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// Improved Hand Tracking Script that uses event-based approach for reliable hand landmark detection
@@ -17,6 +19,10 @@ public class HTS_Improved : MonoBehaviour
     public bool debugLogging = true;
     public float coordinateConversionDistance = 1.0f; // Distance from camera for world position conversion
 
+    [Header("UI Document")]
+    public UIDocument uiDocument;
+    private Label L_HandInstruction;
+
     // Latest processed landmarks
     private List<NormalizedLandmark> latestLandmarks = new List<NormalizedLandmark>();
     private List<Vector3> latestWorldPositions = new();
@@ -24,7 +30,14 @@ public class HTS_Improved : MonoBehaviour
     private Camera cam;
 
     // Thread-safe access
-    private readonly object landmarkLock = new object();
+    private readonly object landmarkLock = new();
+    private bool handDetected = false;
+
+    void OnEnable()
+    {
+        VisualElement root = uiDocument.rootVisualElement;
+        L_HandInstruction = root.Q<Label>("L_HandInstruction");
+    }
 
     void Start()
     {
@@ -46,6 +59,7 @@ public class HTS_Improved : MonoBehaviour
         handLandmarkerRunner.OnHandLandmarkDetected += OnHandLandmarkDetected;
         handLandmarkerRunner.OnHandLandmarkDetectedAsync += OnHandLandmarkDetectedAsync;
 
+        ShowHandInstruction();
         Debug.Log("[HTS_Improved] Successfully subscribed to hand landmark events");
     }
 
@@ -77,10 +91,20 @@ public class HTS_Improved : MonoBehaviour
     {
         if (result.handLandmarks == null || result.handLandmarks.Count == 0)
         {
+            handDetected = false;
             if (debugLogging)
                 Debug.Log("[HTS_Improved] No hand landmarks detected");
+            // ShowHandInstruction();
             return;
         }
+        else
+        {
+            handDetected = true;
+        }
+        // else
+        // {
+        //     HideHandInstruction();
+        // }
 
         // Get landmarks from the first detected hand
         var firstHandLandmarks = result.handLandmarks[0].landmarks;
@@ -115,6 +139,23 @@ public class HTS_Improved : MonoBehaviour
         ProcessLandmarks(latestLandmarks, latestWorldPositions);
     }
 
+    // Hiding and showing instruction
+    void ShowHandInstruction()
+    {
+        if (L_HandInstruction != null)
+        {
+            L_HandInstruction.style.display = DisplayStyle.Flex;
+        }
+    }
+
+    void HideHandInstruction()
+    {
+        if (L_HandInstruction != null)
+        {
+            L_HandInstruction.style.display = DisplayStyle.None;
+        }
+    }
+
     List<Vector3> ConvertToWorldPositions(List<NormalizedLandmark> normalizedLandmarks)
     {
         var worldPositions = new List<Vector3>();
@@ -127,7 +168,6 @@ public class HTS_Improved : MonoBehaviour
 
         foreach (var landmark in normalizedLandmarks)
         {
-            Debug.Log($"RAW x: {landmark.x} y: {landmark.y}");
             // MediaPipe normalized coordinates: x: left->right (0..1), y: top->bottom (0..1)
             // For ViewportToWorldPoint we need y from bottom->top, so use (1 - y)
 
@@ -276,5 +316,17 @@ public class HTS_Improved : MonoBehaviour
         public const int PINKY_PIP = 18;
         public const int PINKY_DIP = 19;
         public const int PINKY_TIP = 20;
+    }
+
+    void Update()
+    {
+        if (handDetected)
+        {
+            ShowHandInstruction();
+        }
+        else
+        {
+            HideHandInstruction();
+        }
     }
 }

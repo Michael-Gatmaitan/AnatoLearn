@@ -36,6 +36,16 @@ public class ProfilePage : MonoBehaviour
     private static TotalScoresController totalScoresController;
     private static UserController userController;
 
+    public Sprite[] avatarSprites;
+    private readonly List<string> avatarNames = new()
+    {
+        "default",
+        "boy-kid",
+        "boy",
+        "girl-kid",
+        "girl",
+    };
+
     private readonly Topics[] topicsArray = new Topics[]
     {
         new() { id = 1, topic_name = "skeletal" },
@@ -54,6 +64,13 @@ public class ProfilePage : MonoBehaviour
         T_NewMiddlename,
         T_NewLastname;
     private Button B_EditButton;
+
+    // private Profiel
+    private VisualElement V_Avatar;
+    private VisualElement V_HomeAvatar;
+    private Button B_UpdateAvatar;
+
+    private List<VisualElement> profiles;
 
     // Delete profile elements
 
@@ -208,6 +225,59 @@ public class ProfilePage : MonoBehaviour
         V_Badges = profilePage.Q<VisualElement>("V_Badges");
         V_EditProfile = profilePage.Q<VisualElement>("V_EditProfile");
 
+        // Profile variables initialization
+        V_Avatar = V_ProfileBody.Q<VisualElement>("V_Avatar");
+        V_HomeAvatar = homePage.Q<VisualElement>("V_HomeAvatar");
+        B_UpdateAvatar = V_ProfileBody.Q<Button>("B_UpdateAvatar");
+        B_UpdateAvatar.SetEnabled(false);
+
+        profiles = V_ProfileBody.Query(className: "profile").ToList();
+
+        VisualElement selected = null;
+        int selectedIndex = 0;
+
+        foreach (var p in profiles)
+        {
+            p?.RegisterCallback<ClickEvent>(_ =>
+            {
+                if (selected != null && p == selected)
+                {
+                    selected = null;
+                    p.RemoveFromClassList("profileSelected");
+
+                    B_UpdateAvatar.SetEnabled(false);
+                    return;
+                }
+
+                foreach (var _p in profiles)
+                {
+                    if (p == _p)
+                    {
+                        // Add selected class
+                        selected = p;
+                        selectedIndex = profiles.IndexOf(p);
+                        Debug.Log($"Selected: {selected}");
+                        p.AddToClassList("profileSelected");
+
+                        // Enable edit profile button
+                        B_UpdateAvatar.SetEnabled(true);
+                    }
+                    else
+                    {
+                        // Remove selected class
+                        _p.RemoveFromClassList("profileSelected");
+                    }
+                }
+
+                Debug.Log($"Selected index: {selectedIndex}");
+            });
+        }
+
+        B_UpdateAvatar?.RegisterCallback<ClickEvent>(_ =>
+        {
+            UpdateAvatarFunction(selectedIndex);
+        });
+
         // Edit profile variables initializations
 
         T_NewFirstname = V_EditProfile.Q<TextField>("T_NewFirstname");
@@ -217,18 +287,59 @@ public class ProfilePage : MonoBehaviour
         B_EditButton = V_EditProfile.Q<Button>("B_EditButton");
     }
 
-    // void Start()
-    // {
-    //     InitializeHomePage();
-    // }
+    public void UpdateAvatarFunction(int selectedIndex)
+    {
+        if (selectedIndex == 0)
+            return;
+
+        // Update avatar of user in database
+        string email = UserState.Instance.Email;
+        userController.EditAvatar(
+            email,
+            avatarNames[selectedIndex + 1],
+            (r) =>
+            {
+                Debug.Log("Edit avatar in db: " + r);
+            },
+            (e) =>
+            {
+                Debug.LogError("Edit avatar in db error");
+            }
+        );
+
+        V_Avatar.style.backgroundImage = new StyleBackground(avatarSprites[selectedIndex + 1]);
+        V_HomeAvatar.style.backgroundImage = new StyleBackground(avatarSprites[selectedIndex + 1]);
+    }
 
     public void InitializeHomePage()
     {
         Debug.Log("Initializing home page");
         L_Username.text = UserState.Instance.Username;
 
+        DisplayProfile();
         DisplayBadges();
         DisplayEditProfile();
+    }
+
+    public void DisplayProfile()
+    {
+        Debug.Log("Default profile: " + UserState.Instance.Avatar);
+
+        string avatar = UserState.Instance.Avatar;
+        int index = avatarNames.IndexOf(avatar);
+
+        Debug.Log("Avatar: " + avatar);
+
+        if (index == -1)
+        {
+            Debug.LogError("Avatar not found");
+        }
+        else
+        {
+            Debug.Log($"Avatar index found: {index} {avatarSprites[index]}");
+            V_Avatar.style.backgroundImage = new StyleBackground(avatarSprites[index]);
+            V_HomeAvatar.style.backgroundImage = new StyleBackground(avatarSprites[index]);
+        }
     }
 
     public void DisplayBadges()
