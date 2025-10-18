@@ -130,7 +130,7 @@ public class LoginManager : MonoBehaviour
             loginPage.style.display = DisplayStyle.None;
             homePage.style.display = DisplayStyle.Flex;
 
-            IntegrateUI.Instance.SetupScoresAndAsyncPages();
+            IntegrateUI.Instance.SetupScoresAndAsyncPages(false);
 
             // IntegrateUI.Instance.SetupHomeSystems(homePage);
             // IntegrateUI.Instance.SetupProgressPage(progressPage);

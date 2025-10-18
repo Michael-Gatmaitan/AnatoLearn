@@ -25,6 +25,7 @@ public class IntegrateUI : MonoBehaviour
     private VisualElement loadingScreen;
     private VisualElement homePage;
     private VisualElement loginScreen;
+
     // private VisualElement registrationScreen;
     private VisualElement popUpPage;
     private VisualElement quizPage;
@@ -35,6 +36,7 @@ public class IntegrateUI : MonoBehaviour
 
     // Home page btn
     private Button progressBtn;
+
     // private Button progressBackBtn;
     private Button settingsBtn;
     private Button logoutBtn;
@@ -64,6 +66,7 @@ public class IntegrateUI : MonoBehaviour
 
     // Quiz Instruction page
     private Button letsGoBtn;
+    private Button quizInsBackBtn;
 
     // Quiz
     public static VisualElement mcqPage;
@@ -196,6 +199,7 @@ public class IntegrateUI : MonoBehaviour
 
         // Quiz instruction page
         letsGoBtn = quizInstructionPage.Q<Button>("letsGoBtn");
+        quizInsBackBtn = quizInstructionPage.Q<Button>("quizInsBackBtn");
 
         // Initialize popup
         videoContainer = popUpPage.Q<VisualElement>("lessonVideoPage");
@@ -254,10 +258,11 @@ public class IntegrateUI : MonoBehaviour
     }
 
     // This function runs in redirecting from quiz and loging in.
-    public void SetupScoresAndAsyncPages()
+    public void SetupScoresAndAsyncPages(bool isFromTapMe)
     {
         // Show loading screen
-        loadingScreen.style.display = DisplayStyle.Flex;
+        if (!isFromTapMe)
+            loadingScreen.style.display = DisplayStyle.Flex;
 
         // Fetch scores before reloading all pages
         totalScoresController.GetAllTotalScores(
@@ -272,7 +277,7 @@ public class IntegrateUI : MonoBehaviour
 
                 loadingScreen.style.display = DisplayStyle.None;
 
-                SetupHomeSystems();
+                SetupHomeSystems(isFromTapMe);
                 // SetupProgressPage(progressPage);
                 SetupProgressPage();
                 profilePage.InitializeHomePage();
@@ -316,7 +321,7 @@ public class IntegrateUI : MonoBehaviour
         SetupPopUpPageButtons();
         SetupFullScreenVideoControl();
         SetupQuizPage();
-        // SetupSumScorePage();
+        SetupSumScorePage();
         SceneData.resetAllFlags();
 
         if (UserState.Instance.Id != 0)
@@ -326,17 +331,17 @@ public class IntegrateUI : MonoBehaviour
             // Hide splash screen if there's an id
             splashScreen.style.display = DisplayStyle.None;
 
-            SetupScoresAndAsyncPages();
-
             int topic_id = UserState.Instance.TopicId;
             bool isFromTapMe = UserState.Instance.isFromTapMe;
 
+            SetupScoresAndAsyncPages(isFromTapMe);
+
             if (topic_id != 0 && isFromTapMe)
             {
-                homePage.style.display = DisplayStyle.None;
+                // homePage.style.display = DisplayStyle.None;
                 UserState.Instance.isFromTapMe = false;
-                // Get timer from UserState
 
+                // Get timer from UserState
                 timeRemaining = UserState.Instance.QuizTimeRemaining;
                 SetupQuizes.SetupMCQContent2(mcqPage);
                 Debug.Log($"✅ Topic id is: {topic_id} and fromTapMe is: {isFromTapMe}");
@@ -439,7 +444,7 @@ public class IntegrateUI : MonoBehaviour
             quizPage.style.display = DisplayStyle.None;
             popUpPage.style.display = DisplayStyle.None;
 
-            SetupHomeSystems();
+            SetupHomeSystems(false);
         });
     }
 
@@ -876,11 +881,12 @@ public class IntegrateUI : MonoBehaviour
         // TODO: Create or migrate a Modal popup after clicking QuizBtn
         quizBtn?.RegisterCallback<ClickEvent>(_ =>
         {
-            var mcqPage = quizPage.Q<VisualElement>("mcqPage");
-            var mcqSplash = quizPage.Q<VisualElement>("mcqSplash");
+            // var mcqPage = quizPage.Q<VisualElement>("mcqPage");
+            // var mcqSplash = quizPage.Q<VisualElement>("mcqSplash");
             quizInstructionPage.style.display = DisplayStyle.Flex;
         });
 
+        // Quiz instruction buttons
         letsGoBtn?.RegisterCallback<ClickEvent>(_ =>
         {
             var topic = topicsArray[UserState.Instance.TopicId - 1];
@@ -926,11 +932,11 @@ public class IntegrateUI : MonoBehaviour
                 SceneData.studyingNervous = true;
                 SceneManager.LoadScene("3dModeNervousScene");
             }
+        });
 
-            // PlayerPrefs.SetString("tapActClicked");
-
-            // SetupQuizes.SetupMCQContent(mcqPage); // Modify this
-            // SetupQuizes.SetupMCQContent2(mcqPage);
+        quizInsBackBtn?.RegisterCallback<ClickEvent>(_ =>
+        {
+            quizInstructionPage.style.display = DisplayStyle.None;
         });
     }
 
@@ -978,9 +984,13 @@ public class IntegrateUI : MonoBehaviour
         });
     }
 
-    public void SetupHomeSystems()
+    public void SetupHomeSystems(bool isFromTapMe)
     {
-        homePage.style.display = DisplayStyle.Flex;
+        if (isFromTapMe)
+            homePage.style.display = DisplayStyle.None;
+        else
+            homePage.style.display = DisplayStyle.Flex;
+
         ScrollView sv = homePage.Q<ScrollView>("ScrollView");
         sv.Clear();
 
@@ -1285,7 +1295,6 @@ public class IntegrateUI : MonoBehaviour
 
                 Label L_NoRecordFound = progressTopicTotalScoresPage.Q<Label>("L_NoRecordFound");
                 L_NoRecordFound.style.display = DisplayStyle.None;
-
 
                 if (filteredScores != null && filteredScores.Count != 0)
                 {
