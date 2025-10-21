@@ -7119,7 +7119,7 @@ MonoBehaviour:
   positionZOffset: 50
   adjustedHipYDivider: 0.9
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.45
+  avatarReferenceTorsoHeight: 0.6
   ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
@@ -17870,7 +17870,7 @@ MonoBehaviour:
   positionZOffset: 50
   adjustedHipYDivider: 0.9
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.4
+  avatarReferenceTorsoHeight: 0.6
   ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
