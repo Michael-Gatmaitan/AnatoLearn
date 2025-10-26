@@ -1554,6 +1554,7 @@ MonoBehaviour:
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
+  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.3
   ikPositionWeight: 0.4
@@ -7118,6 +7119,7 @@ MonoBehaviour:
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
+  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.6
   ikPositionWeight: 0.4
@@ -11076,6 +11078,7 @@ MonoBehaviour:
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
+  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.5
   ikPositionWeight: 0.4
@@ -13076,6 +13079,7 @@ MonoBehaviour:
   screenDepth: 100
   positionZOffset: 50
   adjustedHipYDivider: 1.5
+  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.65
   ikPositionWeight: 1
@@ -13099,6 +13103,7 @@ MonoBehaviour:
   screenDepth: 100
   positionZOffset: 20
   adjustedHipYDivider: 1.5
+  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.65
   ikPositionWeight: 1
@@ -17869,6 +17874,7 @@ MonoBehaviour:
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
+  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.6
   ikPositionWeight: 0.4
@@ -27127,6 +27133,7 @@ MonoBehaviour:
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
+  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.6
   ikPositionWeight: 0.4
@@ -31535,7 +31542,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c6d71978c4e40be4a9cac8a9f5f8c117, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7036213049465896255, guid: c6d71978c4e40be4a9cac8a9f5f8c117, type: 3}
       propertyPath: m_IsActive
@@ -31590,6 +31597,7 @@ MonoBehaviour:
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
+  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.7
   ikPositionWeight: 0.4

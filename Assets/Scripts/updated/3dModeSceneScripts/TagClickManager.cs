@@ -93,7 +93,9 @@ public class TagClickManager : MonoBehaviour
             labelPanels["sweat_GlandDescriptionCon"] = root.Q<VisualElement>(
                 "sweatGlandDescriptionCon"
             );
-            labelPanels["hair_RootDescriptionCon"] = root.Q<VisualElement>("hairRootDescriptionCon");
+            labelPanels["hair_RootDescriptionCon"] = root.Q<VisualElement>(
+                "hairRootDescriptionCon"
+            );
             labelPanels["pore_Of_GlandDescriptionCon"] = root.Q<VisualElement>(
                 "poreOfGlandDescriptionCon"
             );
@@ -165,7 +167,7 @@ public class TagClickManager : MonoBehaviour
             labelPanels["right_VentricleDescriptionCon"] = root.Q<VisualElement>(
                 "rightVentricleDescriptionCon"
             );
-            labelPanels["inferior_VenaCavaDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["inferior_Vena_CavaDescriptionCon"] = root.Q<VisualElement>(
                 "inferiorVenaCavaDescriptionCon"
             );
             labelPanels["pulmonary_ArteryDescriptionCon"] = root.Q<VisualElement>(
@@ -189,7 +191,7 @@ public class TagClickManager : MonoBehaviour
             labelPanels["pulmonary_ValveDescriptionCon"] = root.Q<VisualElement>(
                 "pulmonaryValveDescriptionCon"
             );
-            labelPanels["superior_VenaCavaDescriptionCon"] = root.Q<VisualElement>(
+            labelPanels["superior_Vena_CavaDescriptionCon"] = root.Q<VisualElement>(
                 "superiorVenaCavaDescriptionCon"
             );
 
@@ -274,7 +276,7 @@ public class TagClickManager : MonoBehaviour
                             .Replace("_", " ")
                             .ToLower();
 
-                        Debug.Log($"Raw text from label id on click: {rawText}");
+                        Debug.Log($"Raw text from label id on click TCM: {rawText}");
 
                         userTagViewsController.CreateUserTagView(
                             UserState.Instance.Id,
@@ -285,7 +287,6 @@ public class TagClickManager : MonoBehaviour
                             },
                             (e) => Debug.LogError(e)
                         );
-
                     }
 
                     // Activate viewed tag only if this is a fresh click (panel was previously closed)
@@ -360,11 +361,15 @@ public class TagClickManager : MonoBehaviour
                         circulatoryViewedTagManager.ActivateTag(label.labelID);
                     }
 
-                    // var circulatoryHeartViewedTagManager = FindObjectOfType<Circulatory_HeartViewedTagClickManager>();
-                    // if (circulatoryHeartViewedTagManager != null && !circulatoryHeartViewedTagManager.IsTagActivated(label.labelID))
-                    // {
-                    //     circulatoryHeartViewedTagManager.ActivateTag(label.labelID);
-                    // }
+                    var circulatoryHeartViewedTagManager =
+                        FindFirstObjectByType<Circulatory_HeartViewedTagClickManager>();
+                    if (
+                        circulatoryHeartViewedTagManager != null
+                        && !circulatoryHeartViewedTagManager.IsTagActivated(label.labelID)
+                    )
+                    {
+                        circulatoryHeartViewedTagManager.ActivateTag(label.labelID);
+                    }
                 }
                 else
                 {
@@ -464,6 +469,10 @@ public class TagClickManager : MonoBehaviour
                 else
                     descriptionLabel.text = desc.en; // English description
             }
+            else
+            {
+                Debug.Log("No description label has been get with: " + labelID);
+            }
 
             // Set the tag name text based on the selected language
             if (nameLabel != null && LocalizedText.TagNames.TryGetValue(labelID, out var name))
@@ -472,6 +481,10 @@ public class TagClickManager : MonoBehaviour
                     nameLabel.text = name.tl; // Tagalog name
                 else
                     nameLabel.text = name.en; // English name
+            }
+            else
+            {
+                Debug.Log("No name label has been get with: " + labelID);
             }
         }
     }

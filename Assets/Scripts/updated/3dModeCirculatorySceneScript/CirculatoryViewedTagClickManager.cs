@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -14,7 +15,7 @@ public class CirculatoryViewedTagClickManager : MonoBehaviour
     public GameObject viewedTagBloodVessels;
     private Dictionary<string, GameObject> labelToViewedTag;
     private TagClickManager tagClickManager; //903
-    private HashSet<string> activatedTags = new HashSet<string>();
+    private HashSet<string> activatedTags = new();
 
     // HTTP
     private UserTagViewsController userTagViewsController;
@@ -45,61 +46,69 @@ public class CirculatoryViewedTagClickManager : MonoBehaviour
 
     void CheckAllPartsIfVisited()
     {
-        userTagViewsController.GetUserTagViewsByUserIdAndTopicId(
-            UserState.Instance.Id,
-            UserState.Instance.TopicId,
-            (r) =>
-            {
-                if (r.data.Count >= 1)
+        try
+        {
+            userTagViewsController.GetUserTagViewsByUserIdAndTopicId(
+                UserState.Instance.Id,
+                UserState.Instance.TopicId,
+                (r) =>
                 {
-                    foreach (var data in r.data)
+                    if (r.data.Count >= 1)
                     {
-                        string name = data.name;
-                        Debug.Log(name);
-
-                        if (name.Contains(" "))
+                        foreach (var data in r.data)
                         {
-                            var arr = name.Split(' ');
+                            string name = data.name;
+                            Debug.Log(name);
 
-                            for (int i = 0; i < arr.Length; i++)
+                            if (name.Contains(" "))
                             {
-                                string s = arr[i];
-                                arr[i] = char.ToUpper(s[0]) + s.Substring(1);
+                                var arr = name.Split(' ');
+
+                                for (int i = 0; i < arr.Length; i++)
+                                {
+                                    string s = arr[i];
+                                    arr[i] = char.ToUpper(s[0]) + s.Substring(1);
+                                }
+
+                                // int index = 0;
+                                // foreach (string s in arr)
+                                // {
+                                //     // var newS = char.ToUpper(s[0]) + s.Substring(1);
+                                //     arr[index] = newS;
+                                //     index++;
+                                // }
+
+                                var joined = string.Join("_", arr);
+                                joined = char.ToLower(joined[0]) + joined.Substring(1);
+
+                                Debug.Log(joined);
+                                name = joined;
                             }
 
-                            // int index = 0;
-                            // foreach (string s in arr)
-                            // {
-                            //     // var newS = char.ToUpper(s[0]) + s.Substring(1);
-                            //     arr[index] = newS;
-                            //     index++;
-                            // }
+                            string buildKey = name + "DescriptionCon";
+                            Debug.Log("Builded key: " + buildKey);
 
-                            var joined = string.Join("_", arr);
-                            joined = char.ToLower(joined[0]) + joined.Substring(1);
-
-                            Debug.Log(joined);
-                            name = joined;
-                        }
-
-                        string buildKey = name + "DescriptionCon";
-                        Debug.Log("Builded key: " + buildKey);
-
-                        if (labelToViewedTag[buildKey] == null)
-                        {
-                            Debug.LogError("Build key not found on label viewed tags variable");
-                        }
-                        else
-                        {
-                            // Set to active if the user already viewed this part
-                            Debug.Log("Buildkey found in label viewed tags variable");
-                            labelToViewedTag[buildKey].SetActive(true);
+                            if (labelToViewedTag[buildKey] == null)
+                            {
+                                // Debug.LogError("Build key not found on label viewed tags variable");
+                                Debug.Log("Build key not found");
+                            }
+                            else
+                            {
+                                // Set to active if the user already viewed this part
+                                Debug.Log("Buildkey found in label viewed tags variable");
+                                labelToViewedTag[buildKey].SetActive(true);
+                            }
                         }
                     }
-                }
-            },
-            (e) => Debug.LogError(e)
-        );
+                },
+                (e) => Debug.LogError(e)
+            );
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
 
         foreach (var el in labelToViewedTag)
         {
@@ -160,39 +169,39 @@ public class CirculatoryViewedTagClickManager : MonoBehaviour
             }
 
             // Look up and activate corresponding viewed tag
-            if (labelToViewedTag.TryGetValue(label.labelID, out GameObject viewedTag))
-            {
-                if (viewedTag != null)
-                {
-                    string rawText = label
-                        .labelID.Split("DescriptionCon")[0]
-                        .Replace("_", " ")
-                        .ToLower();
+            // if (labelToViewedTag.TryGetValue(label.labelID, out GameObject viewedTag))
+            // {
+            //     if (viewedTag != null)
+            //     {
+            //         string rawText = label
+            //             .labelID.Split("DescriptionCon")[0]
+            //             .Replace("_", " ")
+            //             .ToLower();
 
-                    Debug.Log($"Raw text from label id on click: {rawText}");
+            //         Debug.Log($"Raw text from label id on click: {rawText}");
 
-                    userTagViewsController.CreateUserTagView(
-                        UserState.Instance.Id,
-                        rawText,
-                        (r) =>
-                        {
-                            Debug.Log("Creation result: " + r);
+            //         userTagViewsController.CreateUserTagView(
+            //             UserState.Instance.Id,
+            //             rawText,
+            //             (r) =>
+            //             {
+            //                 Debug.Log("Creation result: " + r);
 
-                            // Check if unclocked all then able the finish button
-                        },
-                        (e) => Debug.LogError(e)
-                    );
+            //                 // Check if unclocked all then able the finish button
+            //             },
+            //             (e) => Debug.LogError(e)
+            //         );
 
-                    Debug.Log($"Tag view Label id: {label.labelID}");
-                    viewedTag.SetActive(true);
-                }
-                else
-                {
-                    Debug.LogWarning(
-                        $"GameObject for '{label.labelID}' is not assigned in the inspector."
-                    );
-                }
-            }
+            //         Debug.Log($"Tag view Label id: {label.labelID}");
+            //         viewedTag.SetActive(true);
+            //     }
+            //     else
+            //     {
+            //         Debug.LogWarning(
+            //             $"GameObject for '{label.labelID}' is not assigned in the inspector."
+            //         );
+            //     }
+            // }
         }
     }
 

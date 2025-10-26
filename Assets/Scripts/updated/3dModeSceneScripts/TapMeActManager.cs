@@ -118,7 +118,7 @@ public class TapMeActManager : MonoBehaviour
     private string pendingTappedID;
     private int wrongScore = 0;
 
-    private float timeRemaining = 300f;
+    private float timeRemaining = 900f;
     private float finalTimeTaken = 0f;
     private bool isTapMeActActive = false;
     private bool hasInitializedTapMeAct = false;

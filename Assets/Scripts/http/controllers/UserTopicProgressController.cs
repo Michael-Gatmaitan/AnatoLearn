@@ -26,6 +26,20 @@ public class UpdateTopicProgressBody
     public string update_type;
 }
 
+[System.Serializable]
+public class SendCertificateBody
+{
+    public string email;
+    public string name;
+}
+
+[System.Serializable]
+public class SendCertificateResponse
+{
+    public string message;
+    public bool success;
+}
+
 public class UserTopicProgressController : MonoBehaviour
 {
     private HTTPManager httpManager;
@@ -93,6 +107,28 @@ public class UserTopicProgressController : MonoBehaviour
             httpManager.PutRequest<UserTopicProgressResponse>(
                 url,
                 requestBody,
+                (r) => onSuccess?.Invoke(r),
+                (e) => onError?.Invoke(e)
+            )
+        );
+    }
+
+    public void SendCertificate(
+        string email,
+        string name,
+        Action<SendCertificateResponse> onSuccess,
+        Action<string> onError
+    )
+    {
+        SendCertificateBody body = new() { email = email, name = name };
+
+        string jsonData = JsonUtility.ToJson(body);
+        string url = $"{Constants.API_URL}/send-certificate";
+
+        StartCoroutine(
+            httpManager.PostRequest<SendCertificateResponse>(
+                url,
+                jsonData,
                 (r) => onSuccess?.Invoke(r),
                 (e) => onError?.Invoke(e)
             )

@@ -16,12 +16,12 @@ public class UserState : MonoBehaviour
     public int TopicId { get; private set; }
     public int ActivityId { get; private set; }
 
-    public int CurrentTapScore = 5;
+    public int CurrentTapScore = -1;
     public int CurrentMCQScore = -1;
     public int CurrentTOFScore = -1;
 
     // MCQ and TOF time
-    public float QuizTimeRemaining = 300f;
+    public float QuizTimeRemaining = 900f;
 
     // States
     public bool isFromTapMe = false;
@@ -179,6 +179,11 @@ public class UserState : MonoBehaviour
     {
         CurrentTOFScore = score;
         return CurrentMCQScore;
+    }
+
+    public int SumOfAllScores()
+    {
+        return CurrentTapScore + CurrentMCQScore + CurrentTOFScore;
     }
 
     public void ResetAllScores()

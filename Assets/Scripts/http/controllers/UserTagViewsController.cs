@@ -166,7 +166,7 @@ class UserTagViewsController : MonoBehaviour
                 url,
                 (r) =>
                 {
-                    Debug.Log("From root of iser tag views: " + JsonUtility.ToJson(r));
+                    Debug.Log("From root of user tag views: " + JsonUtility.ToJson(r));
                     onSuccess?.Invoke(r);
                 },
                 (e) => onError?.Invoke(e)

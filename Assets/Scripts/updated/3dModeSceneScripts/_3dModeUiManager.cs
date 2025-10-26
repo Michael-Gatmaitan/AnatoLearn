@@ -34,6 +34,8 @@ public class _3dModeUIManager : MonoBehaviour
     private VisualElement blackBgAbsoluteChooseLanguagePage; //added 7 24
     private VisualElement blackBgAbsoluteHomePromptPage;
 
+    private bool isMenuShowed = false;
+
     private void OnEnable()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
@@ -312,11 +314,15 @@ public class _3dModeUIManager : MonoBehaviour
 
     private void ToggleMenuBtn()
     {
-        // Toggle between None and Flex
-        if (
-            homeBtn.style.display == DisplayStyle.None
-            && hideBtn.style.display == DisplayStyle.None
-        )
+        Debug.Log("Menu btn toggled");
+
+        // bool isHomeBtnHidden = homeBtn.style.display == DisplayStyle.None;
+        // bool isHideBtnHidden = hideBtn.style.display == DisplayStyle.None;
+
+        // Debug.Log($"Is home btn hidden: {isHomeBtnHidden}");
+        // Debug.Log($"Is hide btn hidden: {isHideBtnHidden}");
+
+        if (isMenuShowed)
         {
             homeBtn.style.display = DisplayStyle.Flex;
             hideBtn.style.display = DisplayStyle.Flex;
@@ -326,6 +332,8 @@ public class _3dModeUIManager : MonoBehaviour
             homeBtn.style.display = DisplayStyle.None;
             hideBtn.style.display = DisplayStyle.None;
         }
+
+        isMenuShowed = !isMenuShowed;
     }
 
     private void ToggleHideBtn()

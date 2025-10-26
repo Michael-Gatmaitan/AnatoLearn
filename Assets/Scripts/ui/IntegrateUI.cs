@@ -110,7 +110,8 @@ public class IntegrateUI : MonoBehaviour
     };
 
     private List<TotalScore> scores;
-    private List<Count> attempts;
+
+    // private List<Count> attempts;
 
     public Sprite[] systemTopicSprites;
     public Sprite[] progressSprites;
@@ -446,7 +447,8 @@ public class IntegrateUI : MonoBehaviour
             quizPage.style.display = DisplayStyle.None;
             popUpPage.style.display = DisplayStyle.None;
 
-            SetupHomeSystems(false);
+            // SetupHomeSystems(false);
+            SetupScoresAndAsyncPages(true);
         });
     }
 
@@ -473,7 +475,16 @@ public class IntegrateUI : MonoBehaviour
                 Label correctScore = sumScorePage.Q<Label>("correctScore");
                 Label incorrectScore = sumScorePage.Q<Label>("incorrectScore");
 
-                score.text = $"{100 / 15 * allScores}%";
+                int percentage = 100 / 15 * allScores;
+
+                if (percentage >= 50)
+                {
+                    Debug.Log(
+                        $"You recieved a {topicsArray[UserState.Instance.TopicId - 1]} badge!!!"
+                    );
+                }
+
+                score.text = $"{percentage}%";
 
                 // Display accuracy / performance
 
@@ -1838,6 +1849,7 @@ public class IntegrateUI : MonoBehaviour
 
                             // Taking quiz false
                             takingQuiz = false;
+                            // Check if the certificate is ready to give
                             SetupScore();
                             return;
                         }
@@ -1851,6 +1863,62 @@ public class IntegrateUI : MonoBehaviour
                 },
                 (error) => Debug.LogError(error)
             );
+        }
+
+        public static void ValidateCertificate()
+        {
+            Debug.Log("Validating certificate");
+            int topic_id = UserState.Instance.TopicId;
+            Debug.Log("Current topic id: " + topic_id);
+
+            // if (topic_id == 7)
+            if (topic_id == 7)
+            {
+                // Check the current score if passed
+                int sumOfAllScores = UserState.Instance.SumOfAllScores();
+
+                int percentage = 100 / 15 * sumOfAllScores;
+
+                if (percentage >= 50)
+                {
+                    Debug.Log("Give certificate to user and upate 'CERTIFICATE_RECIEVED' to true");
+                    // Call an API for giving certificate
+                    // This API checks if:
+                    // * User passed all of the topics
+                    // * User never recieved a certificate before
+                    // * Or else, status of 'false' and a message will returned by the API
+
+                    string email = UserState.Instance.Email;
+                    string fname = UserState.Instance.Firstname;
+                    string mname = UserState.Instance.Middlename;
+                    string lname = UserState.Instance.Lastname;
+                    string name = $"{fname} {mname} {lname}";
+
+                    userTopicProgressController.SendCertificate(
+                        email,
+                        name,
+                        (r) =>
+                        {
+                            if (r.success)
+                            {
+                                Debug.Log(r.message);
+                                MessageBox(r.message);
+
+                                var c = FindAnyObjectByType<CertificatePage>();
+                                c.ShowCertificatePage();
+                            }
+                            else
+                            {
+                                MessageBox(r.message);
+                            }
+                        },
+                        (e) =>
+                        {
+                            Debug.LogError("There was an error sending certificate: " + e);
+                        }
+                    );
+                }
+            }
         }
 
         public static void SetupScore()
@@ -1949,6 +2017,23 @@ public class IntegrateUI : MonoBehaviour
                         // {
                         //     UserState.Instance.ResetAllScores();
                         // }
+                        totalScoresController.GetHasBadge(
+                            userId,
+                            topicId,
+                            (r) =>
+                            {
+                                Debug.Log(r);
+
+                                if (!r.hasBadge)
+                                {
+                                    var badgeComponent = FindAnyObjectByType<BadgePage>();
+                                    badgeComponent.ShowBadgePage(topicId);
+                                }
+                            },
+                            (e) => Debug.LogError(e)
+                        );
+
+                        ValidateCertificate();
                     },
                     (error) => Debug.LogError(error)
                 );

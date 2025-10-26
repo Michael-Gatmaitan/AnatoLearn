@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -70,6 +71,13 @@ public class RegistrationPage : MonoBehaviour
     private TextField T_ConfirmPass;
     private Button B_Proceed;
 
+    // Privacy and policy
+    private VisualElement popUpPage;
+    private VisualElement PrivacyTermsCondiPage;
+    private Button B_AgreeBtn;
+    private Toggle CB_PP;
+    private Label L_PP;
+
     // Registration 2
     private VisualElement V_Registration_2;
     private TextField T_Code_1;
@@ -114,6 +122,10 @@ public class RegistrationPage : MonoBehaviour
         root = GetComponent<UIDocument>().rootVisualElement;
         V_Main = root.Q<VisualElement>("V_Main");
 
+        popUpPage = V_Main.Q<VisualElement>("popUpPage");
+        PrivacyTermsCondiPage = popUpPage.Q<VisualElement>("PolicyTermsCondiPage");
+        B_AgreeBtn = PrivacyTermsCondiPage.Q<Button>("agreeBtn");
+
         loginPage = V_Main.Q<VisualElement>("loginScreen");
 
         V_RegistrationPages = V_Main.Q<VisualElement>("V_RegistrationPages");
@@ -122,6 +134,8 @@ public class RegistrationPage : MonoBehaviour
         // Registration 1
 
         V_Registration_1 = V_RegistrationPages.Q<VisualElement>("V_Registration_1");
+        CB_PP = V_Registration_1.Q<Toggle>("CB_PP");
+        L_PP = V_Registration_1.Q<Label>("L_PP");
 
         T_Email = V_Registration_1.Q<TextField>("T_Email");
         T_Pass = V_Registration_1.Q<TextField>("T_Pass");
@@ -139,6 +153,7 @@ public class RegistrationPage : MonoBehaviour
         T_Code_6 = V_Registration_2.Q<TextField>("T_Code_6");
         B_ResendCode = V_Registration_2.Q<Button>("B_ResendCode");
         B_ConfirmAccount = V_Registration_2.Q<Button>("B_ConfirmAccount");
+
         if (B_ResendCode != null)
         {
             if (!string.IsNullOrEmpty(B_ResendCode.text))
@@ -169,6 +184,34 @@ public class RegistrationPage : MonoBehaviour
             V_Registration_3.style.display = DisplayStyle.None;
 
             loginPage.style.display = DisplayStyle.Flex;
+        });
+
+        CB_PP?.RegisterCallback<ChangeEvent<bool>>(evt =>
+        {
+            Debug.Log($"CB_PP changed to: {evt.newValue}");
+            // Add your checkbox logic here
+            if (evt.newValue)
+            {
+                Debug.Log("Privacy policy accepted");
+            }
+            else
+            {
+                Debug.Log("Privacy policy not accepted");
+            }
+        });
+
+        L_PP?.RegisterCallback<ClickEvent>(_ =>
+        {
+            V_RegistrationPages.style.display = DisplayStyle.None;
+            popUpPage.style.display = DisplayStyle.Flex;
+            PrivacyTermsCondiPage.style.display = DisplayStyle.Flex;
+        });
+
+        B_AgreeBtn?.RegisterCallback<ClickEvent>(_ =>
+        {
+            V_RegistrationPages.style.display = DisplayStyle.Flex;
+            popUpPage.style.display = DisplayStyle.None;
+            PrivacyTermsCondiPage.style.display = DisplayStyle.None;
         });
 
         void ClearForm1()
@@ -216,6 +259,25 @@ public class RegistrationPage : MonoBehaviour
 
         B_Proceed?.RegisterCallback<ClickEvent>(_ =>
         {
+            string pattern = @"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$";
+
+            if (T_Email.value.Trim() == "")
+            {
+                Debug.Log("Email required");
+                IntegrateUI.MessageBox("Email required");
+                return;
+            }
+
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            bool isValidEmail = regex.IsMatch(T_Email.value.Trim());
+
+            if (!isValidEmail)
+            {
+                Debug.Log("Invalid email");
+                IntegrateUI.MessageBox("Invalid email");
+                return;
+            }
+
             if (T_Pass.value.Length < 8)
             {
                 Debug.Log("Password too short");
@@ -227,6 +289,13 @@ public class RegistrationPage : MonoBehaviour
             {
                 Debug.Log("Password should match");
                 IntegrateUI.MessageBox("Password should match");
+                return;
+            }
+
+            if (!CB_PP.value)
+            {
+                Debug.Log("You need to check the privacy agreement");
+                IntegrateUI.MessageBox("You need to agree with our privacy and policy conditions");
                 return;
             }
 

@@ -227,6 +227,8 @@ GameObject:
   - component: {fileID: 1211968089}
   - component: {fileID: 1211968088}
   - component: {fileID: 1211968090}
+  - component: {fileID: 1211968092}
+  - component: {fileID: 1211968093}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -565,6 +567,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9481af36509245341b242aea02644608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1211968092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211968070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1e0f8ab51a840e40acef2e95fb4408a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1211968093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211968070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 246f3b9c21be1964f95eb8793e75ff4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  badgeTopicSprites:
+  - {fileID: 21300000, guid: cb072a8672a424949a830f8978afef9c, type: 3}
+  - {fileID: 21300000, guid: 146648417eaa0b24ba46fa27a7a1c8ac, type: 3}
+  - {fileID: 21300000, guid: be6d40c0f302ceb4ab13c8392cdaf15b, type: 3}
+  - {fileID: 21300000, guid: 8dac36789c408214caa52ef41a9f9a97, type: 3}
+  - {fileID: 21300000, guid: b2a1f17cf78b49e449316d06d8ba9697, type: 3}
+  - {fileID: 21300000, guid: 7b76f2cb10e328a4ea7293507113fa0c, type: 3}
+  - {fileID: 21300000, guid: bf3d137575d2edd40a084c5e520ecec2, type: 3}
 --- !u!1 &1508282116
 GameObject:
   m_ObjectHideFlags: 0

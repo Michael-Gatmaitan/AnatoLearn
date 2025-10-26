@@ -12,7 +12,7 @@ using UnityEngine.UIElements;
 public class HumanoidPoseMapper : MonoBehaviour
 {
     // Switch conversion of landmarks using this boolean
-    private readonly bool isMobile = true;
+    private readonly bool isMobile = false;
 
     [Header("Main")]
     public PoseLandmarkerRunner poseLandmarkerRunner;
@@ -50,6 +50,7 @@ public class HumanoidPoseMapper : MonoBehaviour
     public float screenDepth = 20;
     public float positionZOffset = 20;
     public float adjustedHipYDivider = 0.9f; // 2.5-ish for skeletal
+    public bool useRotation = false;
 
     void OnEnable()
     {
@@ -219,7 +220,26 @@ public class HumanoidPoseMapper : MonoBehaviour
             if (move)
             {
                 SetAvatarWorldPosition();
-                // UpdateLandmarkVisualization();
+                // Call a function for calculating rotation of shoulder
+
+                if (useRotation)
+                {
+                    Vector3 leftShoulder = ConvertMediaPipeToUnitySpace(
+                        landmarks[(int)MediaPipeLandmark.LEFT_SHOULDER]
+                    );
+                    Vector3 rightShoulder = ConvertMediaPipeToUnitySpace(
+                        landmarks[(int)MediaPipeLandmark.RIGHT_SHOULDER]
+                    );
+
+                    Vector3 direction = leftShoulder - rightShoulder;
+
+                    humanoidAnimator.transform.right = direction;
+                    Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+                    Debug.Log($"Rotation: {targetRotation}");
+                    humanoidAnimator.transform.rotation = targetRotation;
+
+                }
 
                 if (!useShoulderScale)
                 {
@@ -613,7 +633,7 @@ public class HumanoidPoseMapper : MonoBehaviour
         }
 
         Vector3 worldPosition = Camera.main.ViewportToWorldPoint(
-            new Vector3(screenX, screenY, screenDepth)
+            new Vector3(screenX, screenY, mediaPipePos.z + screenDepth)
         );
 
         return worldPosition;

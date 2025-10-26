@@ -3250,7 +3250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: superiorVenaCavaDescriptionCon
+  labelID: superior_Vena_CavaDescriptionCon
 --- !u!114 &296963264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5237,7 +5237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: tricuspidValveDescriptionCon
+  labelID: tricuspid_ValveDescriptionCon
 --- !u!65 &499476807
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5537,7 +5537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: leftAtriumDescriptionCon
+  labelID: left_AtriumDescriptionCon
 --- !u!1 &522516498
 GameObject:
   m_ObjectHideFlags: 0
@@ -5974,7 +5974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: mitralValveDescriptionCon
+  labelID: mitral_ValveDescriptionCon
 --- !u!65 &588476653
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7967,7 +7967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: aorticValveDescriptionCon
+  labelID: aortic_ValveDescriptionCon
 --- !u!1001 &847800342
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8319,7 +8319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: rightVentricleDescriptionCon
+  labelID: right_VentricleDescriptionCon
 --- !u!65 &901535502
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9563,7 +9563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: pulmonaryArteryDescriptionCon
+  labelID: pulmonary_ArteryDescriptionCon
 --- !u!65 &1101399491
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12172,7 +12172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: pulmonaryValveDescriptionCon
+  labelID: pulmonary_ValveDescriptionCon
 --- !u!114 &1478002092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13986,7 +13986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: leftVentricleDescriptionCon
+  labelID: left_VentricleDescriptionCon
 --- !u!1 &1748703959
 GameObject:
   m_ObjectHideFlags: 0
@@ -14340,7 +14340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: pulmonaryVeinDescriptionCon
+  labelID: pulmonary_VeinDescriptionCon
 --- !u!1 &1819681133
 GameObject:
   m_ObjectHideFlags: 0
@@ -14751,7 +14751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: inferiorVenaCavaDescriptionCon
+  labelID: inferior_Vena_CavaDescriptionCon
 --- !u!65 &1861205337
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16318,7 +16318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199d007a46a1bb439a0348c553d09b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  labelID: rightAtriumDescriptionCon
+  labelID: right_AtriumDescriptionCon
 --- !u!114 &2113273086
 MonoBehaviour:
   m_ObjectHideFlags: 0

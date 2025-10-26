@@ -26,6 +26,12 @@ public class Count
     public int count;
 }
 
+[Serializable]
+public class HasBadgeResponse
+{
+    public bool hasBadge;
+}
+
 public class TotalScoresController : MonoBehaviour
 {
     private HTTPManager httpManager;
@@ -93,6 +99,24 @@ public class TotalScoresController : MonoBehaviour
 
         StartCoroutine(
             httpManager.GetRequest<TotalScores>(
+                url,
+                (r) => onSuccess?.Invoke(r),
+                (e) => onError?.Invoke(e)
+            )
+        );
+    }
+
+    public void GetHasBadge(
+        int user_id,
+        int topic_id,
+        Action<HasBadgeResponse> onSuccess,
+        Action<string> onError
+    )
+    {
+        string url = $"{Constants.API_URL}/has-badge?user_id={user_id}&topic_id={topic_id}";
+
+        StartCoroutine(
+            httpManager.GetRequest<HasBadgeResponse>(
                 url,
                 (r) => onSuccess?.Invoke(r),
                 (e) => onError?.Invoke(e)

@@ -160,41 +160,41 @@ public class NervousViewedTagClickManager : MonoBehaviour
                 }
             }
 
-            // Look up and activate corresponding viewed tag
-            if (labelToViewedTag.TryGetValue(label.labelID, out GameObject viewedTag))
-            {
-                if (viewedTag != null)
-                {
-                    string rawText = label
-                        .labelID.Split("DescriptionCon")[0]
-                        .Replace("_", " ")
-                        .ToLower();
+            // // Look up and activate corresponding viewed tag
+            // if (labelToViewedTag.TryGetValue(label.labelID, out GameObject viewedTag))
+            // {
+            //     if (viewedTag != null)
+            //     {
+            //         string rawText = label
+            //             .labelID.Split("DescriptionCon")[0]
+            //             .Replace("_", " ")
+            //             .ToLower();
 
-                    Debug.Log($"Raw text from label id on click: {rawText}");
+            //         Debug.Log($"Raw text from label id on click: {rawText}");
 
-                    userTagViewsController.CreateUserTagView(
-                        UserState.Instance.Id,
-                        rawText,
-                        (r) =>
-                        {
-                            Debug.Log("Creation result: " + r);
+            //         userTagViewsController.CreateUserTagView(
+            //             UserState.Instance.Id,
+            //             rawText,
+            //             (r) =>
+            //             {
+            //                 Debug.Log("Creation result: " + r);
 
-                            // Check if unclocked all then able the finish button
-                        },
-                        (e) => Debug.LogError(e)
-                    );
+            //                 // Check if unclocked all then able the finish button
+            //             },
+            //             (e) => Debug.LogError(e)
+            //         );
 
-                    Debug.Log($"Tag view Label id: {label.labelID}");
-                    Debug.Log($"WOW you clicked this object: {viewedTag.name}");
-                    viewedTag.SetActive(true);
-                }
-                else
-                {
-                    Debug.LogWarning(
-                        $"GameObject for '{label.labelID}' is not assigned in the inspector."
-                    );
-                }
-            }
+            //         Debug.Log($"Tag view Label id: {label.labelID}");
+            //         Debug.Log($"WOW you clicked this object: {viewedTag.name}");
+            //         viewedTag.SetActive(true);
+            //     }
+            //     else
+            //     {
+            //         Debug.LogWarning(
+            //             $"GameObject for '{label.labelID}' is not assigned in the inspector."
+            //         );
+            //     }
+            // }
         }
     }
 
