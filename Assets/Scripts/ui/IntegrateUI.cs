@@ -263,9 +263,12 @@ public class IntegrateUI : MonoBehaviour
     // This function runs in redirecting from quiz and loging in.
     public void SetupScoresAndAsyncPages(bool isFromTapMe)
     {
+        Debug.Log("Setup called");
         // Show loading screen
         if (!isFromTapMe)
+        {
             loadingScreen.style.display = DisplayStyle.Flex;
+        }
 
         // Fetch scores before reloading all pages
         totalScoresController.GetAllTotalScores(
@@ -337,10 +340,12 @@ public class IntegrateUI : MonoBehaviour
             int topic_id = UserState.Instance.TopicId;
             bool isFromTapMe = UserState.Instance.isFromTapMe;
 
+            Debug.Log("Calling inner setup");
             SetupScoresAndAsyncPages(isFromTapMe);
 
             if (topic_id != 0 && isFromTapMe)
             {
+                Debug.Log("From tap me.");
                 // homePage.style.display = DisplayStyle.None;
                 UserState.Instance.isFromTapMe = false;
 
@@ -372,7 +377,6 @@ public class IntegrateUI : MonoBehaviour
             Debug.Log("Not loading yet because Id is 0");
             // Proceed to splash
             splashScreen.style.display = DisplayStyle.Flex;
-            homePage.style.display = DisplayStyle.None;
             homePage.style.display = DisplayStyle.None;
         }
 
@@ -441,14 +445,16 @@ public class IntegrateUI : MonoBehaviour
 
         homeBtn?.RegisterCallback<ClickEvent>(_ =>
         {
-            homePage.style.display = DisplayStyle.Flex;
+            // Purposely hide the homepage coz it will show after the SetupAsyncPages
+            homePage.style.display = DisplayStyle.None;
+            // homePage.style.display = DisplayStyle.Flex;
             sumScorePage.style.display = DisplayStyle.None;
             tofPage.style.display = DisplayStyle.None;
             quizPage.style.display = DisplayStyle.None;
             popUpPage.style.display = DisplayStyle.None;
 
             // SetupHomeSystems(false);
-            SetupScoresAndAsyncPages(true);
+            SetupScoresAndAsyncPages(false);
         });
     }
 
@@ -913,7 +919,6 @@ public class IntegrateUI : MonoBehaviour
             // From revo -- if true, 3d mode will be tap me act
             SceneData.showTapActPage = true;
 
-            Debug.Log(topic);
             // Adter modal pops up, run code below to change the scene
             if (topic.topic_name == "skeletal")
             {
@@ -944,6 +949,11 @@ public class IntegrateUI : MonoBehaviour
             {
                 SceneData.studyingNervous = true;
                 SceneManager.LoadScene("3dModeNervousScene");
+            }
+            else if (topic.topic_name == "excretory")
+            {
+                SceneData.studyingExcretory = true;
+                SceneManager.LoadScene("3dModeExcretoryScene");
             }
         });
 
@@ -999,6 +1009,8 @@ public class IntegrateUI : MonoBehaviour
 
     public void SetupHomeSystems(bool isFromTapMe)
     {
+        Debug.Log("Is from tap me: " + isFromTapMe);
+
         if (isFromTapMe)
             homePage.style.display = DisplayStyle.None;
         else
