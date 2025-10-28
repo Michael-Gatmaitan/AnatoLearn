@@ -26,7 +26,11 @@ public class BadgePage : MonoBehaviour
 
     public void ShowBadgePage(int topic_id)
     {
-        Debug.Log($"Openning badge for topic id: {topic_id - 1}");
+        Debug.Log($"Openning badge for topic id: {topic_id}");
+
+        Debug.Log($"Popup page: " + popUpPage);
+        Debug.Log($"Badge page: " + V_BadgePage);
+        Debug.Log($"Badge Image: " + V_BadgeImage);
 
         popUpPage.style.display = DisplayStyle.Flex;
         V_BadgePage.style.display = DisplayStyle.Flex;

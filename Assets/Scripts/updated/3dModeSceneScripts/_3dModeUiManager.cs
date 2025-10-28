@@ -208,10 +208,10 @@ public class _3dModeUIManager : MonoBehaviour
                 nervousContentsBtns.style.display = DisplayStyle.Flex;
                 // skeletalContentsBtns.style.display = DisplayStyle.None;
             }
-            // else if (SceneData.studyingExcretory || UserState.Instance.TopicId == 7)
-            // {
-
-            // }
+            else if (SceneData.studyingExcretory || UserState.Instance.TopicId == 7)
+            {
+                // Nothing to show on excretory
+            }
 
             Debug.Log("PlayerPrefs studyingHeart: " + PlayerPrefs.GetInt("studyingHeart"));
             if (PlayerPrefs.GetInt("studyingHeart") == 1)

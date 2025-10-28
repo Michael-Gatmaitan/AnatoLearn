@@ -128,7 +128,7 @@ public class LoginManager : MonoBehaviour
             IntegrateUI.MessageBox(loggedInMessage);
 
             loginPage.style.display = DisplayStyle.None;
-            homePage.style.display = DisplayStyle.Flex;
+            // homePage.style.display = DisplayStyle.Flex;
 
             IntegrateUI.Instance.SetupScoresAndAsyncPages(false);
 

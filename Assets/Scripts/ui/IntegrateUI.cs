@@ -451,6 +451,8 @@ public class IntegrateUI : MonoBehaviour
             sumScorePage.style.display = DisplayStyle.None;
             tofPage.style.display = DisplayStyle.None;
             quizPage.style.display = DisplayStyle.None;
+
+            // Kinda sus
             popUpPage.style.display = DisplayStyle.None;
 
             // SetupHomeSystems(false);
@@ -483,19 +485,18 @@ public class IntegrateUI : MonoBehaviour
 
                 int percentage = 100 / 15 * allScores;
 
-                if (percentage >= 50)
-                {
-                    Debug.Log(
-                        $"You recieved a {topicsArray[UserState.Instance.TopicId - 1]} badge!!!"
-                    );
-                }
-
-                score.text = $"{percentage}%";
-
                 // Display accuracy / performance
+                score.text = $"{percentage}%";
 
                 correctScore.text = $"{allScores}";
                 incorrectScore.text = $"{15 - allScores}";
+
+                if (percentage >= 50)
+                {
+                    Debug.Log(
+                        $"You recieved a {topicsArray[UserState.Instance.TopicId - 1].topic_name} badge!!!"
+                    );
+                }
 
                 UserState.Instance.ResetAllScores();
             }
@@ -1273,6 +1274,7 @@ public class IntegrateUI : MonoBehaviour
 
                         if (r.data.Count > 0)
                         {
+                            // Highest passed
                             progDataLabelR.text = $"{r.data[0].total_score}";
 
                             if (r.data[0].accuracy < 50)
@@ -1881,9 +1883,8 @@ public class IntegrateUI : MonoBehaviour
         {
             Debug.Log("Validating certificate");
             int topic_id = UserState.Instance.TopicId;
-            Debug.Log("Current topic id: " + topic_id);
+            Debug.Log("Current topic id for validating certificate: " + topic_id);
 
-            // if (topic_id == 7)
             if (topic_id == 7)
             {
                 // Check the current score if passed
@@ -1943,19 +1944,11 @@ public class IntegrateUI : MonoBehaviour
             int actTypeId = UserState.Instance.ActivityId;
             int topicId = UserState.Instance.TopicId;
 
-            Debug.Log(
-                $"Checking values: userid {userId} acttypeid: {actTypeId} topicid: {topicId}"
-            );
+            MessageBox("Loading, calculating your scores.");
 
-            // if (userId == 0 || actTypeId == 0 || topicId == 0)
-            // {
-            //     Debug.Log("Error params in creating score cannot be null");
-            //     return;
-            // }
-
-            scoresPage.style.display = DisplayStyle.Flex;
-            mcqPage.parent.style.display = DisplayStyle.None;
-            mcqPage.style.display = DisplayStyle.None;
+            // scoresPage.style.display = DisplayStyle.Flex;
+            // mcqPage.parent.style.display = DisplayStyle.None;
+            // mcqPage.style.display = DisplayStyle.None;
 
             void DisplayScore(Label L_Correct, Label L_Incorrect, int score, int totalItems = 5)
             {
@@ -2018,6 +2011,28 @@ public class IntegrateUI : MonoBehaviour
                     time_left = time_left,
                 };
 
+                // Check hasBadge before storing score.
+                totalScoresController.GetHasBadge(
+                    userId,
+                    topicId,
+                    (r) =>
+                    {
+                        Debug.Log(r);
+                        Debug.Log("Has badge: " + r.hasBadge);
+
+                        if (!r.hasBadge)
+                        {
+                            var badgeComponent = FindAnyObjectByType<BadgePage>();
+                            badgeComponent.ShowBadgePage(topicId);
+                        }
+
+                        scoresPage.style.display = DisplayStyle.Flex;
+                        mcqPage.parent.style.display = DisplayStyle.None;
+                        mcqPage.style.display = DisplayStyle.None;
+                    },
+                    (e) => Debug.LogError(e)
+                );
+
                 actScoresController.CreateActScoresWithTotalScore(
                     reqBody,
                     (response) =>
@@ -2029,22 +2044,8 @@ public class IntegrateUI : MonoBehaviour
                         // {
                         //     UserState.Instance.ResetAllScores();
                         // }
-                        totalScoresController.GetHasBadge(
-                            userId,
-                            topicId,
-                            (r) =>
-                            {
-                                Debug.Log(r);
 
-                                if (!r.hasBadge)
-                                {
-                                    var badgeComponent = FindAnyObjectByType<BadgePage>();
-                                    badgeComponent.ShowBadgePage(topicId);
-                                }
-                            },
-                            (e) => Debug.LogError(e)
-                        );
-
+                        // Store the score first before validating the certificate
                         ValidateCertificate();
                     },
                     (error) => Debug.LogError(error)
