@@ -516,8 +516,15 @@
                             </engine:VisualElement>
                         </engine:ScrollView>
                     </engine:VisualElement>
-                    <engine:VisualElement name="V_ProfileModals" style="width: 100%; position: absolute; align-self: center; justify-content: center; align-items: center; align-content: center; background-color: rgba(0, 0, 0, 0.39); display: none;">
-                        <engine:VisualElement name="V_DeleteProfileModal" style="height: 100px; background-color: rgb(241, 0, 0); display: none;" />
+                    <engine:VisualElement name="V_ProfileModals" style="width: 100%; position: absolute; align-self: center; justify-content: center; align-items: center; align-content: center; background-color: rgba(0, 0, 0, 0.39); display: none; padding-left: 24px; margin-right: 24px; padding-right: 24px;">
+                        <engine:VisualElement name="V_DeleteProfileModal" style="height: auto; background-color: rgb(52, 107, 168); display: none; padding-top: 12px; padding-right: 12px; padding-bottom: 12px; padding-left: 12px; width: 100%; border-top-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; border-bottom-left-radius: 12px;">
+                            <engine:Label text="Delete profile?" style="-unity-text-align: upper-center; -unity-font-definition: resource(&apos;fonts/poppins/Poppins-Bold&apos;); font-size: 24px; color: rgb(255, 255, 255); white-space: normal;" />
+                            <engine:Label text="Are you sure you want to delete your profile?" style="-unity-font-definition: resource(&apos;fonts/poppins/Poppins-Regular&apos;); color: rgb(255, 255, 255); font-size: 16px; white-space: normal;" />
+                            <engine:VisualElement style="flex-grow: 1; flex-direction: row; width: 100%; margin-top: 12px;">
+                                <engine:Button text="Button" style="flex-grow: 1;" />
+                                <engine:Button text="Button" name="B_DeletePofileBack" style="flex-grow: 1;" />
+                            </engine:VisualElement>
+                        </engine:VisualElement>
                         <engine:VisualElement name="V_EditUsernameModal" style="height: 100px; background-color: rgb(4, 12, 190); display: none;" />
                     </engine:VisualElement>
                 </engine:VisualElement>

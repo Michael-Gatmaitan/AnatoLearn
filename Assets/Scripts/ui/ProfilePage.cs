@@ -26,6 +26,9 @@ public class ProfilePage : MonoBehaviour
         B_Badges,
         B_EditProfile;
 
+    // Delete profile modal
+    private Button B_DeletePofileBack;
+
     // Sub pages
     private VisualElement V_ProfileBody,
         V_Badges,
@@ -100,20 +103,20 @@ public class ProfilePage : MonoBehaviour
         V_ProfileModals.style.display = DisplayStyle.Flex;
         V_DeleteProfileModal.style.display = DisplayStyle.Flex;
 
-        userController.DeleteUser(
-            UserState.Instance.Email,
-            (r) =>
-            {
-                NavigateToProfileBody();
-                HideProfilePage();
-                ClearEditProfileInputs();
-                IntegrateUI.MessageBox("Account successfully deleted");
-                IntegrateUI.Instance.LogoutFunc();
+        // userController.DeleteUser(
+        //     UserState.Instance.Email,
+        //     (r) =>
+        //     {
+        //         NavigateToProfileBody();
+        //         HideProfilePage();
+        //         ClearEditProfileInputs();
+        //         IntegrateUI.MessageBox("Account successfully deleted");
+        //         IntegrateUI.Instance.LogoutFunc();
 
-                // Debug.Log(r);
-            },
-            (e) => Debug.Log(e)
-        );
+        //         // Debug.Log(r);
+        //     },
+        //     (e) => Debug.Log(e)
+        // );
     }
 
     void HideDeleteProfileModal()
@@ -209,6 +212,8 @@ public class ProfilePage : MonoBehaviour
 
         L_Username?.RegisterCallback<ClickEvent>(_ => ShowEditUsernameModal());
 
+        // Delete profile
+        B_DeletePofileBack?.RegisterCallback<ClickEvent>(_ => HideDeleteProfileModal());
         // Testing purposes
         V_DeleteProfileModal?.RegisterCallback<ClickEvent>(_ => HideDeleteProfileModal());
         V_EditUsernameModal?.RegisterCallback<ClickEvent>(_ => HideEditUsernameModal());
