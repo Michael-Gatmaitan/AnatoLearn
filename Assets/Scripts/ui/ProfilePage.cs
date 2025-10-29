@@ -14,7 +14,9 @@ public class ProfilePage : MonoBehaviour
     private Label L_ProfilePage;
 
     private Button B_BackProfilePage,
-        B_DeleteProfile;
+        B_DeleteProfile,
+        B_DeleteProfileProceed,
+        B_DeleteProfileBack;
 
     private ScrollView S_ProfileScrollView;
     private VisualElement V_ProfileModals,
@@ -27,7 +29,6 @@ public class ProfilePage : MonoBehaviour
         B_EditProfile;
 
     // Delete profile modal
-    private Button B_DeletePofileBack;
 
     // Sub pages
     private VisualElement V_ProfileBody,
@@ -119,6 +120,24 @@ public class ProfilePage : MonoBehaviour
         // );
     }
 
+    void DeleteProfileAndLogout()
+    {
+        userController.DeleteUser(
+            UserState.Instance.Email,
+            (r) =>
+            {
+                NavigateToProfileBody();
+                HideProfilePage();
+                ClearEditProfileInputs();
+                IntegrateUI.MessageBox("Account successfully deleted");
+                IntegrateUI.Instance.LogoutFunc();
+
+                // Debug.Log(r);
+            },
+            (e) => Debug.Log(e)
+        );
+    }
+
     void HideDeleteProfileModal()
     {
         V_ProfileModals.style.display = DisplayStyle.None;
@@ -198,6 +217,8 @@ public class ProfilePage : MonoBehaviour
 
         B_BackProfilePage = profilePage.Q<Button>("B_BackProfilePage");
         B_DeleteProfile = profilePage.Q<Button>("B_DeleteProfile");
+        B_DeleteProfileBack = profilePage.Q<Button>("B_DeleteProfileBack");
+        B_DeleteProfileProceed = profilePage.Q<Button>("B_DeleteProfileProceed");
 
         V_ProfileModals = profilePage.Q<VisualElement>("V_ProfileModals");
         V_DeleteProfileModal = V_ProfileModals.Q<VisualElement>("V_DeleteProfileModal");
@@ -213,7 +234,9 @@ public class ProfilePage : MonoBehaviour
         L_Username?.RegisterCallback<ClickEvent>(_ => ShowEditUsernameModal());
 
         // Delete profile
-        B_DeletePofileBack?.RegisterCallback<ClickEvent>(_ => HideDeleteProfileModal());
+        B_DeleteProfileProceed?.RegisterCallback<ClickEvent>(_ => DeleteProfileAndLogout());
+        B_DeleteProfileBack?.RegisterCallback<ClickEvent>(_ => HideDeleteProfileModal());
+
         // Testing purposes
         V_DeleteProfileModal?.RegisterCallback<ClickEvent>(_ => HideDeleteProfileModal());
         V_EditUsernameModal?.RegisterCallback<ClickEvent>(_ => HideEditUsernameModal());
