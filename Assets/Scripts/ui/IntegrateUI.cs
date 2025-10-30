@@ -1414,10 +1414,15 @@ public class IntegrateUI : MonoBehaviour
 
                         // void UpdateTimerLabel()
                         // {
-                        int minutes = Mathf.FloorToInt(300 - totalScore.time_left / 60f);
-                        int seconds = Mathf.FloorToInt(300 - totalScore.time_left % 60f);
+                        // int minutes = Mathf.FloorToInt(900 - totalScore.time_left / 60f);
+                        // int seconds = Mathf.FloorToInt(900 - totalScore.time_left % 60f);
+
+                        int minutes = Mathf.FloorToInt(totalScore.time_left / 60f);
+                        int seconds = Mathf.FloorToInt(totalScore.time_left % 60f);
                         // timeLimitLabel.text = $"{minutes:00}:{seconds:00}";
                         // }
+                        Debug.Log($"m: {minutes}, s: {seconds}");
+                        Debug.Log($"formatted - m: {minutes:00}, s: {seconds:00}");
 
                         // Label ScoreTime = new(text: "05:04"); // Inside ScoreContainer
                         Label ScoreTime = new(text: $"{minutes:00}:{seconds:00}"); // Inside ScoreContainer
@@ -1531,9 +1536,6 @@ public class IntegrateUI : MonoBehaviour
         exploreMorePage.style.display = DisplayStyle.None;
 
         // Change image of title
-        // lessonVideoFinishBtn.SetEnabled(false);
-
-
         int user_id = UserState.Instance.Id;
         int topic_id = UserState.Instance.TopicId;
 
@@ -1544,23 +1546,9 @@ public class IntegrateUI : MonoBehaviour
             {
                 Debug.Log($"Is lesson video finished playing? {r.lesson_completed}");
                 if (r.lesson_completed)
-                {
                     lessonVideoFinishBtn.SetEnabled(true);
-                    // lessonVideoFinishBtn.style.backgroundImage = new StyleBackground(
-                    //     Resources.Load<Sprite>("Images/enabledSkipBtn.png")
-                    // );
-
-                    // systemImage.style.backgroundImage = new StyleBackground(
-                    //     Resources.Load<Sprite>($"Images/HomePageSystem/system{topic.id}.png")
-                    // );
-                }
                 else
-                {
                     lessonVideoFinishBtn.SetEnabled(false);
-                    // lessonVideoFinishBtn.style.backgroundImage = new StyleBackground(
-                    //     Resources.Load<Sprite>("Images/enabledSkipBtn.png")
-                    // );
-                }
             },
             (e) => Debug.Log(e)
         );
