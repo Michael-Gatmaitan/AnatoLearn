@@ -7,6 +7,7 @@ public class UserState : MonoBehaviour
     public string Username { get; private set; }
     public string Email { get; private set; }
     public int Id;
+    public string Token { get; private set; }
 
     public string Firstname,
         Middlename,
@@ -41,6 +42,11 @@ public class UserState : MonoBehaviour
         DontDestroyOnLoad(gameObject); // Persist between scenes
     }
 
+    public void SetToken(string _token)
+    {
+        Token = _token;
+    }
+
     public void SetShowProgressionPage(bool t)
     {
         showProgressionPage = t;
@@ -68,12 +74,14 @@ public class UserState : MonoBehaviour
         string fname,
         string lname,
         string mname,
+        string token,
         string avatar
     )
     {
         Id = id;
         Username = username;
         Email = email;
+        Token = token;
 
         Firstname = fname;
         Lastname = lname;
@@ -83,8 +91,11 @@ public class UserState : MonoBehaviour
 
         Avatar = avatar;
 
+        Debug.Log($"Setting avatar: {avatar}");
+
         // Save to PlayerPrefs
         PlayerPrefs.SetInt("id", id);
+        PlayerPrefs.SetString("token", token);
         PlayerPrefs.SetString("username", username);
         PlayerPrefs.SetString("email", email);
         PlayerPrefs.SetString("fname", fname);
@@ -108,6 +119,8 @@ public class UserState : MonoBehaviour
             Lastname = PlayerPrefs.GetString("lname");
 
             Avatar = PlayerPrefs.GetString("avatar");
+
+            Token = PlayerPrefs.GetString("token");
         }
     }
 
@@ -116,6 +129,8 @@ public class UserState : MonoBehaviour
         Id = 0;
         Username = null;
         Email = null;
+
+        Token = "";
 
         isFromTapMe = false;
 
@@ -126,6 +141,8 @@ public class UserState : MonoBehaviour
         PlayerPrefs.DeleteKey("fname");
         PlayerPrefs.DeleteKey("mname");
         PlayerPrefs.DeleteKey("lname");
+
+        PlayerPrefs.DeleteKey("token");
 
         PlayerPrefs.DeleteKey("avatar");
     }

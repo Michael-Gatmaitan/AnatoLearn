@@ -10,6 +10,10 @@ public class BadgePage : MonoBehaviour
     private VisualElement V_BadgeImage;
     private Button B_CloseBadgePage;
 
+    private VisualElement V_noBadgePromptCon;
+    private VisualElement V_NoBadgeImage;
+    private Button B_CloseNoBadgePrompt;
+
     public Sprite[] badgeTopicSprites;
 
     void OnEnable()
@@ -20,18 +24,17 @@ public class BadgePage : MonoBehaviour
         V_BadgePage = popUpPage.Q<VisualElement>("badgePage");
         V_BadgeImage = V_BadgePage.Q<VisualElement>("V_BadgeImage");
 
+        V_noBadgePromptCon = popUpPage.Q<VisualElement>("noBadgePromptCon");
+        V_NoBadgeImage = V_noBadgePromptCon.Q<VisualElement>("badge");
+        B_CloseNoBadgePrompt = V_noBadgePromptCon.Q<Button>("hasBadgeOkayBtn");
+
         B_CloseBadgePage = popUpPage.Q<Button>("closeBadgePageBtn");
         B_CloseBadgePage?.RegisterCallback<ClickEvent>(_ => HideBadgePage());
+        B_CloseNoBadgePrompt?.RegisterCallback<ClickEvent>(_ => HideNoBadgePrompt());
     }
 
     public void ShowBadgePage(int topic_id)
     {
-        Debug.Log($"Openning badge for topic id: {topic_id}");
-
-        Debug.Log($"Popup page: " + popUpPage);
-        Debug.Log($"Badge page: " + V_BadgePage);
-        Debug.Log($"Badge Image: " + V_BadgeImage);
-
         popUpPage.style.display = DisplayStyle.Flex;
         V_BadgePage.style.display = DisplayStyle.Flex;
         V_BadgeImage.style.backgroundImage = new StyleBackground(badgeTopicSprites[topic_id - 1]);
@@ -41,5 +44,18 @@ public class BadgePage : MonoBehaviour
     {
         popUpPage.style.display = DisplayStyle.None;
         V_BadgePage.style.display = DisplayStyle.None;
+    }
+
+    public void ShowNoBadgePrompt(int topic_id)
+    {
+        popUpPage.style.display = DisplayStyle.Flex;
+        V_noBadgePromptCon.style.display = DisplayStyle.Flex;
+        V_NoBadgeImage.style.backgroundImage = new StyleBackground(badgeTopicSprites[topic_id - 1]);
+    }
+
+    public void HideNoBadgePrompt()
+    {
+        popUpPage.style.display = DisplayStyle.None;
+        V_noBadgePromptCon.style.display = DisplayStyle.None;
     }
 }

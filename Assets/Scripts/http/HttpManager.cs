@@ -25,6 +25,7 @@ public class HTTPManager : MonoBehaviour
             req.downloadHandler = new DownloadHandlerBuffer();
 
             req.SetRequestHeader("Content-Type", "application/json");
+            req.SetRequestHeader("Authorization", $"Bearer {UserState.Instance.Token}");
 
             // Debug.Log("Raw get response: " + req.downloadHandler.text);
 
@@ -67,7 +68,7 @@ public class HTTPManager : MonoBehaviour
 
             // Set headers
             request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Authorization", "Bearer your-token-here");
+            request.SetRequestHeader("Authorization", $"Bearer {UserState.Instance.Token}");
 
             yield return request.SendWebRequest();
 
@@ -99,7 +100,7 @@ public class HTTPManager : MonoBehaviour
 
             // Set headers
             request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Authorization", "Bearer your-token-here");
+            request.SetRequestHeader("Authorization", $"Bearer {UserState.Instance.Token}");
 
             yield return request.SendWebRequest();
 
@@ -126,7 +127,7 @@ public class HTTPManager : MonoBehaviour
         {
             // Optional: Add headers
             request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Authorization", "Bearer your-token-here");
+            request.SetRequestHeader("Authorization", $"Bearer {UserState.Instance.Token}");
 
             yield return request.SendWebRequest();
 

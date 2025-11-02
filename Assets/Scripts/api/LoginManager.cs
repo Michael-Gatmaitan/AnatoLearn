@@ -19,6 +19,7 @@ public class LoginManager : MonoBehaviour
     {
         public string message;
         public UserData user;
+        public string token;
     }
 
     [System.Serializable]
@@ -117,10 +118,11 @@ public class LoginManager : MonoBehaviour
             string fname = response.user.fname;
             string lname = response.user.lname;
             string mname = response.user.mname;
+            string token = response.token;
             string avatar = response.user.avatar;
 
             // Set the data of user to localstorage
-            UserState.Instance.SetUserData(id, name, email, fname, lname, mname, avatar);
+            UserState.Instance.SetUserData(id, name, email, fname, lname, mname, token, avatar);
 
             string loggedInMessage = $"Welcome, {name}!";
             Debug.Log("You logged in! " + response.user.name);

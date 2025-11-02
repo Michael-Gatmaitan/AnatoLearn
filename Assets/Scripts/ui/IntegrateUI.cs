@@ -1421,10 +1421,7 @@ public class IntegrateUI : MonoBehaviour
                         int seconds = Mathf.FloorToInt(totalScore.time_left % 60f);
                         // timeLimitLabel.text = $"{minutes:00}:{seconds:00}";
                         // }
-                        Debug.Log($"m: {minutes}, s: {seconds}");
-                        Debug.Log($"formatted - m: {minutes:00}, s: {seconds:00}");
 
-                        // Label ScoreTime = new(text: "05:04"); // Inside ScoreContainer
                         Label ScoreTime = new(text: $"{minutes:00}:{seconds:00}"); // Inside ScoreContainer
                         ScoreTime.AddToClassList("ScoreTime");
 
@@ -1867,58 +1864,56 @@ public class IntegrateUI : MonoBehaviour
             );
         }
 
+        // This function only fires in Topic = 7 (Excretory)
         public static void ValidateCertificate()
         {
             Debug.Log("Validating certificate");
             int topic_id = UserState.Instance.TopicId;
             Debug.Log("Current topic id for validating certificate: " + topic_id);
 
-            if (topic_id == 7)
+            // Check the current score if passed
+            int sumOfAllScores = UserState.Instance.SumOfAllScores();
+
+            int percentage = 100 / 15 * sumOfAllScores;
+
+            if (percentage >= 50)
             {
-                // Check the current score if passed
-                int sumOfAllScores = UserState.Instance.SumOfAllScores();
+                Debug.Log("Give certificate to user and upate 'CERTIFICATE_RECIEVED' to true");
+                // Call an API for giving certificate
+                // This API checks if:
+                // * User passed all of the topics
+                // * User never recieved a certificate before
+                // * Or else, status of 'false' and a message will returned by the API
 
-                int percentage = 100 / 15 * sumOfAllScores;
+                string email = UserState.Instance.Email;
+                string fname = UserState.Instance.Firstname;
+                string mname = UserState.Instance.Middlename;
+                string lname = UserState.Instance.Lastname;
+                string name = $"{fname} {mname} {lname}";
 
-                if (percentage >= 50)
-                {
-                    Debug.Log("Give certificate to user and upate 'CERTIFICATE_RECIEVED' to true");
-                    // Call an API for giving certificate
-                    // This API checks if:
-                    // * User passed all of the topics
-                    // * User never recieved a certificate before
-                    // * Or else, status of 'false' and a message will returned by the API
-
-                    string email = UserState.Instance.Email;
-                    string fname = UserState.Instance.Firstname;
-                    string mname = UserState.Instance.Middlename;
-                    string lname = UserState.Instance.Lastname;
-                    string name = $"{fname} {mname} {lname}";
-
-                    userTopicProgressController.SendCertificate(
-                        email,
-                        name,
-                        (r) =>
+                userTopicProgressController.SendCertificate(
+                    email,
+                    name,
+                    (r) =>
+                    {
+                        if (r.success)
                         {
-                            if (r.success)
-                            {
-                                Debug.Log(r.message);
-                                MessageBox(r.message);
+                            Debug.Log(r.message);
+                            MessageBox(r.message);
 
-                                var c = FindAnyObjectByType<CertificatePage>();
-                                c.ShowCertificatePage();
-                            }
-                            else
-                            {
-                                MessageBox(r.message);
-                            }
-                        },
-                        (e) =>
-                        {
-                            Debug.LogError("There was an error sending certificate: " + e);
+                            var c = FindAnyObjectByType<CertificatePage>();
+                            c.ShowCertificatePage();
                         }
-                    );
-                }
+                        else
+                        {
+                            MessageBox(r.message);
+                        }
+                    },
+                    (e) =>
+                    {
+                        Debug.LogError("There was an error sending certificate: " + e);
+                    }
+                );
             }
         }
 
@@ -1999,19 +1994,32 @@ public class IntegrateUI : MonoBehaviour
                     time_left = time_left,
                 };
 
+                int allScores = tapScore + mcqScore + tofScore;
+                int percentage = 100 / 15 * allScores;
+
+                // TODO: CHECK IF THE AVERAGE IS ABOVE 50%
+                // IF IT IS, RUN ShowBadgePage, else, show ShowHasNotBadgePage
                 // Check hasBadge before storing score.
                 totalScoresController.GetHasBadge(
                     userId,
                     topicId,
                     (r) =>
                     {
-                        Debug.Log(r);
                         Debug.Log("Has badge: " + r.hasBadge);
 
-                        if (!r.hasBadge)
+                        var badgeComponent = FindAnyObjectByType<BadgePage>();
+                        if (percentage >= 50)
                         {
-                            var badgeComponent = FindAnyObjectByType<BadgePage>();
-                            badgeComponent.ShowBadgePage(topicId);
+                            if (!r.hasBadge)
+                            {
+                                // We can do the math here (checking percentage)
+                                badgeComponent.ShowBadgePage(topicId);
+                            }
+                            // Else, show nothing, bc user already claimed or has a badge
+                        }
+                        else
+                        {
+                            badgeComponent.ShowNoBadgePrompt(topicId);
                         }
 
                         scoresPage.style.display = DisplayStyle.Flex;
@@ -2034,7 +2042,10 @@ public class IntegrateUI : MonoBehaviour
                         // }
 
                         // Store the score first before validating the certificate
-                        ValidateCertificate();
+                        if (topicId == 7)
+                        {
+                            ValidateCertificate();
+                        }
                     },
                     (error) => Debug.LogError(error)
                 );
