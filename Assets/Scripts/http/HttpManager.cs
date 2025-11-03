@@ -25,6 +25,8 @@ public class HTTPManager : MonoBehaviour
             req.downloadHandler = new DownloadHandlerBuffer();
 
             req.SetRequestHeader("Content-Type", "application/json");
+
+            Debug.Log("Token: " + UserState.Instance.Token);
             req.SetRequestHeader("Authorization", $"Bearer {UserState.Instance.Token}");
 
             // Debug.Log("Raw get response: " + req.downloadHandler.text);

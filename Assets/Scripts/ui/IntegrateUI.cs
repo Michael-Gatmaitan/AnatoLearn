@@ -298,6 +298,8 @@ public class IntegrateUI : MonoBehaviour
 
     void Start()
     {
+        // UserState.Instance.ClearUserData();
+
         if (Permission.HasUserAuthorizedPermission(Permission.Camera))
         {
             Debug.Log("Camera permission granted");
