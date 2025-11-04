@@ -2049,7 +2049,7 @@ public class IntegrateUI : MonoBehaviour
                     reqBody,
                     (response) =>
                     {
-                        homeBtn.SetEnabled(false);
+                        homeBtn.SetEnabled(true);
 
                         Debug.Log(response.message);
                         // If the request returns success = true,

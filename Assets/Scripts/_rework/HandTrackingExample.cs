@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 public class HandTrackingExample : MonoBehaviour
 {
     // Switch conversion of landmarks using this boolean
-    private readonly bool isMobile = false;
+    private readonly bool isMobile = true;
 
     [Header("Hand Tracking")]
     public HTS_Improved handTracker;

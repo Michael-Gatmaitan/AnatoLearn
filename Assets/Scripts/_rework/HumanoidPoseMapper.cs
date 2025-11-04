@@ -12,10 +12,11 @@ using UnityEngine.UIElements;
 public class HumanoidPoseMapper : MonoBehaviour
 {
     // Switch conversion of landmarks using this boolean
-    private readonly bool isMobile = false;
+    private readonly bool isMobile = true;
 
     [Header("Main")]
     public PoseLandmarkerRunner poseLandmarkerRunner;
+
     // public GameObject landmarkPrefab;
 
     [Header("Humanoid Model")]
@@ -39,6 +40,7 @@ public class HumanoidPoseMapper : MonoBehaviour
 
     private FieldInfo currentTargetField;
     private List<NormalizedLandmark> landmarks;
+
     // private GameObject positionPref;
     public UIDocument uiDocument;
 
@@ -50,7 +52,7 @@ public class HumanoidPoseMapper : MonoBehaviour
     public float screenDepth = 20;
     public float positionZOffset = 20;
     public float adjustedHipYDivider = 0.9f; // 2.5-ish for skeletal
-    public bool useRotation = false;
+    private bool useRotation = true;
 
     void OnEnable()
     {
@@ -246,6 +248,16 @@ public class HumanoidPoseMapper : MonoBehaviour
 
                     // Forward is perpendicular to right and up
                     Vector3 bodyForward = Vector3.Cross(shoulderRight, torsoUp).normalized;
+
+                    // Disambiguate forward/back using nose relative to chest so model faces camera correctly
+                    Vector3 nose = ConvertMediaPipeToUnitySpace(
+                        landmarks[(int)MediaPipeLandmark.NOSE]
+                    );
+                    Vector3 chestToNose = (nose - midShoulder);
+                    if (Vector3.Dot(bodyForward, chestToNose) < 0f)
+                    {
+                        bodyForward = -bodyForward;
+                    }
 
                     if (torsoUp.sqrMagnitude > 1e-4f && bodyForward.sqrMagnitude > 1e-4f)
                     {
