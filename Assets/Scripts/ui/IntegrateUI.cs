@@ -452,7 +452,7 @@ public class IntegrateUI : MonoBehaviour
                 Label correctScore = sumScorePage.Q<Label>("correctScore");
                 Label incorrectScore = sumScorePage.Q<Label>("incorrectScore");
 
-                int percentage = 100 / 15 * allScores;
+                int percentage = (100 / 15) * allScores;
 
                 // Display accuracy / performance
                 score.text = $"{percentage}%";
@@ -991,6 +991,7 @@ public class IntegrateUI : MonoBehaviour
             }
             else
             {
+                Debug.Log("Scores setting home page: " + scores.Count);
                 // Check topic - 1 total_score
                 // If there is at least 1 passing score at previou topic, enable the topic
                 Debug.Log("User id in total scores controller: " + UserState.Instance.Id);
@@ -1764,7 +1765,7 @@ public class IntegrateUI : MonoBehaviour
             // Check the current score if passed
             int sumOfAllScores = UserState.Instance.SumOfAllScores();
 
-            int percentage = 100 / 15 * sumOfAllScores;
+            int percentage = (100 / 15) * sumOfAllScores;
 
             if (percentage >= 50)
             {
@@ -1885,7 +1886,7 @@ public class IntegrateUI : MonoBehaviour
                 };
 
                 int allScores = tapScore + mcqScore + tofScore;
-                int percentage = 100 / 15 * allScores;
+                int percentage = (100 / 15) * allScores;
 
                 // TODO: CHECK IF THE AVERAGE IS ABOVE 50%
                 // IF IT IS, RUN ShowBadgePage, else, show ShowHasNotBadgePage

@@ -1549,12 +1549,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
-  landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
   uiDocument: {fileID: 403801984}
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
-  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.3
   ikPositionWeight: 0.4
@@ -7114,12 +7112,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
-  landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
   uiDocument: {fileID: 403801984}
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
-  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.6
   ikPositionWeight: 0.4
@@ -11073,12 +11069,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
-  landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
   uiDocument: {fileID: 403801984}
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
-  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.5
   ikPositionWeight: 0.4
@@ -13074,12 +13068,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
-  landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
   uiDocument: {fileID: 403801984}
   screenDepth: 100
   positionZOffset: 50
   adjustedHipYDivider: 1.5
-  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.65
   ikPositionWeight: 1
@@ -13098,12 +13090,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 0}
-  landmarkPrefab: {fileID: 0}
   uiDocument: {fileID: 0}
   screenDepth: 100
   positionZOffset: 20
   adjustedHipYDivider: 1.5
-  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.65
   ikPositionWeight: 1
@@ -17869,12 +17859,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
-  landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
   uiDocument: {fileID: 403801984}
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
-  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.6
   ikPositionWeight: 0.4
@@ -27128,12 +27116,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
-  landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
   uiDocument: {fileID: 403801984}
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
-  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.6
   ikPositionWeight: 0.4
@@ -27438,7 +27424,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -31592,12 +31578,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poseLandmarkerRunner: {fileID: 1064799468}
-  landmarkPrefab: {fileID: 5467427710409400390, guid: 92e5a2d3cfd78eb4f829e8bfeb01d9cc, type: 3}
   uiDocument: {fileID: 403801984}
   screenDepth: 20
   positionZOffset: 50
   adjustedHipYDivider: 0.9
-  useRotation: 0
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.7
   ikPositionWeight: 0.4
