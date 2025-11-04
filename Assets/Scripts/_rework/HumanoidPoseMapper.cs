@@ -12,7 +12,7 @@ using UnityEngine.UIElements;
 public class HumanoidPoseMapper : MonoBehaviour
 {
     // Switch conversion of landmarks using this boolean
-    private readonly bool isMobile = false;
+    private readonly bool isMobile = true;
 
     [Header("Main")]
     public PoseLandmarkerRunner poseLandmarkerRunner;

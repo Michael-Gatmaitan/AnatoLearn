@@ -96,6 +96,7 @@ public class IntegrateUI : MonoBehaviour
     private static bool isVideoPlaying = false;
     private static bool currentVideoValidToSkip = false;
     private static bool takingQuiz = false;
+    private static Coroutine messageBoxCoroutine;
 
     // Array of Topics class
     private Topics[] topicsArray = new Topics[]
@@ -1117,7 +1118,8 @@ public class IntegrateUI : MonoBehaviour
                         "This topic is still locked, please passed the activity of recent topic first"
                     );
                     MessageBox(
-                        "You need to pass at previous topic before proceeding to this topic"
+                        "You need to pass at previous topic before proceeding to this topic",
+                        "error"
                     );
                 }
             });
@@ -2028,13 +2030,27 @@ public class IntegrateUI : MonoBehaviour
                         mcqPage.parent.style.display = DisplayStyle.None;
                         mcqPage.style.display = DisplayStyle.None;
                     },
-                    (e) => Debug.LogError(e)
+                    (e) =>
+                    {
+                        Debug.LogError(e);
+
+                        scoresPage.style.display = DisplayStyle.Flex;
+                        mcqPage.parent.style.display = DisplayStyle.None;
+                        mcqPage.style.display = DisplayStyle.None;
+                    }
                 );
+
+                Button homeBtn = sumScorePage.Q<Button>("B_HomeBtn");
+                homeBtn.SetEnabled(false);
+
+                MessageBox("Saving progress...");
 
                 actScoresController.CreateActScoresWithTotalScore(
                     reqBody,
                     (response) =>
                     {
+                        homeBtn.SetEnabled(false);
+
                         Debug.Log(response.message);
                         // If the request returns success = true,
                         // rest all scores into -1 again (default -1)
@@ -2049,7 +2065,14 @@ public class IntegrateUI : MonoBehaviour
                             ValidateCertificate();
                         }
                     },
-                    (error) => Debug.LogError(error)
+                    (e) =>
+                    {
+                        Debug.LogError(e);
+
+                        scoresPage.style.display = DisplayStyle.Flex;
+                        mcqPage.parent.style.display = DisplayStyle.None;
+                        mcqPage.style.display = DisplayStyle.None;
+                    }
                 );
             }
 
@@ -2058,7 +2081,7 @@ public class IntegrateUI : MonoBehaviour
     }
 
     // Parameter vs should be a page of the parent of vs should be the root VisualElement
-    public static void MessageBox(string message)
+    public static void MessageBox(string message, string variant = "")
     {
         VisualElement messageBoxContainer = root.Q<VisualElement>("messageBox");
 
@@ -2068,13 +2091,37 @@ public class IntegrateUI : MonoBehaviour
 
         messageBoxContainer.style.display = DisplayStyle.Flex;
 
+        if (variant == "error")
+        {
+            // E72A2A -- ERROR
+            if (ColorUtility.TryParseHtmlString("#E72A2A", out Color errorColor))
+            {
+                messageBoxContainer.style.backgroundColor = new StyleColor(errorColor);
+            }
+        }
+        else
+        {
+            // 262222 -- DEFAULT
+            if (ColorUtility.TryParseHtmlString("#262222", out Color defaultColor))
+            {
+                messageBoxContainer.style.backgroundColor = new StyleColor(defaultColor);
+            }
+        }
+
+        // Stop any existing coroutine to prevent flickering when called multiple times
+        if (messageBoxCoroutine != null)
+        {
+            Instance.StopCoroutine(messageBoxCoroutine);
+        }
+
         IEnumerator<WaitForSeconds> HideMessageBox()
         {
             yield return new WaitForSeconds(3);
             messageBoxContainer.style.display = DisplayStyle.None;
+            messageBoxCoroutine = null; // Clear reference when done
         }
 
-        Instance.StartCoroutine(HideMessageBox());
+        messageBoxCoroutine = Instance.StartCoroutine(HideMessageBox());
     }
 
     void Update()

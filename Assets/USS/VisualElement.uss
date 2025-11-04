@@ -872,3 +872,7 @@ VisualElement {
     border-bottom-width: 5px;
     border-left-width: 5px;
 }
+
+.error-message {
+    background-color: rgb(231, 42, 42);
+}
