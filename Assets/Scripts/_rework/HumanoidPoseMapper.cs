@@ -12,11 +12,11 @@ using UnityEngine.UIElements;
 public class HumanoidPoseMapper : MonoBehaviour
 {
     // Switch conversion of landmarks using this boolean
-    private readonly bool isMobile = true;
+    private readonly bool isMobile = false;
 
     [Header("Main")]
     public PoseLandmarkerRunner poseLandmarkerRunner;
-    public GameObject landmarkPrefab;
+    // public GameObject landmarkPrefab;
 
     [Header("Humanoid Model")]
     private Animator humanoidAnimator; // The Mixamo model with Animator component
@@ -39,7 +39,7 @@ public class HumanoidPoseMapper : MonoBehaviour
 
     private FieldInfo currentTargetField;
     private List<NormalizedLandmark> landmarks;
-    private GameObject positionPref;
+    // private GameObject positionPref;
     public UIDocument uiDocument;
 
     private Label L_BodyInstruction;
@@ -141,8 +141,8 @@ public class HumanoidPoseMapper : MonoBehaviour
 
         // CreateLandmarkSpheres();
 
-        positionPref = Instantiate(landmarkPrefab);
-        positionPref.name = "Position pref";
+        // positionPref = Instantiate(landmarkPrefab);
+        // positionPref.name = "Position pref";
 
         if (humanoidAnimator == null)
         {
@@ -224,21 +224,39 @@ public class HumanoidPoseMapper : MonoBehaviour
 
                 if (useRotation)
                 {
+                    // Compute body orientation from shoulders (right vector) and torso (up vector)
                     Vector3 leftShoulder = ConvertMediaPipeToUnitySpace(
                         landmarks[(int)MediaPipeLandmark.LEFT_SHOULDER]
                     );
                     Vector3 rightShoulder = ConvertMediaPipeToUnitySpace(
                         landmarks[(int)MediaPipeLandmark.RIGHT_SHOULDER]
                     );
+                    Vector3 leftHip = ConvertMediaPipeToUnitySpace(
+                        landmarks[(int)MediaPipeLandmark.LEFT_HIP]
+                    );
+                    Vector3 rightHip = ConvertMediaPipeToUnitySpace(
+                        landmarks[(int)MediaPipeLandmark.RIGHT_HIP]
+                    );
 
-                    Vector3 direction = leftShoulder - rightShoulder;
+                    Vector3 midShoulder = (leftShoulder + rightShoulder) * 0.5f;
+                    Vector3 midHip = (leftHip + rightHip) * 0.5f;
 
-                    humanoidAnimator.transform.right = direction;
-                    Quaternion targetRotation = Quaternion.LookRotation(direction);
+                    Vector3 torsoUp = (midShoulder - midHip).normalized;
+                    Vector3 shoulderRight = (rightShoulder - leftShoulder).normalized;
 
-                    Debug.Log($"Rotation: {targetRotation}");
-                    humanoidAnimator.transform.rotation = targetRotation;
+                    // Forward is perpendicular to right and up
+                    Vector3 bodyForward = Vector3.Cross(shoulderRight, torsoUp).normalized;
 
+                    if (torsoUp.sqrMagnitude > 1e-4f && bodyForward.sqrMagnitude > 1e-4f)
+                    {
+                        Quaternion targetRotation = Quaternion.LookRotation(bodyForward, torsoUp);
+                        float smooth = Mathf.Clamp01(Time.deltaTime * 10f);
+                        humanoidAnimator.transform.rotation = Quaternion.Slerp(
+                            humanoidAnimator.transform.rotation,
+                            targetRotation,
+                            smooth
+                        );
+                    }
                 }
 
                 if (!useShoulderScale)
@@ -566,7 +584,7 @@ public class HumanoidPoseMapper : MonoBehaviour
                     humanoidAnimator.SetIKPositionWeight(AvatarIKGoal.RightHand, ikPositionWeight);
                     humanoidAnimator.SetIKPosition(AvatarIKGoal.RightHand, prevRightHandPos);
 
-                    positionPref.transform.localPosition = prevRightHandPos;
+                    // positionPref.transform.localPosition = prevRightHandPos;
 
                     // Set left knee
                     humanoidAnimator.SetIKHintPositionWeight(
