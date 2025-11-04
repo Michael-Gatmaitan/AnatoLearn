@@ -361,7 +361,6 @@ public class IntegrateUI : MonoBehaviour
             {
                 // Normal flow is happening
                 Debug.Log($"❌ Topic id is: {topic_id} and fromTapMe is: {isFromTapMe}");
-                // homePage.style.display = DisplayStyle.Flex;
             }
 
             Debug.Log("Show progression page: " + UserState.Instance.showProgressionPage);
@@ -386,8 +385,6 @@ public class IntegrateUI : MonoBehaviour
         // One time registration of callbacks
         progressBtn?.RegisterCallback<ClickEvent>(_ =>
         {
-            // SetupProgressPage(progressPage);
-
             progressPage.style.display = DisplayStyle.Flex;
             progressTopicsPage.style.display = DisplayStyle.Flex;
             homePage.style.display = DisplayStyle.None;
@@ -409,38 +406,7 @@ public class IntegrateUI : MonoBehaviour
             popUpPage.style.display = DisplayStyle.None;
             settingsPage.style.display = DisplayStyle.None;
         });
-
-        // progressBackBtn?.RegisterCallback<ClickEvent>(_ =>
-        // {
-        //     progressPage.style.display = DisplayStyle.None;
-        // });
     }
-
-    // public void SetupSettingsPage(VisualElement settingsPage)
-    // {
-    //     Debug.Log($"Settings: {settingsPage}");
-
-    //     Button logoutBtn = settingsPage.Q<Button>("B_Logout");
-    //     Button closeBtn = settingsPage.Q<Button>("B_CloseSettings");
-
-    //     closeBtn?.RegisterCallback<ClickEvent>(_ =>
-    //     {
-    //         Debug.Log("Closing settings");
-    //         settingsPage.style.display = DisplayStyle.None;
-    //         homePage.style.display = DisplayStyle.Flex;
-    //     });
-
-    //     logoutBtn?.RegisterCallback<ClickEvent>(_ =>
-    //     {
-    //         Debug.Log("Logging out");
-    //         settingsPage.style.display = DisplayStyle.None;
-    //         homePage.style.display = DisplayStyle.None;
-
-    //         loginScreen.style.display = DisplayStyle.Flex;
-
-    //         UserState.Instance.ClearUserData();
-    //     });
-    // }
 
     private void SetupSumScorePage()
     {
@@ -846,52 +812,6 @@ public class IntegrateUI : MonoBehaviour
                 else if (topic.topic_name == "excretory")
                     SceneManager.LoadScene("3dModeExcretoryScene");
 
-                // userTopicProgressController.UpdateUserTopicProgress(
-                //     UserState.Instance.Id,
-                //     UserState.Instance.TopicId,
-                //     "explore",
-                //     (r) =>
-                //     {
-                //         Debug.Log("Activity unlocked: " + r);
-                //         ShowUnlockedProgression();
-
-                //         PlayerPrefs.SetString("Chosen3D", topic.topic_name);
-
-                //         if (topic.topic_name == "skeletal")
-                //         {
-                //             SceneManager.LoadScene("3dModeSkeletalScene");
-                //         }
-                //         else if (topic.topic_name == "integumentary")
-                //         {
-                //             SceneManager.LoadScene("3dModeIntegumentaryScene");
-                //         }
-                //         else if (topic.topic_name == "respiratory")
-                //         {
-                //             SceneManager.LoadScene("3dModeRespiratoryScene");
-                //         }
-                //         else if (topic.topic_name == "digestive")
-                //         {
-                //             SceneManager.LoadScene("3dModeDigestiveScene");
-                //         }
-                //         else if (topic.topic_name == "circulatory")
-                //         {
-                //             SceneManager.LoadScene("3dModeCirculatoryScene");
-                //         }
-                //         else if (topic.topic_name == "nervous")
-                //         {
-                //             SceneManager.LoadScene("3dModeNervousScene");
-                //         }
-                //         else if (topic.topic_name == "excretory")
-                //         {
-                //             SceneManager.LoadScene("3dModeExcretoryScene");
-                //         }
-                //     },
-                //     (e) =>
-                //     {
-                //         Debug.LogError(e);
-                //     }
-                // );
-
                 exploreMorePage.style.display = DisplayStyle.None;
                 // Close and refresh the progression page
             }
@@ -1131,8 +1051,6 @@ public class IntegrateUI : MonoBehaviour
 
     public void SetupProgressPage()
     {
-        // progressTopicsPage
-        // VisualElement progressTopicsPage = progressPage.Q<VisualElement>("progressTopicsPage"); //added
         bool isTotalScoresPageShowed = false;
 
         VisualElement progressTopicTotalScoresPage = progressPage.Q<VisualElement>(
@@ -1144,24 +1062,15 @@ public class IntegrateUI : MonoBehaviour
         ); //added
 
         Button progressBackBtn = progressPage.Q<Button>("progressBackBtn"); //added
-        // Debug.Log("BACKGROUND IMAGE: " + progressBackBtn.style.backgroundImage);
 
 
         ScrollView progressScrollView = progressTopicsPage.Q<ScrollView>("ProgressScrollView");
         progressScrollView.Clear();
 
         Debug.Log("Setting up progress page");
-        Debug.Log(topicController);
 
-        // topicController.GetAllTopics(
-        //     (response) => DisplayTopics(response.data),
-        //     (error) => Debug.LogError("Error on getting all topics")
-        // );
-
-        // totalScoresController.GetTotalAttempts(UserState.Instance.Id, (r) => Debug.Log(r), (e) => Debug.Log(e));
         DisplayTopics();
 
-        // void DisplayTopics(List<Topic> topics)
         void DisplayTopics()
         {
             foreach (var topic in topicsArray)
@@ -1313,16 +1222,10 @@ public class IntegrateUI : MonoBehaviour
                 progressTopicsPage.style.display = DisplayStyle.None;
                 progressTopicTotalScoresPage.style.display = DisplayStyle.Flex;
 
-                Debug.Log("History of activity");
-
                 var mainContainer = progressTopicTotalScoresPage.Q("topicSumScoreMainContainer");
-                Debug.Log("Main container? " + mainContainer);
                 mainContainer.Clear();
 
                 List<TotalScore> filteredScores = scores.FindAll(s => s.topic_id == topic_id);
-
-                Debug.Log($"Filtered Scores: {filteredScores}");
-                Debug.Log($"Filtered Scores langth: {filteredScores.Count}");
 
                 Label L_NoRecordFound = progressTopicTotalScoresPage.Q<Label>("L_NoRecordFound");
                 L_NoRecordFound.style.display = DisplayStyle.None;
@@ -1332,8 +1235,6 @@ public class IntegrateUI : MonoBehaviour
                     // foreach (var totalScore in response.data)
                     foreach (var totalScore in filteredScores)
                     {
-                        Debug.Log(totalScore.total_score);
-
                         VisualElement TotalSumScoreContainer = new();
                         TotalSumScoreContainer.AddToClassList("TopicSumScoreContainer");
 
@@ -1395,8 +1296,9 @@ public class IntegrateUI : MonoBehaviour
                                         "totalScoreDate"
                                     );
                                     // totalScoreDate.text = totalScore.created_at;
+
                                     totalScoreDate.text =
-                                        $"{DateTimeOffset.Parse(totalScore.created_at).ToLocalTime()}";
+                                        $"{DateTimeOffset.Parse(totalScore.created_at).ToLocalTime():MMMM dd, yyyy h:mm tt}";
 
                                     progressTopicActScoresPage.style.display = DisplayStyle.Flex;
                                 },
@@ -1492,17 +1394,7 @@ public class IntegrateUI : MonoBehaviour
                 {
                     L_NoRecordFound.style.display = DisplayStyle.Flex;
                 }
-                // },
-                //         (err) =>
-                //         {
-                //             Debug.Log(
-                //                 "There was an error getting total score by user id and topic id: " + err
-                //             );
-                //         }
-                //     );
             }
-
-            // List<VisualElement> progressButtons = progressPage.Query<VisualElement>(className: "progressContainer").ToList();
 
             // foreach (var)
             progressBackBtn?.RegisterCallback<ClickEvent>(_ =>
@@ -1600,8 +1492,6 @@ public class IntegrateUI : MonoBehaviour
             quizTitleImg.style.backgroundImage = new StyleBackground(
                 IntegrateUI.Instance.progressionTopicTitle[topicId - 1]
             );
-
-            Debug.Log("Quiz title background image: " + quizTitleImg.style.backgroundImage);
 
             void DisplayQuestion(int index, List<QuestionMCQ> mcqQuestions)
             {
@@ -1722,8 +1612,6 @@ public class IntegrateUI : MonoBehaviour
                 },
                 (error) => Debug.LogError(error)
             );
-
-            //Show splash
         }
 
         public static void SetupTOFContent2(VisualElement tofPage)
@@ -1858,8 +1746,6 @@ public class IntegrateUI : MonoBehaviour
                         }
                         else
                         {
-                            Debug.Log(questionIndex);
-                            Debug.Log(response.data.Count);
                             DisplayQuestion(questionIndex, response.data);
                         }
                     });
@@ -2143,11 +2029,6 @@ public class IntegrateUI : MonoBehaviour
             }
 
             Debug.Log($"Current time: {currentTime} Video length: {videoPlayer.length}");
-
-            // if (currentTime + 1 >= videoPlayer.length)
-            // {
-            //     Debug.Log($"Video finished {UserState.Instance.TopicId}");
-            // }
         }
 
         // Handle quiz time
