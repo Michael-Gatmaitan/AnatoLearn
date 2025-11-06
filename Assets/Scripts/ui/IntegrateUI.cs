@@ -185,6 +185,7 @@ public class IntegrateUI : MonoBehaviour
 
         settingsBtn = homePage.Q<Button>("settingsBtn");
         exitSettingsBtn = settingsPage.Q<Button>("exitSettingsBtn");
+        // Clear data?
         logoutBtn = settingsPage.Q<Button>("B_Logout");
 
         progressionPage = popUpPage.Q<VisualElement>("progressionPage"); //added
@@ -299,8 +300,6 @@ public class IntegrateUI : MonoBehaviour
 
     void Start()
     {
-        // UserState.Instance.ClearUserData();
-
         if (Permission.HasUserAuthorizedPermission(Permission.Camera))
         {
             Debug.Log("Camera permission granted");

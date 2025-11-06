@@ -1,5 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UIElements;
 
 public class ProfilePage : MonoBehaviour
@@ -26,6 +29,7 @@ public class ProfilePage : MonoBehaviour
     // Navigation Buttons
     private Button B_Profile,
         B_Badges,
+        B_Certificate,
         B_EditProfile;
 
     // Delete profile modal
@@ -33,9 +37,17 @@ public class ProfilePage : MonoBehaviour
     // Sub pages
     private VisualElement V_ProfileBody,
         V_Badges,
+        V_Certificate,
         V_EditProfile;
 
     private Label L_Username;
+
+    // Certificate
+    private VisualElement V_CertificateContainer,
+        V_CertificateImageContent,
+        V_CertificateImage;
+    private Button B_DownloadCertificate;
+    private Label L_CertificateWarn;
 
     private static TotalScoresController totalScoresController;
     private static UserController userController;
@@ -161,10 +173,12 @@ public class ProfilePage : MonoBehaviour
         V_ProfileBody.style.display = DisplayStyle.Flex;
         V_Badges.style.display = DisplayStyle.None;
         V_EditProfile.style.display = DisplayStyle.None;
+        V_Certificate.style.display = DisplayStyle.None;
 
         B_Profile.style.opacity = 1f;
 
         B_Badges.style.opacity = 0.2f;
+        B_Certificate.style.opacity = 0.2f;
         B_EditProfile.style.opacity = 0.2f;
 
         L_ProfilePage.text = "Profile";
@@ -175,10 +189,12 @@ public class ProfilePage : MonoBehaviour
         V_ProfileBody.style.display = DisplayStyle.None;
         V_Badges.style.display = DisplayStyle.Flex;
         V_EditProfile.style.display = DisplayStyle.None;
+        V_Certificate.style.display = DisplayStyle.None;
 
         B_Badges.style.opacity = 1f;
 
         B_Profile.style.opacity = 0.2f;
+        B_Certificate.style.opacity = 0.2f;
         B_EditProfile.style.opacity = 0.2f;
 
         L_ProfilePage.text = "Badges";
@@ -189,10 +205,28 @@ public class ProfilePage : MonoBehaviour
         V_ProfileBody.style.display = DisplayStyle.None;
         V_Badges.style.display = DisplayStyle.None;
         V_EditProfile.style.display = DisplayStyle.Flex;
+        V_Certificate.style.display = DisplayStyle.None;
 
         B_EditProfile.style.opacity = 1f;
 
         B_Badges.style.opacity = 0.2f;
+        B_Profile.style.opacity = 0.2f;
+        B_Certificate.style.opacity = 0.2f;
+
+        L_ProfilePage.text = "Certificate";
+    }
+
+    void NavigateToCertificate()
+    {
+        V_ProfileBody.style.display = DisplayStyle.None;
+        V_Badges.style.display = DisplayStyle.None;
+        V_EditProfile.style.display = DisplayStyle.None;
+        V_Certificate.style.display = DisplayStyle.Flex;
+
+        B_Certificate.style.opacity = 1f;
+
+        B_Badges.style.opacity = 0.2f;
+        B_EditProfile.style.opacity = 0.2f;
         B_Profile.style.opacity = 0.2f;
 
         L_ProfilePage.text = "Edit Profile";
@@ -243,14 +277,17 @@ public class ProfilePage : MonoBehaviour
 
         B_Profile = profilePage.Q<Button>("B_Profile");
         B_Badges = profilePage.Q<Button>("B_Badges");
+        B_Certificate = profilePage.Q<Button>("B_Certificate");
         B_EditProfile = profilePage.Q<Button>("B_EditProfile");
 
         B_Profile?.RegisterCallback<ClickEvent>(_ => NavigateToProfileBody());
         B_Badges?.RegisterCallback<ClickEvent>(_ => NavigateToBadges());
+        B_Certificate?.RegisterCallback<ClickEvent>(_ => NavigateToCertificate());
         B_EditProfile?.RegisterCallback<ClickEvent>(_ => NavigateToEditProfile());
 
         V_ProfileBody = profilePage.Q<VisualElement>("V_ProfileBody");
         V_Badges = profilePage.Q<VisualElement>("V_Badges");
+        V_Certificate = profilePage.Q<VisualElement>("V_Certificate");
         V_EditProfile = profilePage.Q<VisualElement>("V_EditProfile");
 
         // Profile variables initialization
@@ -260,6 +297,20 @@ public class ProfilePage : MonoBehaviour
         B_UpdateAvatar.SetEnabled(false);
 
         profiles = V_ProfileBody.Query(className: "profile").ToList();
+
+        // Certificate
+        V_CertificateContainer = V_Certificate.Q<VisualElement>("V_CertificateContainer");
+        V_CertificateImageContent = V_CertificateContainer.Q<VisualElement>(
+            "V_CertificateImageContent"
+        );
+        V_CertificateImage = V_CertificateImageContent.Q<VisualElement>("V_CertificateImage");
+        B_DownloadCertificate = V_CertificateImageContent.Q<Button>("B_DownloadCertificate");
+        L_CertificateWarn = V_CertificateContainer.Q<Label>("L_CertificateWarn");
+
+        B_DownloadCertificate?.RegisterCallback<ClickEvent>(_ =>
+        {
+            DownloadCertificate();
+        });
 
         VisualElement selected = null;
         int selectedIndex = 0;
@@ -315,6 +366,204 @@ public class ProfilePage : MonoBehaviour
         B_EditButton = V_EditProfile.Q<Button>("B_EditButton");
     }
 
+    public void InitializeCertificate()
+    {
+#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+        string? certificate_url;
+#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+        certificate_url = UserState.Instance.Certificate_url;
+
+        if (certificate_url == null)
+        {
+            L_CertificateWarn.style.display = DisplayStyle.Flex;
+            V_CertificateImageContent.style.display = DisplayStyle.None;
+
+            Debug.Log("Certificate is null");
+        }
+        else
+        {
+            L_CertificateWarn.style.display = DisplayStyle.None;
+            V_CertificateImageContent.style.display = DisplayStyle.Flex;
+
+            Debug.Log("Certificate url: " + certificate_url);
+
+            // Ensure background scales to fit without cropping
+            V_CertificateImage.style.backgroundPositionX = new StyleBackgroundPosition(
+                new BackgroundPosition(BackgroundPositionKeyword.Center)
+            );
+            V_CertificateImage.style.backgroundPositionY = new StyleBackgroundPosition(
+                new BackgroundPosition(BackgroundPositionKeyword.Center)
+            );
+            V_CertificateImage.style.backgroundSize = new StyleBackgroundSize(
+                new BackgroundSize(BackgroundSizeType.Contain)
+            );
+
+            // Keep width responsive
+            V_CertificateImage.style.width = new StyleLength(new Length(100, LengthUnit.Percent));
+
+            // Maintain aspect ratio (669x486) by adjusting height on geometry changes
+            // float certificateAspect = 486f / 669f;
+            float certificateAspect = 982f / 1340f;
+            EventCallback<GeometryChangedEvent> geometryHandler = null;
+            geometryHandler = (GeometryChangedEvent e) =>
+            {
+                float currentWidth = V_CertificateImage.resolvedStyle.width;
+                if (currentWidth > 0)
+                {
+                    float computedHeight = currentWidth * certificateAspect;
+                    V_CertificateImage.style.height = computedHeight;
+                }
+            };
+            // Register once (safe to re-register, remove previous first)
+            V_CertificateImage.UnregisterCallback<GeometryChangedEvent>(geometryHandler);
+            V_CertificateImage.RegisterCallback(geometryHandler);
+
+            // Display certificate image from URL
+            StartCoroutine(
+                RemoteImageLoader.LoadInto(
+                    V_CertificateImage,
+                    certificate_url,
+                    tex =>
+                    {
+                        // After load, enforce contain and recompute height using actual width
+                        V_CertificateImage.style.backgroundSize = new StyleBackgroundSize(
+                            new BackgroundSize(BackgroundSizeType.Contain)
+                        );
+                        // If texture provides more accurate aspect, prefer it
+                        if (tex != null && tex.width > 0)
+                        {
+                            float aspect = (float)tex.height / tex.width;
+                            float currentWidth = V_CertificateImage.resolvedStyle.width;
+                            if (currentWidth > 0)
+                            {
+                                V_CertificateImage.style.height = currentWidth * aspect;
+                            }
+                        }
+                        else
+                        {
+                            // Fallback to fixed certificate aspect
+                            float currentWidth = V_CertificateImage.resolvedStyle.width;
+                            if (currentWidth > 0)
+                            {
+                                V_CertificateImage.style.height = currentWidth * certificateAspect;
+                            }
+                        }
+                        B_DownloadCertificate?.SetEnabled(true);
+                    },
+                    error =>
+                    {
+                        Debug.LogError($"Certificate load error: {error}");
+                        B_DownloadCertificate?.SetEnabled(false);
+                    }
+                )
+            );
+        }
+    }
+
+    public void DownloadCertificate()
+    {
+        string certificate_url = UserState.Instance.Certificate_url;
+
+        if (string.IsNullOrEmpty(certificate_url))
+        {
+            IntegrateUI.MessageBox("Certificate URL is not available");
+            Debug.LogError("Certificate URL is null or empty");
+            return;
+        }
+
+        // Disable button during download
+        B_DownloadCertificate?.SetEnabled(false);
+
+        StartCoroutine(DownloadCertificateImage(certificate_url));
+    }
+
+    private IEnumerator DownloadCertificateImage(string url)
+    {
+        using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(url))
+        {
+            yield return request.SendWebRequest();
+
+#if UNITY_2020_2_OR_NEWER
+            bool hasError = request.result != UnityWebRequest.Result.Success;
+#else
+            bool hasError = request.isNetworkError || request.isHttpError;
+#endif
+
+            if (hasError)
+            {
+                Debug.LogError($"Failed to download certificate: {request.error}");
+                IntegrateUI.MessageBox($"Failed to download certificate: {request.error}");
+                B_DownloadCertificate?.SetEnabled(true);
+                yield break;
+            }
+
+            Texture2D texture = DownloadHandlerTexture.GetContent(request);
+            if (texture == null)
+            {
+                Debug.LogError("Downloaded texture is null");
+                IntegrateUI.MessageBox("Failed to download certificate image");
+                B_DownloadCertificate?.SetEnabled(true);
+                yield break;
+            }
+
+            // Convert texture to PNG bytes
+            byte[] imageBytes = texture.EncodeToPNG();
+
+            // Generate filename with timestamp
+            string username = UserState.Instance.Username ?? "User";
+            string filename = $"Certificate_{username}_{System.DateTime.Now:yyyyMMdd_HHmmss}.png";
+
+            // Save to persistent data path (accessible on mobile devices)
+            string savePath = Path.Combine(Application.persistentDataPath, filename);
+
+            try
+            {
+                File.WriteAllBytes(savePath, imageBytes);
+
+                Debug.Log($"Certificate saved to: {savePath}");
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+                // On Android, try to save to Downloads folder for better accessibility
+                string androidDownloadsPath = "/storage/emulated/0/Download";
+                if (Directory.Exists(androidDownloadsPath))
+                {
+                    string androidPath = Path.Combine(androidDownloadsPath, filename);
+                    File.WriteAllBytes(androidPath, imageBytes);
+                    Debug.Log($"Certificate also saved to Downloads: {androidPath}");
+                    IntegrateUI.MessageBox(
+                        $"Certificate downloaded successfully!\nSaved to Downloads folder."
+                    );
+                }
+                else
+                {
+                    IntegrateUI.MessageBox(
+                        $"Certificate downloaded successfully!\nSaved to: {savePath}"
+                    );
+                }
+#elif UNITY_IOS && !UNITY_EDITOR
+                // On iOS, save to Documents folder (accessible via Files app)
+                IntegrateUI.MessageBox(
+                    $"Certificate downloaded successfully!\nSaved to Files app."
+                );
+#else
+                // For editor or other platforms
+                IntegrateUI.MessageBox(
+                    $"Certificate downloaded successfully!\nSaved to: {savePath}"
+                );
+#endif
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Failed to save certificate: {e.Message}");
+                IntegrateUI.MessageBox($"Failed to save certificate: {e.Message}");
+            }
+            finally
+            {
+                B_DownloadCertificate?.SetEnabled(true);
+            }
+        }
+    }
+
     public void UpdateAvatarFunction(int selectedIndex)
     {
         if (selectedIndex == 0)
@@ -347,6 +596,10 @@ public class ProfilePage : MonoBehaviour
         DisplayProfile();
         DisplayBadges();
         DisplayEditProfile();
+        InitializeCertificate();
+
+        // BadgePage bp = FindFirstObjectByType<BadgePage>();
+        // bp.InitializeCertificate();
     }
 
     public void DisplayProfile()

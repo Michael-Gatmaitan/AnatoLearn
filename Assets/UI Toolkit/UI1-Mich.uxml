@@ -437,6 +437,7 @@
                         <engine:VisualElement style="flex-grow: 1; width: 100%; height: 50px; flex-direction: row; justify-content: space-between;">
                             <engine:Button name="B_Profile" class="navigation-button" />
                             <engine:Button name="B_Badges" class="navigation-button" style="background-image: url(&quot;project://database/Assets/Images/HomePageSystem/NavigationButtons/badges.png?fileID=2800000&amp;guid=3d10f9cffeb97874ab7d1e8de5705d55&amp;type=3#badges&quot;); opacity: 0.2;" />
+                            <engine:Button name="B_Certificate" class="navigation-button" style="background-image: url(&quot;project://database/Assets/Images/HomePageSystem/NavigationButtons/certificate.png?fileID=2800000&amp;guid=efe6b05c2000c88429babebd3a514a18&amp;type=3#certificate&quot;); opacity: 0.2;" />
                             <engine:Button name="B_EditProfile" class="navigation-button" style="background-image: url(&quot;project://database/Assets/Images/HomePageSystem/NavigationButtons/edit-profile.png?fileID=2800000&amp;guid=218063c94d6d86e43865decb7a91eac8&amp;type=3#edit-profile&quot;); opacity: 0.2;" />
                         </engine:VisualElement>
                     </engine:VisualElement>
@@ -462,7 +463,7 @@
                                 <engine:Button text="Update avatar" name="B_UpdateAvatar" emoji-fallback-support="false" enable-rich-text="false" style="width: auto; margin-top: 12px; background-color: rgb(255, 178, 98); -unity-font-style: bold; color: rgb(255, 255, 255); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; -unity-font-definition: resource(&apos;fonts/poppins/Poppins-Medium&apos;); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
                             </engine:VisualElement>
                             <engine:VisualElement name="V_Badges" style="flex-grow: 1; width: 100%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; display: none; background-color: rgba(56, 56, 56, 0); height: auto;">
-                                <engine:VisualElement style="flex-grow: 1; width: 100%; background-color: rgba(56, 56, 56, 0);">
+                                <engine:VisualElement style="flex-grow: 1; width: 100%; background-color: rgba(56, 56, 56, 0); height: auto;">
                                     <engine:Label text="Topics" style="-unity-font-definition: resource(&apos;fonts/poppins/Poppins-Bold&apos;); font-size: 32px; margin-bottom: 12px;" />
                                     <engine:VisualElement name="V_BadgesContainer" style="flex-grow: 1; width: 100%; height: auto;">
                                         <engine:VisualElement style="flex-grow: 1; flex-direction: row; width: 100%; flex-wrap: wrap; justify-content: center; height: auto;">
@@ -495,6 +496,18 @@
                                                 <engine:Label text="Excretory" style="-unity-font-definition: resource(&apos;fonts/poppins/Poppins-Medium&apos;); color: rgb(255, 255, 255); font-size: 20px;" />
                                             </engine:VisualElement>
                                         </engine:VisualElement>
+                                    </engine:VisualElement>
+                                </engine:VisualElement>
+                            </engine:VisualElement>
+                            <engine:VisualElement name="V_Certificate" style="flex-grow: 1; width: 100%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; display: none; background-color: rgba(56, 56, 56, 0); height: auto;">
+                                <engine:VisualElement style="flex-grow: 1; width: 100%; background-color: rgba(56, 56, 56, 0); height: auto;">
+                                    <engine:Label text="Certificate" style="-unity-font-definition: resource(&apos;fonts/poppins/Poppins-Bold&apos;); font-size: 32px; margin-bottom: 12px;" />
+                                    <engine:VisualElement name="V_CertificateContainer" style="flex-grow: 1; width: 100%; height: auto;">
+                                        <engine:VisualElement name="V_CertificateImageContent" style="flex-grow: 1; flex-direction: row; width: 100%; flex-wrap: wrap; justify-content: center; height: auto; display: none;">
+                                            <engine:VisualElement name="V_CertificateImage" style="flex-grow: 1; width: 100%; height: 200px;" />
+                                            <engine:Button text="Download Certificate" name="B_DownloadCertificate" emoji-fallback-support="false" enable-rich-text="false" style="width: 100%; margin-top: 12px; background-color: rgb(255, 178, 98); -unity-font-style: bold; color: rgb(255, 255, 255); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; -unity-font-definition: resource(&apos;fonts/poppins/Poppins-Medium&apos;); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+                                        </engine:VisualElement>
+                                        <engine:Label text="You don&apos;t have certificate yet." name="L_CertificateWarn" style="-unity-text-align: upper-center; font-size: 18px; -unity-font-definition: resource(&apos;fonts/poppins/Poppins-Medium&apos;); margin-top: 0;" />
                                     </engine:VisualElement>
                                 </engine:VisualElement>
                             </engine:VisualElement>

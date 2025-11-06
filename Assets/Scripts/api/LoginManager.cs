@@ -32,6 +32,7 @@ public class LoginManager : MonoBehaviour
         public string mname;
         public string lname;
         public string avatar;
+        public string certificate_url;
 
         // For errors
         public string message;
@@ -53,7 +54,8 @@ public class LoginManager : MonoBehaviour
     private VisualElement progressPage;
     private VisualElement settingsPage;
 
-    private TextField T_Email, T_Pass;
+    private TextField T_Email,
+        T_Pass;
 
     // private IntegrateUI integrateUI;
 
@@ -118,11 +120,22 @@ public class LoginManager : MonoBehaviour
             string fname = response.user.fname;
             string lname = response.user.lname;
             string mname = response.user.mname;
+            string certificate_url = response.user.certificate_url;
             string token = response.token;
             string avatar = response.user.avatar;
 
             // Set the data of user to localstorage
-            UserState.Instance.SetUserData(id, name, email, fname, lname, mname, token, avatar);
+            UserState.Instance.SetUserData(
+                id,
+                name,
+                email,
+                fname,
+                lname,
+                mname,
+                certificate_url,
+                token,
+                avatar
+            );
 
             string loggedInMessage = $"Welcome, {name}!";
             Debug.Log("You logged in! " + response.user.name);

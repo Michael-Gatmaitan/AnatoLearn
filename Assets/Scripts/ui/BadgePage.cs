@@ -6,6 +6,8 @@ public class BadgePage : MonoBehaviour
 {
     private VisualElement V_Main;
     private VisualElement popUpPage;
+
+    // Badge
     private VisualElement V_BadgePage;
     private VisualElement V_BadgeImage;
     private Button B_CloseBadgePage;
@@ -20,6 +22,8 @@ public class BadgePage : MonoBehaviour
     {
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         V_Main = root.Q<VisualElement>("V_Main");
+
+        // Badge
         popUpPage = V_Main.Q<VisualElement>("popUpPage");
         V_BadgePage = popUpPage.Q<VisualElement>("badgePage");
         V_BadgeImage = V_BadgePage.Q<VisualElement>("V_BadgeImage");

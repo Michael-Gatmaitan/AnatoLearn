@@ -12,6 +12,7 @@ public class UserState : MonoBehaviour
     public string Firstname,
         Middlename,
         Lastname,
+        Certificate_url,
         Avatar;
 
     public int TopicId { get; private set; }
@@ -74,6 +75,7 @@ public class UserState : MonoBehaviour
         string fname,
         string lname,
         string mname,
+        string certificate_url,
         string token,
         string avatar
     )
@@ -89,6 +91,7 @@ public class UserState : MonoBehaviour
         if (mname != null || mname.Trim() != "")
             Middlename = mname;
 
+        Certificate_url = certificate_url;
         Avatar = avatar;
 
         Debug.Log($"Setting avatar: {avatar}");
@@ -101,6 +104,7 @@ public class UserState : MonoBehaviour
         PlayerPrefs.SetString("fname", fname);
         PlayerPrefs.SetString("mname", mname);
         PlayerPrefs.SetString("lname", lname);
+        PlayerPrefs.SetString("certificate_url", certificate_url);
         PlayerPrefs.SetString("avatar", avatar);
 
         PlayerPrefs.Save();
@@ -117,6 +121,8 @@ public class UserState : MonoBehaviour
             Firstname = PlayerPrefs.GetString("fname");
             Middlename = PlayerPrefs.GetString("mname");
             Lastname = PlayerPrefs.GetString("lname");
+
+            Certificate_url = PlayerPrefs.GetString("certificate_url");
 
             Avatar = PlayerPrefs.GetString("avatar");
 

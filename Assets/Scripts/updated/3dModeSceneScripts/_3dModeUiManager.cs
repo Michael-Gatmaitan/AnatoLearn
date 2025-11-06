@@ -33,12 +33,13 @@ public class _3dModeUIManager : MonoBehaviour
     private VisualElement blackBgAbsoluteNeuronsCardsPage;
     private VisualElement blackBgAbsoluteChooseLanguagePage; //added 7 24
     private VisualElement blackBgAbsoluteHomePromptPage;
+    private VisualElement root;
 
     private bool isMenuShowed = false;
 
     private void OnEnable()
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
+        root = GetComponent<UIDocument>().rootVisualElement;
 
         homeBtn = root.Q<Button>("homeBtn");
         hideBtn = root.Q<Button>("hideBtn");
@@ -252,6 +253,10 @@ public class _3dModeUIManager : MonoBehaviour
         // SceneData.showTapActPage = true;
         if (SceneData.showTapActPage)
         {
+            // Hide menu button
+            var menuBtn = root.Q<Button>("menuBtn");
+            menuBtn.style.display = DisplayStyle.None;
+
             ShowTapActPage(); //3dModeScene
             ShowTapMeActInstructionPage();
             Debug.Log("✅ ShowTapActPage and ShowTapMeActInstrucPage run in Start()");
