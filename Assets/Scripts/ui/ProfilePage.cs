@@ -213,7 +213,7 @@ public class ProfilePage : MonoBehaviour
         B_Profile.style.opacity = 0.2f;
         B_Certificate.style.opacity = 0.2f;
 
-        L_ProfilePage.text = "Certificate";
+        L_ProfilePage.text = "Edit Profile";
     }
 
     void NavigateToCertificate()
@@ -229,7 +229,7 @@ public class ProfilePage : MonoBehaviour
         B_EditProfile.style.opacity = 0.2f;
         B_Profile.style.opacity = 0.2f;
 
-        L_ProfilePage.text = "Edit Profile";
+        L_ProfilePage.text = "Certificate";
     }
 
     void OnEnable()
@@ -349,6 +349,7 @@ public class ProfilePage : MonoBehaviour
                 }
 
                 Debug.Log($"Selected index: {selectedIndex}");
+                Debug.Log($"Selected index: {avatarNames[selectedIndex + 1]}");
             });
         }
 
@@ -452,6 +453,8 @@ public class ProfilePage : MonoBehaviour
                     },
                     error =>
                     {
+                        L_CertificateWarn.style.display = DisplayStyle.Flex;
+                        V_CertificateImageContent.style.display = DisplayStyle.None;
                         Debug.LogError($"Certificate load error: {error}");
                         B_DownloadCertificate?.SetEnabled(false);
                     }
@@ -566,9 +569,6 @@ public class ProfilePage : MonoBehaviour
 
     public void UpdateAvatarFunction(int selectedIndex)
     {
-        if (selectedIndex == 0)
-            return;
-
         // Update avatar of user in database
         string email = UserState.Instance.Email;
         userController.EditAvatar(
@@ -581,8 +581,11 @@ public class ProfilePage : MonoBehaviour
             (e) =>
             {
                 Debug.LogError("Edit avatar in db error");
+                IntegrateUI.MessageBox("Edit avatar in db error");
             }
         );
+
+        Debug.Log("Selected index: " + selectedIndex);
 
         V_Avatar.style.backgroundImage = new StyleBackground(avatarSprites[selectedIndex + 1]);
         V_HomeAvatar.style.backgroundImage = new StyleBackground(avatarSprites[selectedIndex + 1]);
@@ -597,9 +600,6 @@ public class ProfilePage : MonoBehaviour
         DisplayBadges();
         DisplayEditProfile();
         InitializeCertificate();
-
-        // BadgePage bp = FindFirstObjectByType<BadgePage>();
-        // bp.InitializeCertificate();
     }
 
     public void DisplayProfile()
@@ -642,14 +642,22 @@ public class ProfilePage : MonoBehaviour
                 foreach (var topic in topicsArray)
                 {
                     // Find existing badged scores based on topic id
-                    if (badgedScores.Find(b => b.topic_id == topic.id) != null)
-                    {
+                    // if (badgedScores.Find(b => b.topic_id == topic.id) != null)
+                    // {
+                    //     Debug.Log("User has a badge of " + topic.topic_name + ": " + topic.id);
+                    //     badgesContainer[topic.id - 1].SetEnabled(true);
+                    // }
+                    // else
+                    // {
+                    //     Debug.Log($"Disabling {topic.topic_name}");
+                    //     badgesContainer[topic.id - 1].SetEnabled(false);
+                    // }
+
+                    bool userHasBadge = badgedScores.Find(b => b.topic_id == topic.id) != null;
+                    badgesContainer[topic.id - 1].SetEnabled(userHasBadge);
+
+                    if (userHasBadge)
                         Debug.Log("User has a badge of " + topic.topic_name + ": " + topic.id);
-                    }
-                    else
-                    {
-                        badgesContainer[topic.id - 1].SetEnabled(false);
-                    }
                 }
 
                 foreach (var badgedScore in badgedScores)

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
@@ -425,6 +424,7 @@ public class IntegrateUI : MonoBehaviour
 
             // SetupHomeSystems(false);
             SetupScoresAndAsyncPages(false);
+            UserState.Instance.ResetAllScores();
         });
     }
 
@@ -465,8 +465,6 @@ public class IntegrateUI : MonoBehaviour
                         $"You recieved a {topicsArray[UserState.Instance.TopicId - 1].topic_name} badge!!!"
                     );
                 }
-
-                UserState.Instance.ResetAllScores();
             }
             else
             {
@@ -1760,6 +1758,7 @@ public class IntegrateUI : MonoBehaviour
             Debug.Log("Validating certificate");
             int topic_id = UserState.Instance.TopicId;
             Debug.Log("Current topic id for validating certificate: " + topic_id);
+            Button homeBtn = sumScorePage.Q<Button>("B_HomeBtn");
 
             // Check the current score if passed
             int sumOfAllScores = UserState.Instance.SumOfAllScores();
@@ -1775,6 +1774,8 @@ public class IntegrateUI : MonoBehaviour
                 // * User never recieved a certificate before
                 // * Or else, status of 'false' and a message will returned by the API
 
+                MessageBox("Processing certificate");
+
                 string email = UserState.Instance.Email;
                 string fname = UserState.Instance.Firstname;
                 string mname = UserState.Instance.Middlename;
@@ -1786,10 +1787,18 @@ public class IntegrateUI : MonoBehaviour
                     name,
                     (r) =>
                     {
+                        homeBtn.SetEnabled(true);
+
                         if (r.success)
                         {
                             Debug.Log(r.message);
                             MessageBox(r.message);
+
+                            string certificate_url = r.imageUrl;
+                            Debug.Log("Certificate url recieved");
+                            MessageBox($"Certificate url {certificate_url}");
+                            UserState.Instance.SetCertificateUrl(certificate_url);
+                            PlayerPrefs.SetString("certificate_url", certificate_url);
 
                             var c = FindAnyObjectByType<CertificatePage>();
                             c.ShowCertificatePage();
@@ -1801,9 +1810,15 @@ public class IntegrateUI : MonoBehaviour
                     },
                     (e) =>
                     {
+                        homeBtn.SetEnabled(true);
+                        MessageBox("There was an error sending certificate: ");
                         Debug.LogError("There was an error sending certificate: " + e);
                     }
                 );
+            }
+            else
+            {
+                Debug.Log("Not enough score");
             }
         }
 
@@ -1915,6 +1930,8 @@ public class IntegrateUI : MonoBehaviour
                         scoresPage.style.display = DisplayStyle.Flex;
                         mcqPage.parent.style.display = DisplayStyle.None;
                         mcqPage.style.display = DisplayStyle.None;
+
+                        // Let's try to process the certificate after checking the badges
                     },
                     (e) =>
                     {
@@ -1935,7 +1952,7 @@ public class IntegrateUI : MonoBehaviour
                     reqBody,
                     (response) =>
                     {
-                        homeBtn.SetEnabled(true);
+                        // homeBtn.SetEnabled(true);
 
                         Debug.Log(response.message);
                         // If the request returns success = true,
@@ -1949,6 +1966,10 @@ public class IntegrateUI : MonoBehaviour
                         if (topicId == 7)
                         {
                             ValidateCertificate();
+                        }
+                        else
+                        {
+                            homeBtn.SetEnabled(true);
                         }
                     },
                     (e) =>

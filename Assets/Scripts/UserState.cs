@@ -1,4 +1,3 @@
-using NUnit.Framework.Internal.Filters;
 using UnityEngine;
 
 public class UserState : MonoBehaviour
@@ -41,6 +40,11 @@ public class UserState : MonoBehaviour
         Instance = this;
         TopicId = 0;
         DontDestroyOnLoad(gameObject); // Persist between scenes
+    }
+
+    public void SetCertificateUrl(string _certificate_url)
+    {
+        Certificate_url = _certificate_url;
     }
 
     public void SetToken(string _token)

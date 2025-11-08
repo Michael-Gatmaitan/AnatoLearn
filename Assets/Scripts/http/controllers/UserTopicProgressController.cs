@@ -38,6 +38,7 @@ public class SendCertificateResponse
 {
     public string message;
     public bool success;
+    public string imageUrl;
 }
 
 public class UserTopicProgressController : MonoBehaviour
