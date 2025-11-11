@@ -445,16 +445,21 @@ public class IntegrateUI : MonoBehaviour
 
                 int allScores = tapScore + mcqScore + tofScore;
 
-                Debug.Log($"{tapScore} + {mcqScore} + {tofScore}");
+                Debug.Log($"{tapScore} + {mcqScore} + {tofScore} = {allScores}");
+
+                Debug.Log($"{100} / {15} = {100 / 15}");
+                Debug.Log($"{100 / 15} * {allScores} = {100 / 15 * allScores}");
 
                 Label score = sumScorePage.Q<Label>("L_SSPScore");
                 Label correctScore = sumScorePage.Q<Label>("correctScore");
                 Label incorrectScore = sumScorePage.Q<Label>("incorrectScore");
 
-                int percentage = (100 / 15) * allScores;
+                float percentage = 100f / 15f * allScores;
+
+                Debug.Log("Percentage: " + percentage);
 
                 // Display accuracy / performance
-                score.text = $"{percentage}%";
+                score.text = $"{percentage:F0}%";
 
                 correctScore.text = $"{allScores}";
                 incorrectScore.text = $"{15 - allScores}";
@@ -1763,7 +1768,9 @@ public class IntegrateUI : MonoBehaviour
             // Check the current score if passed
             int sumOfAllScores = UserState.Instance.SumOfAllScores();
 
-            int percentage = (100 / 15) * sumOfAllScores;
+            float percentage = 100f / 15f * sumOfAllScores;
+
+            Debug.Log("Validating percentage: " + percentage);
 
             if (percentage >= 50)
             {
@@ -1900,7 +1907,7 @@ public class IntegrateUI : MonoBehaviour
                 };
 
                 int allScores = tapScore + mcqScore + tofScore;
-                int percentage = (100 / 15) * allScores;
+                float percentage = 100f / 15f * allScores;
 
                 // TODO: CHECK IF THE AVERAGE IS ABOVE 50%
                 // IF IT IS, RUN ShowBadgePage, else, show ShowHasNotBadgePage
