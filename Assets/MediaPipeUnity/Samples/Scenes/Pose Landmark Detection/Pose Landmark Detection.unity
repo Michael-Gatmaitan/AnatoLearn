@@ -1552,9 +1552,9 @@ MonoBehaviour:
   uiDocument: {fileID: 403801984}
   screenDepth: 20
   positionZOffset: 50
-  adjustedHipYDivider: 0.9
+  adjustedHipYDivider: 0.73
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.3
+  avatarReferenceTorsoHeight: 0.2
   ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
@@ -3419,16 +3419,16 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290596306}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.9979588, w: 0.06386174}
-  m_LocalPosition: {x: -0.196, y: 0.487, z: -0.089}
-  m_LocalScale: {x: 1, y: 1, z: 0.9999842}
+  m_LocalRotation: {x: 0.016974492, y: -0.1531954, z: 0.987876, w: 0.018551309}
+  m_LocalPosition: {x: -0.20247023, y: 0.062281065, z: -0.067686625}
+  m_LocalScale: {x: 1, y: 1, z: 0.9999844}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1254474762}
   - {fileID: 1014434090}
   - {fileID: 1090115430}
   - {fileID: 1257456473}
-  m_Father: {fileID: 705521300}
+  m_Father: {fileID: 8915306871267397564}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 172.677}
 --- !u!114 &290596308
 MonoBehaviour:
@@ -7115,7 +7115,7 @@ MonoBehaviour:
   uiDocument: {fileID: 403801984}
   screenDepth: 20
   positionZOffset: 50
-  adjustedHipYDivider: 0.9
+  adjustedHipYDivider: 1.22
   avatarReferenceToShoulderWidth: 0.5
   avatarReferenceTorsoHeight: 0.6
   ikPositionWeight: 0.4
@@ -10700,16 +10700,16 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756766001}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.9979588, w: 0.06386174}
-  m_LocalPosition: {x: -0.796, y: 0.414, z: -0.084}
-  m_LocalScale: {x: 1, y: 1, z: 0.9999842}
+  m_LocalRotation: {x: 0.016974492, y: -0.1531954, z: 0.987876, w: 0.018551309}
+  m_LocalPosition: {x: -0.7936232, y: -0.06260241, z: -0.08491758}
+  m_LocalScale: {x: 1, y: 1, z: 0.9999844}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 110532781}
   - {fileID: 1234838920}
   - {fileID: 2071691709}
   - {fileID: 1179620492}
-  m_Father: {fileID: 705521300}
+  m_Father: {fileID: 8915306871267397564}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 172.677}
 --- !u!114 &756766003
 MonoBehaviour:
@@ -11072,9 +11072,9 @@ MonoBehaviour:
   uiDocument: {fileID: 403801984}
   screenDepth: 20
   positionZOffset: 50
-  adjustedHipYDivider: 0.9
+  adjustedHipYDivider: 1
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.5
+  avatarReferenceTorsoHeight: 0.43
   ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
@@ -17862,9 +17862,9 @@ MonoBehaviour:
   uiDocument: {fileID: 403801984}
   screenDepth: 20
   positionZOffset: 50
-  adjustedHipYDivider: 0.9
+  adjustedHipYDivider: 1.22
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.6
+  avatarReferenceTorsoHeight: 0.65
   ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
@@ -27119,9 +27119,9 @@ MonoBehaviour:
   uiDocument: {fileID: 403801984}
   screenDepth: 20
   positionZOffset: 50
-  adjustedHipYDivider: 0.9
+  adjustedHipYDivider: 0.85
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.6
+  avatarReferenceTorsoHeight: 0.36
   ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
@@ -31583,7 +31583,7 @@ MonoBehaviour:
   positionZOffset: 50
   adjustedHipYDivider: 0.9
   avatarReferenceToShoulderWidth: 0.5
-  avatarReferenceTorsoHeight: 0.7
+  avatarReferenceTorsoHeight: 0.4
   ikPositionWeight: 0.4
   useShoulderScale: 0
   move: 1
@@ -32657,11 +32657,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3789762435259290214, guid: 6020d61e7c3f2c64089c2fd039756c15, type: 3}
       insertIndex: 1
       addedObject: {fileID: 1064812953}
-    - targetCorrespondingSourceObject: {fileID: 3789762435259290214, guid: 6020d61e7c3f2c64089c2fd039756c15, type: 3}
-      insertIndex: 2
+    - targetCorrespondingSourceObject: {fileID: 4466665219267799375, guid: 6020d61e7c3f2c64089c2fd039756c15, type: 3}
+      insertIndex: 0
       addedObject: {fileID: 290596307}
-    - targetCorrespondingSourceObject: {fileID: 3789762435259290214, guid: 6020d61e7c3f2c64089c2fd039756c15, type: 3}
-      insertIndex: 3
+    - targetCorrespondingSourceObject: {fileID: 4466665219267799375, guid: 6020d61e7c3f2c64089c2fd039756c15, type: 3}
+      insertIndex: 1
       addedObject: {fileID: 756766002}
     - targetCorrespondingSourceObject: {fileID: 6338940483670310445, guid: 6020d61e7c3f2c64089c2fd039756c15, type: 3}
       insertIndex: 0
@@ -32719,6 +32719,11 @@ PrefabInstance:
 --- !u!4 &8915306871267397563 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 853445916342780944, guid: 6020d61e7c3f2c64089c2fd039756c15, type: 3}
+  m_PrefabInstance: {fileID: 8915306871267397562}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8915306871267397564 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4466665219267799375, guid: 6020d61e7c3f2c64089c2fd039756c15, type: 3}
   m_PrefabInstance: {fileID: 8915306871267397562}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807

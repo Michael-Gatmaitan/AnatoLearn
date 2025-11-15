@@ -629,9 +629,13 @@ public class ProfilePage : MonoBehaviour
             .Query<VisualElement>(className: "badge-container")
             .ToList();
 
-        totalScoresController.GetAllTotalScores(
+        // totalScoresController.GetAllTotalScores(
+        //     UserState.Instance.Id,
+        //     true,
+        //     (r) =>
+        //     {
+        totalScoresController.GetUserPerfectScores(
             UserState.Instance.Id,
-            true,
             (r) =>
             {
                 Debug.Log("Result from getting all topic scores: " + r.data);

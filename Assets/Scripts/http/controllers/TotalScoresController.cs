@@ -21,6 +21,12 @@ public class TotalScores
 }
 
 [Serializable]
+public class PerfectScores
+{
+    public List<TotalScore> data;
+}
+
+[Serializable]
 public class Count
 {
     public int count;
@@ -117,6 +123,23 @@ public class TotalScoresController : MonoBehaviour
 
         StartCoroutine(
             httpManager.GetRequest<HasBadgeResponse>(
+                url,
+                (r) => onSuccess?.Invoke(r),
+                (e) => onError?.Invoke(e)
+            )
+        );
+    }
+
+    public void GetUserPerfectScores(
+        int user_id,
+        Action<PerfectScores> onSuccess,
+        Action<string> onError
+    )
+    {
+        string url = $"{Constants.API_URL}/total-scores/perfect-scores?user_id={user_id}";
+
+        StartCoroutine(
+            httpManager.GetRequest<PerfectScores>(
                 url,
                 (r) => onSuccess?.Invoke(r),
                 (e) => onError?.Invoke(e)
