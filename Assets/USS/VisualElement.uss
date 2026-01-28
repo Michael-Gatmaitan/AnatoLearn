@@ -876,3 +876,6 @@ VisualElement {
 .error-message {
     background-color: rgb(231, 42, 42);
 }
+
+.underline {
+}

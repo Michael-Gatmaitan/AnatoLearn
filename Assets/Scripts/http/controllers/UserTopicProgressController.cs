@@ -31,6 +31,7 @@ public class SendCertificateBody
 {
     public string email;
     public string name;
+    public string nameEdited;
 }
 
 [System.Serializable]
@@ -117,11 +118,12 @@ public class UserTopicProgressController : MonoBehaviour
     public void SendCertificate(
         string email,
         string name,
+        string nameEdited,
         Action<SendCertificateResponse> onSuccess,
         Action<string> onError
     )
     {
-        SendCertificateBody body = new() { email = email, name = name };
+        SendCertificateBody body = new() { email = email, name = name, nameEdited = nameEdited };
 
         string jsonData = JsonUtility.ToJson(body);
         string url = $"{Constants.API_URL}/send-certificate";

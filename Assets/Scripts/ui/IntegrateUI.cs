@@ -254,10 +254,6 @@ public class IntegrateUI : MonoBehaviour
         loginScreen.style.display = DisplayStyle.Flex;
         homePage.style.display = DisplayStyle.None;
 
-        Debug.Log("Checking if logged out: ");
-        Debug.Log(UserState.Instance.Id);
-        Debug.Log(UserState.Instance.Username);
-
         MessageBox("Logged out");
     }
 
@@ -464,7 +460,7 @@ public class IntegrateUI : MonoBehaviour
                 correctScore.text = $"{allScores}";
                 incorrectScore.text = $"{15 - allScores}";
 
-                if (percentage >= 50)
+                if (percentage >= 100)
                 {
                     Debug.Log(
                         $"You recieved a {topicsArray[UserState.Instance.TopicId - 1].topic_name} badge!!!"
@@ -1139,7 +1135,7 @@ public class IntegrateUI : MonoBehaviour
                 VisualElement progDataHighest = new();
                 progDataHighest.AddToClassList("progDataAttempts");
 
-                Label progDataLabelHighest = new(text: "Highest passed");
+                Label progDataLabelHighest = new(text: "Highest score");
                 progDataLabelHighest.AddToClassList("progDataLabelAttempts");
 
                 progDataLCL.Add(progDataLabelL);
@@ -1792,6 +1788,7 @@ public class IntegrateUI : MonoBehaviour
                 userTopicProgressController.SendCertificate(
                     email,
                     name,
+                    "no",
                     (r) =>
                     {
                         homeBtn.SetEnabled(true);
@@ -1809,6 +1806,9 @@ public class IntegrateUI : MonoBehaviour
 
                             var c = FindAnyObjectByType<CertificatePage>();
                             c.ShowCertificatePage();
+
+                            var pp = FindAnyObjectByType<ProfilePage>();
+                            pp.InitializeCertificate();
                         }
                         else
                         {
@@ -1920,7 +1920,7 @@ public class IntegrateUI : MonoBehaviour
                         Debug.Log("Has badge: " + r.hasBadge);
 
                         var badgeComponent = FindAnyObjectByType<BadgePage>();
-                        if (percentage >= 50)
+                        if (percentage >= 100)
                         {
                             if (!r.hasBadge)
                             {

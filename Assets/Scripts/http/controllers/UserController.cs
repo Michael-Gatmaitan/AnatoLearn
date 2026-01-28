@@ -17,6 +17,14 @@ public class EditAvatarBody
 }
 
 [Serializable]
+public class EditUsernameBody
+{
+    public string email;
+    public string newUsername;
+    public string updateType = "username";
+}
+
+[Serializable]
 public class EditNameBody
 {
     public string email;
@@ -71,6 +79,33 @@ class UserController : MonoBehaviour
             email = email,
             newAvatar = avatar,
             updateType = "avatar",
+        };
+
+        string jsonData = JsonUtility.ToJson(body);
+        string url = $"{Constants.API_URL}/api/users";
+
+        StartCoroutine(
+            httpManager.PutRequest<ResponseMessage>(
+                url,
+                jsonData,
+                (r) => onSuccess?.Invoke(r),
+                (e) => onError?.Invoke(e)
+            )
+        );
+    }
+
+    public void EditUsername(
+        string email,
+        string newUsername,
+        Action<ResponseMessage> onSuccess,
+        Action<string> onError
+    )
+    {
+        EditUsernameBody body = new()
+        {
+            email = email,
+            newUsername = newUsername,
+            updateType = "username",
         };
 
         string jsonData = JsonUtility.ToJson(body);

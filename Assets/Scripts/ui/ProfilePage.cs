@@ -40,6 +40,7 @@ public class ProfilePage : MonoBehaviour
         V_Certificate,
         V_EditProfile;
 
+    private VisualElement V_UsernameBlock;
     private Label L_Username;
 
     // Certificate
@@ -88,9 +89,14 @@ public class ProfilePage : MonoBehaviour
 
     private List<VisualElement> profiles;
 
+    private static UserTopicProgressController userTopicProgressController;
+
     // Delete profile elements
 
     // Edit username elements
+    private TextField T_NewUsername;
+    private Button B_UpdateUsername;
+    private Button B_CloseEditUsername;
 
     void ShowProfilePage()
     {
@@ -166,7 +172,26 @@ public class ProfilePage : MonoBehaviour
     {
         V_ProfileModals.style.display = DisplayStyle.None;
         V_EditUsernameModal.style.display = DisplayStyle.None;
+
+        // Clear username input or in submit
+        ClearNewUsernameField();
     }
+
+    void ClearNewUsernameField()
+    {
+        T_NewUsername.value = "";
+    }
+
+    // void UpdateUsername()
+    // {
+    //     string newUsername = T_NewUsername.value;
+    //     Debug.Log("New username: " + newUsername);
+
+    //     // Call API
+
+    //     // Clear input field
+    //     ClearNewUsernameField();
+    // }
 
     void NavigateToProfileBody()
     {
@@ -234,6 +259,7 @@ public class ProfilePage : MonoBehaviour
 
     void OnEnable()
     {
+        userTopicProgressController = GetComponent<UserTopicProgressController>();
         totalScoresController = GetComponent<TotalScoresController>();
         userController = GetComponent<UserController>();
 
@@ -256,24 +282,33 @@ public class ProfilePage : MonoBehaviour
 
         V_ProfileModals = profilePage.Q<VisualElement>("V_ProfileModals");
         V_DeleteProfileModal = V_ProfileModals.Q<VisualElement>("V_DeleteProfileModal");
+
         V_EditUsernameModal = profilePage.Q<VisualElement>("V_EditUsernameModal");
+        T_NewUsername = V_EditUsernameModal.Q<TextField>("T_NewUsername");
+        B_UpdateUsername = V_EditUsernameModal.Q<Button>("B_UpdateUsername");
+        B_CloseEditUsername = V_EditUsernameModal.Q<Button>("B_CloseEditUsername");
+
+        // Call API for update username
+        B_UpdateUsername?.RegisterCallback<ClickEvent>(_ => UpdateUsernameFunction());
+        B_CloseEditUsername?.RegisterCallback<ClickEvent>(_ => HideEditUsernameModal());
 
         L_Username = S_ProfileScrollView.Q<Label>("L_Username");
+        V_UsernameBlock = S_ProfileScrollView.Q<VisualElement>("V_UsernameBlock");
 
         profileButton?.RegisterCallback<ClickEvent>(_ => ShowProfilePage());
         B_BackProfilePage?.RegisterCallback<ClickEvent>(_ => HideProfilePage());
 
         B_DeleteProfile?.RegisterCallback<ClickEvent>(_ => ShowDeleteProfileModal());
 
-        L_Username?.RegisterCallback<ClickEvent>(_ => ShowEditUsernameModal());
+        V_UsernameBlock?.RegisterCallback<ClickEvent>(_ => ShowEditUsernameModal());
 
         // Delete profile
         B_DeleteProfileProceed?.RegisterCallback<ClickEvent>(_ => DeleteProfileAndLogout());
         B_DeleteProfileBack?.RegisterCallback<ClickEvent>(_ => HideDeleteProfileModal());
 
         // Testing purposes
-        V_DeleteProfileModal?.RegisterCallback<ClickEvent>(_ => HideDeleteProfileModal());
-        V_EditUsernameModal?.RegisterCallback<ClickEvent>(_ => HideEditUsernameModal());
+        // V_DeleteProfileModal?.RegisterCallback<ClickEvent>(_ => HideDeleteProfileModal());
+        // V_EditUsernameModal?.RegisterCallback<ClickEvent>(_ => HideEditUsernameModal());
 
         B_Profile = profilePage.Q<Button>("B_Profile");
         B_Badges = profilePage.Q<Button>("B_Badges");
@@ -591,6 +626,46 @@ public class ProfilePage : MonoBehaviour
         V_HomeAvatar.style.backgroundImage = new StyleBackground(avatarSprites[selectedIndex + 1]);
     }
 
+    public void UpdateUsernameFunction()
+    {
+        string newUsername = T_NewUsername.value.Trim();
+        if (newUsername == "")
+        {
+            IntegrateUI.MessageBox("New username cannot be empty.");
+            ClearNewUsernameField();
+            return;
+        }
+
+        string email = UserState.Instance.Email;
+        userController.EditUsername(
+            email,
+            newUsername,
+            (r) =>
+            {
+                Debug.Log("Updated username in db: " + r);
+                IntegrateUI.MessageBox(r.message);
+
+
+                // Replace the display of username to new username
+                L_Username.text = newUsername;
+
+                Label profileLabel = homePage.Q<Label>("profileLabel");
+                profileLabel.text = newUsername;
+
+                ClearNewUsernameField();
+            },
+            (e) =>
+            {
+                Debug.LogError("Edit username in db error");
+                IntegrateUI.MessageBox("Edit username in db error");
+                ClearNewUsernameField();
+            }
+        );
+
+        // Close the modal
+        HideEditUsernameModal();
+    }
+
     public void InitializeHomePage()
     {
         Debug.Log("Initializing home page");
@@ -691,6 +766,17 @@ public class ProfilePage : MonoBehaviour
                 string newMiddlename = T_NewMiddlename.value;
                 string newLastname = T_NewLastname.value;
 
+                if (
+                    UserState.Instance.Firstname == newFirstname
+                    && UserState.Instance.Middlename == newMiddlename
+                    && UserState.Instance.Lastname == newLastname
+                )
+                {
+                    Debug.Log("Nothing to edit.");
+                    IntegrateUI.MessageBox("Nothing to update");
+                    return;
+                }
+
                 Debug.Log($"Email: {email}");
 
                 if (newFirstname.Trim() == "" || newLastname.Trim() == "")
@@ -715,6 +801,52 @@ public class ProfilePage : MonoBehaviour
 
                         ClearEditProfileInputs();
                         // Optionally update UI or user state here
+
+                        if (UserState.Instance.Certificate_url != "")
+                        {
+                            Debug.Log("Update certificate");
+                            string email = UserState.Instance.Email;
+                            string fname = UserState.Instance.Firstname;
+                            string mname = UserState.Instance.Middlename;
+                            string lname = UserState.Instance.Lastname;
+                            string name = $"{fname} {mname} {lname}";
+
+                            userTopicProgressController.SendCertificate(
+                                email,
+                                name,
+                                "no",
+                                (r) =>
+                                {
+                                    if (r.success)
+                                    {
+                                        Debug.Log(r.message);
+                                        IntegrateUI.MessageBox(r.message);
+
+                                        string certificate_url = r.imageUrl;
+                                        Debug.Log("Certificate url recieved");
+                                        IntegrateUI.MessageBox($"Certificate's name updated.");
+
+                                        UserState.Instance.SetCertificateUrl(certificate_url);
+                                        PlayerPrefs.SetString("certificate_url", certificate_url);
+
+                                        // Update UI
+                                        var pp = FindAnyObjectByType<ProfilePage>();
+                                        pp.InitializeCertificate();
+                                    }
+                                    else
+                                    {
+                                        IntegrateUI.MessageBox(r.message);
+                                    }
+                                },
+                                (e) =>
+                                {
+                                    IntegrateUI.MessageBox("There was an error sending certificate: ");
+                                    Debug.LogError("There was an error sending certificate: " + e);
+                                }
+                            );
+                        }
+
+                        // Update certificate
                     },
                     (e) =>
                     {
