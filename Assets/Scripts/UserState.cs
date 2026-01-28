@@ -219,4 +219,26 @@ public class UserState : MonoBehaviour
         CurrentMCQScore = -1;
         CurrentTOFScore = -1;
     }
+
+    public void UpdateAvatarState(string avatar)
+    {
+        Avatar = avatar;
+        PlayerPrefs.SetString("avatar", avatar);
+    }
+
+    public void UpdateNameState(string fname, string mname, string lname)
+    {
+        Firstname = fname;
+        Middlename = mname;
+        Lastname = lname;
+        PlayerPrefs.SetString("fname", fname);
+        PlayerPrefs.SetString("mname", mname);
+        PlayerPrefs.SetString("lname", lname);
+    }
+
+    public void UpdateUsernameState(string username)
+    {
+        Username = username;
+        PlayerPrefs.SetString("username", username);
+    }
 }

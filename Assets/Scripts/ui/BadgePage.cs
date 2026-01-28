@@ -6,6 +6,8 @@ public class BadgePage : MonoBehaviour
 {
     private VisualElement V_Main;
     private VisualElement popUpPage;
+    private VisualElement profilePage;
+    private VisualElement V_ProfileModals;
 
     // Badge
     private VisualElement V_BadgePage;
@@ -15,6 +17,15 @@ public class BadgePage : MonoBehaviour
     private VisualElement V_noBadgePromptCon;
     private VisualElement V_NoBadgeImage;
     private Button B_CloseNoBadgePrompt;
+
+    private Button B_BadgeInstruction;
+
+    // Modal
+    private VisualElement V_BadgeInstructionModal;
+
+    // Close modal
+    private Button B_CloseBadgeInstruction;
+
 
     public Sprite[] badgeTopicSprites;
 

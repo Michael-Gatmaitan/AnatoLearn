@@ -1653,7 +1653,7 @@
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:Label text="Place a hand to spawn the model" name="L_HandInstruction" style="-unity-text-align: upper-center; position: absolute; width: 100%; bottom: 100px; -unity-font-definition: resource(&apos;fonts/poppins/Poppins-Bold&apos;); color: rgb(255, 255, 255); display: none;" />
+        <engine:Label text="Place a hand to spawn the model&#10;Drag the model to rotate&#10;Bring fingers together or apart to scale" name="L_HandInstruction" style="-unity-text-align: upper-center; position: absolute; width: 100%; bottom: 100px; -unity-font-definition: resource(&apos;fonts/poppins/Poppins-Bold&apos;); color: rgb(255, 255, 255); display: none;" />
         <engine:Label text="Detect a human body to see the model" name="L_BodyInstruction" style="-unity-text-align: upper-center; position: absolute; width: 100%; bottom: 100px; -unity-font-definition: resource(&apos;fonts/poppins/Poppins-Bold&apos;); color: rgb(255, 255, 255); display: none;" />
     </engine:VisualElement>
 </engine:UXML>

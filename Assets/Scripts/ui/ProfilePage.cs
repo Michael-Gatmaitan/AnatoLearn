@@ -24,7 +24,8 @@ public class ProfilePage : MonoBehaviour
     private ScrollView S_ProfileScrollView;
     private VisualElement V_ProfileModals,
         V_DeleteProfileModal,
-        V_EditUsernameModal;
+        V_EditUsernameModal,
+        V_BadgeInstructionModal;
 
     // Navigation Buttons
     private Button B_Profile,
@@ -97,6 +98,9 @@ public class ProfilePage : MonoBehaviour
     private TextField T_NewUsername;
     private Button B_UpdateUsername;
     private Button B_CloseEditUsername;
+
+    private Button B_BadgeInstruction;
+    private Button B_CloseBadgeInstruction;
 
     void ShowProfilePage()
     {
@@ -324,6 +328,14 @@ public class ProfilePage : MonoBehaviour
         V_Badges = profilePage.Q<VisualElement>("V_Badges");
         V_Certificate = profilePage.Q<VisualElement>("V_Certificate");
         V_EditProfile = profilePage.Q<VisualElement>("V_EditProfile");
+
+        // Badge
+        B_BadgeInstruction = V_Badges.Q<Button>("B_BadgeInstruction");
+        V_BadgeInstructionModal = V_ProfileModals.Q<VisualElement>("V_BadgeInstructionModal");
+        B_CloseBadgeInstruction = V_BadgeInstructionModal.Q<Button>("B_CloseBadgeInstruction");
+
+        B_BadgeInstruction?.RegisterCallback<ClickEvent>(_ => ShowBadgeInstruction());
+        B_CloseBadgeInstruction?.RegisterCallback<ClickEvent>(_ => HideBadgeInstruction());
 
         // Profile variables initialization
         V_Avatar = V_ProfileBody.Q<VisualElement>("V_Avatar");
@@ -602,6 +614,18 @@ public class ProfilePage : MonoBehaviour
         }
     }
 
+    public void ShowBadgeInstruction()
+    {
+        V_ProfileModals.style.display = DisplayStyle.Flex;
+        V_BadgeInstructionModal.style.display = DisplayStyle.Flex;
+    }
+
+    public void HideBadgeInstruction()
+    {
+        V_ProfileModals.style.display = DisplayStyle.None;
+        V_BadgeInstructionModal.style.display = DisplayStyle.None;
+    }
+
     public void UpdateAvatarFunction(int selectedIndex)
     {
         // Update avatar of user in database
@@ -612,6 +636,8 @@ public class ProfilePage : MonoBehaviour
             (r) =>
             {
                 Debug.Log("Edit avatar in db: " + r);
+                // Update avatar in UserState (PlayerPrefs)
+                UserState.Instance.UpdateAvatarState(avatarNames[selectedIndex + 1]);
             },
             (e) =>
             {
@@ -636,6 +662,8 @@ public class ProfilePage : MonoBehaviour
             return;
         }
 
+        // UserState.
+
         string email = UserState.Instance.Email;
         userController.EditUsername(
             email,
@@ -645,13 +673,13 @@ public class ProfilePage : MonoBehaviour
                 Debug.Log("Updated username in db: " + r);
                 IntegrateUI.MessageBox(r.message);
 
-
-                // Replace the display of username to new username
                 L_Username.text = newUsername;
 
                 Label profileLabel = homePage.Q<Label>("profileLabel");
                 profileLabel.text = newUsername;
 
+                // Update username (name) in UserState (PlayerPrefs)
+                UserState.Instance.UpdateUsernameState(newUsername);
                 ClearNewUsernameField();
             },
             (e) =>
@@ -799,6 +827,13 @@ public class ProfilePage : MonoBehaviour
                         UserState.Instance.Middlename = newMiddlename;
                         UserState.Instance.Lastname = newLastname;
 
+                        // Update name state in UserState
+                        UserState.Instance.UpdateNameState(
+                            newFirstname,
+                            newMiddlename,
+                            newLastname
+                        );
+
                         ClearEditProfileInputs();
                         // Optionally update UI or user state here
 
@@ -819,6 +854,7 @@ public class ProfilePage : MonoBehaviour
                                 {
                                     if (r.success)
                                     {
+                                        // "Already recieved certificate" message even the name is updated.
                                         Debug.Log(r.message);
                                         IntegrateUI.MessageBox(r.message);
 

@@ -320,13 +320,14 @@ public class HTS_Improved : MonoBehaviour
 
     void Update()
     {
-        if (handDetected)
-        {
-            ShowHandInstruction();
-        }
-        else
-        {
-            HideHandInstruction();
-        }
+        ShowHandInstruction();
+        // if (handDetected)
+        // {
+        // ShowHandInstruction();
+        // }
+        // else
+        // {
+        // HideHandInstruction();
+        // }
     }
 }
